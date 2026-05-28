@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Help Center</title>
+    <link rel="stylesheet" href="../styles/help-center.css">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Bar layout -->
+        <div class="top-app-bar">
+            <a href="settings.html" class="btn-back">←</a>
+            <div class="app-bar-title">Help Center</div>
+            <button class="btn-search-icon" onclick="document.getElementById('helpSearch').focus()">🔍</button>
+        </div>
+
+        <!-- Headline banner text query -->
+        <h2 class="help-main-headline">How can we help?</h2>
+
+        <!-- Rounded Prefixed Search Input Box -->
+        <div class="search-wrapper-box">
+            <span class="search-decor-icon">🔍</span>
+            <input type="text" id="helpSearch" class="search-input-field" placeholder="Search for help articles...">
+        </div>
+
+        <!-- Twin Topic Category Blocks Layout Grid -->
+        <div class="topics-grid-row">
+            
+            <!-- Category Box 1: Scanning Guides -->
+            <a href="#" class="topic-block-card topic-card-mint" onclick="alert('Opening Scanning Guideline Documentation Logs...')">
+                <div class="topic-card-icon">🔳</div>
+                <div class="topic-card-title">Scanning<br>Guides</div>
+            </a>
+
+            <!-- Category Box 2: Security & Trust -->
+            <a href="#" class="topic-block-card topic-card-grey" onclick="alert('Opening Ledger Cryptography & Security Dossiers...')">
+                <div class="topic-card-icon">🛡️</div>
+                <div class="topic-card-title">Security &<br>Trust</div>
+            </a>
+
+        </div>
+
+        <!-- Frequently Asked Questions Component Stack -->
+        <h3 class="faq-section-title">Frequently Asked Questions</h3>
+        
+        <div class="faq-accordion-stack">
+            
+            <div class="faq-row-item" onclick="alert('Accordion Toggled: ShambaChain cross-verifies QR hash tracking across independent storage validator nodes.')">
+                <span class="faq-question-txt">How does ShambaChain verification work?</span>
+                <span class="faq-dropdown-chevron">∨</span>
+            </div>
+
+            <div class="faq-row-item" onclick="alert('Accordion Toggled: Click the central Scan tab button on your home dashboard to launch your device viewfinder camera.')">
+                <span class="faq-question-txt">How do I scan a product?</span>
+                <span class="faq-dropdown-chevron">∨</span>
+            </div>
+
+            <div class="faq-row-item" onclick="alert('Accordion Toggled: A trust rating scored automatically relative to on-chain compliance history and certification checks.')">
+                <span class="faq-question-txt">What is a Trust Score?</span>
+                <span class="faq-dropdown-chevron">∨</span>
+            </div>
+
+            <div class="faq-row-item" onclick="alert('Accordion Toggled: Log in to your Farmer Profile workspace portal and utilize the Record New Batch entry submission card layout.')">
+                <span class="faq-question-txt">How to record a new batch?</span>
+                <span class="faq-dropdown-chevron">∨</span>
+            </div>
+
+
+        <!-- UPDATE: Locate your 'faq-accordion-stack' closing tag and drop this code directly under it -->
+        
+        </div> <!-- Closes .faq-accordion-stack -->
+
+        <!-- Premium Gradient Support Banner Card Component -->
+        <div class="support-banner-card">
+            <h4>Still have questions?</h4>
+            <p>Our support team is available 24/7 to assist with your supply chain queries.</p>
+            <a href="mailto:support@shambachain.com" class="btn-contact-support">
+                <span>🎧</span> Contact Support
+            </a>
+        </div>
+
+        <!-- Sticky Persistent Profile Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            
+            <!-- Tab 1: Trace -->
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📍</span>
+                <span>Trace</span>
+            </a>
+
+            <!-- Tab 2: History -->
+            <a href="#" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+
+            <!-- Tab 3: Ledger -->
+            <a href="#" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+
+            <!-- Tab 4: Profile (Active Pill Highlight layout setup configuration) -->
+            <a href="settings.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">👤</div>
+                <span>Profile</span>
+            </a>
+
+        </div>
+
+    </div> <!-- Closes parent mobile .phone-container layout frame element wrapper -->
+
+</body>
+</html>
