@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Lizlent Wasonga</title>
-    <link rel="stylesheet" href="../styles/farmer-profile.css">
+    <title>ShambaChain - Producer Biography</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/farmer-profile.css?v=3">
 </head>
 <body>
 
@@ -12,149 +13,139 @@
         
         <!-- Global Top App Navigation Row Bar -->
         <div class="top-app-bar">
-            <button class="menu-icon">☰</button>
-            <div class="app-bar-title">ShambaChain</div>
-            <button class="profile-shortcut">👤</button>
+            <button class="menu-icon" onclick="window.location.href='farmer-portal.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="profile-shortcut" onclick="window.location.href='settings.html'">⚙️</button>
         </div>
 
-        <!-- Producer Header Avatar Branding Section Block -->
-        <div class="profile-hero-center">
+        <!-- RESPONSIVE LAYOUT GRID WORKSPACE HUB SPLITTER -->
+        <div class="profile-grid-layout-hub">
             
-            <div class="avatar-badge-wrapper">
-                <!-- Using an empty structural icon vector to mirror the un-uploaded profile circle look -->
-                <div class="large-avatar-placeholder">👤</div>
-                <div class="verified-floating-check">✓</div>
-            </div>
-
-            <h1 class="producer-name-header">Lizlent Wasonga</h1>
-            
-            <div class="verified-capsule-tag">
-                <span style="font-size: 10px;">🛡️</span> Verified Producer
-            </div>
-
-            <div class="location-pin-lbl">
-                📍 Green Valley Farms
-            </div>
-
-        </div>
-
-        <!-- Impact Subsections Block Header Area -->
-        <div class="section-icon-title">
-            <span>📊</span> Impact & Stats
-        </div>
-
-        <!-- Vertically Stacked Analytics Scoreboards List Stack Container -->
-        <div class="stats-cards-stack">
-            
-            <!-- Box 1: Total Batches Registered Block -->
-            <div class="analytics-block-card">
-                <div class="metric-card-lbl-txt">Total Batches</div>
-                <div class="metric-card-val-num">24</div>
-                <div class="metric-card-trend-lbl">
-                    <span>📈</span> +2 this month
-                </div>
-            </div>
-
-            <!-- Box 2: Consumers Reached Left-Stroked Accent Block -->
-            <div class="analytics-block-card left-accented">
-                <div class="metric-card-lbl-txt">Consumers Reached</div>
-                <div class="metric-card-val-num">1.2k</div>
-                <div class="metric-card-trend-lbl" style="color: #115e59;">
-                    <span>🌍</span> Global Reach
-                </div>
-            </div>
-
-            <!-- Box 3: Cryptographic Trust Scoring Percentage Block -->
-            <div class="analytics-block-card">
-                <div class="metric-card-lbl-txt">Trust Score</div>
-                <div class="metric-card-val-num">98%</div>
-                <div class="metric-card-trend-lbl" style="color: #115e59;">
-                    <span>★</span> Top Tier
-                </div>
-            </div>
-
-        </div>
-
-        <div class="activity-section-headline-bar">
-            <h3><span>⏳</span> Recent Activity</h3>
-            <a href="#" class="view-all-link">View All</a>
-        </div>
-
-        <!-- Audit Activity Feed Stack Card Container Box -->
-        <div class="activity-feed-card-box">
-            
-            <!-- Row Log 1: New Batch Recorded -->
-            <a href="details.html" class="activity-feed-row">
-                <div class="activity-left-side">
-                    <div class="activity-square-badge">🔳</div>
-                    <div class="activity-text-block">
-                        <h4 class="activity-row-headline">New batch #88219 recorded</h4>
-                        <p class="activity-row-para-desc">Harvest of organic kale successfully logged on-chain.</p>
-                        <span class="activity-row-time-lbl">2 hours ago</span>
+            <!-- COLUMN 1 DETACH WORKSPACE: Producer avatar info card and impact stack summary blocks -->
+            <div>
+                <div class="profile-hero-center">
+                    <div class="avatar-badge-wrapper">
+                        <div class="large-avatar-placeholder">👤</div>
+                        <div class="verified-floating-check">✓</div>
                     </div>
-                </div>
-                <span class="activity-chevron-arrow">&gt;</span>
-            </a>
 
-            <!-- Row Log 2: Certification Renewed -->
-            <a href="#" class="activity-feed-row">
-                <div class="activity-left-side">
-                    <div class="activity-square-badge">🛡️</div>
-                    <div class="activity-text-block">
-                        <h4 class="activity-row-headline">Certification renewed</h4>
-                        <p class="activity-row-para-desc">Global Organic Standards certificate updated for 2026.</p>
-                        <span class="activity-row-time-lbl">Yesterday</span>
+                    <h1 class="producer-name-header" id="display-farmer-name"></h1>
+                    
+                    <div class="verified-capsule-tag">
+                        <span style="font-size: 10px;">🛡️</span> <span id="display-badge-txt"></span>
                     </div>
-                </div>
-                <span class="activity-chevron-arrow">&gt;</span>
-            </a>
 
-            <!-- Row Log 3: Milestone Achievement -->
-            <a href="#" class="activity-feed-row">
-                <div class="activity-left-side">
-                    <div class="activity-square-badge">👥</div>
-                    <div class="activity-text-block">
-                        <h4 class="activity-row-headline">Milestone: 1,000 Consumers</h4>
-                        <p class="activity-row-para-desc">Your traceability data reached a new engagement milestone.</p>
-                        <span class="activity-row-time-lbl">3 days ago</span>
-                    </div>
+                    <div class="location-pin-lbl" id="display-location-txt"></div>
                 </div>
-                <span class="activity-chevron-arrow">&gt;</span>
-            </a>
 
-        </div>
+                <div class="section-icon-title">
+                    <span>📊</span> Impact & Stats
+                </div>
+
+                <!-- Vertically/Horizontally Stacking Analytics scorecards blocks tracker -->
+                <div class="stats-cards-stack" id="stats-cards-container"></div>
+            </div>
+
+            <!-- COLUMN 2 DETACH WORKSPACE: On-Chain Audit Activity Log feed container box -->
+            <div>
+                <div class="activity-section-headline-bar">
+                    <h3><span>⏳</span> Recent Activity</h3>
+                    <a href="farmer-inventory.html" class="view-all-link" id="display-history-link-txt"></a>
+                </div>
+
+                <!-- White Audit Activity List container box -->
+                <div class="activity-feed-card-box" id="activity-rows-container"></div>
+            </div>
+
+        </div> <!-- Closes .profile-grid-layout-hub grid layout wrapper -->
 
         <!-- Sticky Persistent Profile Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
-            
-            <!-- Tab 1: Trace -->
             <a href="farmer-portal.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">🔳</span>
                 <span>Trace</span>
             </a>
-
-            <!-- Tab 2: Impact -->
-            <a href="#" class="dock-tab-link">
+            <a href="farmer-inventory.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">📊</span>
                 <span>Impact</span>
             </a>
-
-            <!-- Tab 3: Profile (Active Pill Highlight layout setup configuration) -->
             <a href="farmer-profile.html" class="dock-tab-link active-pill-state">
                 <div class="pill-overlay-badge">👤</div>
                 <span>Profile</span>
             </a>
-
-            <!-- Tab 4: Settings -->
-            <a href="#" class="dock-tab-link">
+            <a href="settings.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">⚙️</span>
                 <span>Settings</span>
             </a>
-
         </div>
 
     </div>
 
+    <!-- CLEAN DECOUPLED DATA STRUCTURING PROCESSING SCRIPT BLOCK -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD DICTIONARIES TABLES ---
+        const profileConfig = {
+            appName: "ShambaChain",
+            farmerName: "Lizlent Wasonga",
+            badgeLabel: "Verified Producer",
+            locationLabel: "📍 Green Valley Farms",
+            historyLinkText: "View All History"
+        };
+
+        const analyticsCardsPayload = [
+            { title: "Total Batches", value: "24", trend: "📈 +2 this month", isLeftAccented: false },
+            { title: "Consumers Reached", value: "1.2k", trend: "🌍 Global Reach", isLeftAccented: true },
+            { title: "Trust Score", value: "98%", trend: "★ Top Tier", isLeftAccented: false }
+        ];
+
+        const activitiesPayload = [
+            { title: "New batch #88219 recorded", desc: "Harvest of organic avocado successfully logged on-chain.", time: "2 hours ago", icon: "🔳", targetUrl: "details.html" },
+            { title: "Certification renewed", desc: "Global Organic Standards certificate updated for 2026.", time: "Yesterday", icon: "🛡️", targetUrl: "#" },
+            { title: "Milestone: 1,000 Consumers", desc: "Your traceability data reached a new engagement milestone.", time: "3 days ago", icon: "👥", targetUrl: "#" }
+        ];
+
+        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign profile summary labels out of structural variables pointers
+            document.getElementById('app-title-txt').innerText = profileConfig.appName;
+            document.getElementById('display-farmer-name').innerText = profileConfig.farmerName;
+            document.getElementById('display-badge-txt').innerText = profileConfig.badgeLabel;
+            document.getElementById('display-location-txt').innerText = profileConfig.locationLabel;
+            document.getElementById('display-history-link-txt').innerText = profileConfig.historyLinkText;
+
+            // Generate impact statistics card metrics modules loop
+            const statsContainer = document.getElementById('stats-cards-container');
+            statsContainer.innerHTML = '';
+            analyticsCardsPayload.forEach(card => {
+                let accentStyleClass = card.isLeftAccented ? "left-accented" : "";
+                statsContainer.innerHTML += `
+                    <div class="analytics-block-card ${accentStyleClass}">
+                        <div class="metric-card-lbl-txt">${card.title}</div>
+                        <div class="metric-card-val-num">${card.value}</div>
+                        <div class="metric-card-trend-lbl">${card.trend}</div>
+                    </div>
+                `;
+            });
+
+            // Generate chronological activity feed logs timeline grid row items loop
+            const activityContainer = document.getElementById('activity-rows-container');
+            activityContainer.innerHTML = '';
+            activitiesPayload.forEach(row => {
+                activityContainer.innerHTML += `
+                    <a href="${row.targetUrl}" class="activity-feed-row">
+                        <div class="activity-left-side">
+                            <div class="activity-square-badge">${row.icon}</div>
+                            <div class="activity-text-block">
+                                <h4 class="activity-row-headline">${row.title}</h4>
+                                <p class="activity-row-para-desc">${row.desc}</p>
+                                <span class="activity-row-time-lbl">${row.time}</span>
+                            </div>
+                        </div>
+                        <span class="activity-chevron-arrow">&gt;</span>
+                    </a>
+                `;
+            });
+        });
+    </script>
 </body>
 </html>
-

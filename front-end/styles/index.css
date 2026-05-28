@@ -1,16 +1,14 @@
-/* Core Design Variables matched to UI */
+/* --- SHAMBACHAIN RESPONSIVE GLOBAL DESIGN SYSTEM --- */
 :root {
-    --primary-dark: #022c22;
-    --accent-mint: #22c55e;
-    --bg-light-mint: #e8faf0;
-    --bg-dark-mint: #115e59;
-    --bg-gradient: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
-    --text-dark: #0f172a;
-    --text-muted: #475569;
-    --border-color: #cbd5e1;
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-mint: #22c55e;      /* Mint Green Highlight Accent */
+    --bg-light-mint: #e8faf0;    /* Ultra-light Matte Mint background */
+    --text-dark: #0f172a;        /* High-contrast Charcoal text */
+    --text-muted: #475569;       /* Subtext Muted Slate Gray */
+    --border-color: #cbd5e1;     /* Interactive input element board outlines */
+    --max-width-desktop: 1200px; /* Standard wide screen center content constraints */
 }
 
-/* Global Reset */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -19,93 +17,103 @@
 }
 
 body {
-    background: #f1f5f9;
+    background: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
+    align-items: flex-start; /* Flows down organically from top */
+    padding: 24px;
 }
 
-/* Force strict width caps so it stays a mobile layout on any screen size */
+/* UNIVERSAL CONTAINER SYSTEM */
+/* Fills out the entire workspace width naturally on any device screen */
 .phone-container {
-    background: var(--bg-gradient);
     width: 100%;
-    max-width: 412px;      /* Standard mobile screen maximum width */
-    min-width: 320px;      /* Prevents breaking on tiny devices */
-    min-height: 732px;
-    border-radius: 32px;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
-    padding: 24px;
+    max-width: var(--max-width-desktop); /* Caps layout on giant screens to keep it elegant */
+    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    position: relative;
-    border: 8px solid #ffffff; 
-    box-sizing: border-box; /* Ensures padding doesn't stretch the width */
+    min-height: calc(100vh - 48px);
 }
 
-/* Top App Branding Navigation */
+/* TOP BRANDING NAVIGATION HEADER */
 .nav-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 48px;
+    margin-bottom: 40px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(2, 44, 34, 0.05);
 }
 
 .logo-block {
     display: flex;
     align-items: center;
-    gap: 8px;
-    font-weight: 700;
-    font-size: 18px;
+    gap: 10px;
+    font-weight: 800;
+    font-size: 22px;
     color: var(--primary-dark);
 }
 
 .help-link {
     color: var(--text-muted);
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 500;
+    font-size: 15px;
+    font-weight: 600;
+    transition: color 0.15s ease;
 }
 
-/* Headers */
-.main-title {
-    font-size: 26px;
-    font-weight: 800;
+.help-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ONBOARDING INTRO WRAPPER BLOCK */
+.intro-summary-block {
     text-align: center;
+    margin-bottom: 32px;
+}
+
+.main-title {
+    font-size: 32px;
+    font-weight: 800;
     color: var(--primary-dark);
     margin-bottom: 12px;
+    letter-spacing: -0.5px;
 }
 
 .main-subtitle {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--text-muted);
-    text-align: center;
-    line-height: 1.5;
-    padding: 0 16px;
-    margin-bottom: 36px;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-/* Force the form card to adapt strictly to the parent phone viewport width */
+/* INTERACTIVE REGISTRATION PANEL CARD SKELETON */
 .registration-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
-    border-radius: 20px;
-    padding: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
-    width: 100%;           /* Fill out phone width perfectly */
-    box-sizing: border-box; 
+    border-radius: 24px;
+    padding: 32px;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.03);
+    width: 100%;
+    max-width: 800px; /* Keeps the panel box centered and balanced on wide viewports */
+    margin: 0 auto;
 }
 
-/* Two-Step Progress Bar Indicator */
+/* PROGRESS STEP TRACKER STYLES */
 .step-indicator {
     display: flex;
-    gap: 8px;
+    gap: 12px;
     margin-bottom: 28px;
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .indicator-bar {
-    height: 5px;
+    height: 6px;
     flex: 1;
     background: #e2e8f0;
     border-radius: 10px;
@@ -116,44 +124,50 @@ body {
 }
 
 .prompt-text {
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 18px;
+    font-weight: 800;
     color: var(--text-dark);
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 24px;
 }
 
-/* Role Selector Options Buttons */
+/* DYNAMIC TARGET BOX: THE GRID SYSTEM CHANGE */
+/* By default on mobile, stacked single file. On desktop, switches to twin responsive columns! */
+#dynamic-roles-box {
+    display: grid;
+    grid-template-columns: 1fr; /* Mobile default layout stacking */
+    gap: 16px;
+}
+
+/* CARD INTERFACE PANEL ITEM SETTINGS */
 .role-btn {
     background: #ffffff;
     border: 1.5px solid #e2e8f0;
-    border-radius: 14px;
-    padding: 16px;
-    width: 100%;
-    margin-bottom: 14px;
+    border-radius: 16px;
+    padding: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
     text-align: left;
-    transition: all 0.2s ease;
-    text-decoration: none;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .role-btn:hover {
     border-color: var(--primary-dark);
-    transform: translateY(-1px);
+    background-color: #fcfdfe;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(2, 44, 34, 0.04);
 }
 
-/* Specific Role Icon Circles */
 .icon-circle {
-    width: 44px;
-    height: 44px;
+    width: 52px;
+    height: 52px;
     border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 18px;
-    margin-right: 14px;
+    font-size: 22px;
+    margin-right: 18px;
     flex-shrink: 0;
 }
 
@@ -167,45 +181,91 @@ body {
     color: #ffffff;
 }
 
+.icon-transporter {
+    background-color: #fef3c7;
+    color: #b45309;
+}
+
 .role-body {
     flex: 1;
 }
 
 .role-title {
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 3px;
+    margin-bottom: 4px;
 }
 
 .role-description {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text-muted);
-    line-height: 1.4;
+    line-height: 1.5;
 }
 
 .role-arrow {
     color: #94a3b8;
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
-    padding-left: 8px;
+    padding-left: 12px;
 }
 
-/* Footer Switching Prompts */
+/* BASELINE FOOTER NAVIGATION ALIGNMENTS */
 .footer-prompt {
     text-align: center;
-    font-size: 14px;
+    font-size: 15px;
     color: var(--text-muted);
-    margin-top: auto;
-    padding-bottom: 12px;
+    margin-top: auto; /* Pushes to baseline if screen spaces permit */
+    padding-top: 40px;
+    padding-bottom: 16px;
+    width: 100%;
 }
 
 .footer-prompt a {
-    color: var(--text-dark);
+    color: var(--primary-dark);
     font-weight: 700;
     text-decoration: none;
+    margin-left: 4px;
 }
 
 .footer-prompt a:hover {
     text-decoration: underline;
+}
+
+/* --- THE RESPONSIVE DESKTOP SCALE MEDIATION GRID --- */
+/* Trigger layout alterations immediately if viewed on screens wider than tablets */
+@media (min-width: 768px) {
+    .intro-summary-block {
+        margin-top: 40px;
+        margin-bottom: 48px;
+    }
+    
+    .main-title {
+        font-size: 42px; /* Embolden headline impact on desktop windows */
+    }
+    
+    /* TRANSFORM: Split the cards side-by-side cleanly into 2 columns on wide screens */
+    #dynamic-roles-box {
+        grid-template-columns: 1fr 1fr 1fr; 
+        gap: 20px;
+    }
+    
+    .role-btn {
+        padding: 28px; /* Expand target breathing room on laptop screens */
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .icon-circle {
+        margin-right: 0;
+        margin-bottom: 16px;
+        width: 64px;
+        height: 64px;
+        font-size: 26px;
+    }
+    
+    .role-arrow {
+        display: none; /* Strip out the narrow mobile chevron symbol arrow on desktop grids */
+    }
 }

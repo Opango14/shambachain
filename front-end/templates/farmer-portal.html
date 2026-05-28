@@ -3,149 +3,148 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Farmer Portal</title>
-    <link rel="stylesheet" href="../styles/farmer-portal.css">
+    <title>ShambaChain - Producer Portal</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/farmer-portal.css?v=3">
 </head>
 <body>
 
     <div class="phone-container">
+
+        <div class="drawer-overlay-tint" id="farmerOverlay" onclick="toggleFarmerNavigationDrawer(false)"></div>
         
-        <!-- Top App Bar Navigation Row -->
+        <div class="navigation-drawer-pane" id="farmerNavDrawer">
+            <div class="drawer-header">
+                <h4>🚜 Farmer Menu</h4>
+                <button class="btn-close-drawer" onclick="toggleFarmerNavigationDrawer(false)">✕</button>
+            </div>
+            
+            <!-- Cross-app linkages allowing seamless switching between consumer/producer view scopes -->
+            <div class="drawer-links-stack">
+                <a href="farmer-portal.html" class="drawer-link-item">
+                    <span>🚜</span> Record Batch
+                </a>
+                <a href="farmer-profile.html" class="drawer-link-item">
+                    <span>👤</span> My Profile
+                </a>
+                <a href="settings.html" class="drawer-link-item">
+                    <span>⚙️</span> Farm Settings
+                </a>
+                <!-- CROSS-PORTAL ROUTE: Drops the farmer cleanly back into Consumer dashboard view mode -->
+                <a href="consumer-dashboard.html" class="drawer-link-item" style="border-top: 1px solid #e2e8f0; padding-top: 16px; margin-top: 20px;">
+                    <span>🔍</span> Switch to Consumer Mode
+                </a>
+                <a href="login.html" class="drawer-link-item" style="color: #b91c1c;">
+                    <span>🚪</span> Sign Out
+                </a>
+            </div>
+        </div>
+        
+        <!-- Top App Bar Navigation Row Layout -->
         <div class="top-app-bar">
-            <button class="menu-icon">☰</button>
-            <div class="app-bar-title">ShambaChain</div>
-            <button class="qr-shortcut">🔲</button>
+            <!-- FIXED: Now invokes the navigation drawer state engine instead of routing back out -->
+            <button class="menu-icon" onclick="toggleFarmerNavigationDrawer(true)">☰</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='farmer-profile.html'">👤</button>
         </div>
 
-        <!-- Portal Header Sub-Labels -->
-        <div class="portal-label-tag">Farmer Portal</div>
-        <h1 class="farm-main-title">Green Valley Farm</h1>
+        
+        <div class="portal-label-tag" id="display-portal-lbl"></div>
+        <h1 class="farm-main-title" id="display-farm-name"></h1>
         
         <div class="farm-meta-row">
             <div class="verified-producer-badge">
-                <span>✓</span> Verified Producer
+                <span>✓</span> <span id="display-badge-txt"></span>
             </div>
-            <span class="batch-id-text">Batch ID: 88219</span>
+            <span class="batch-id-text" id="display-batch-id-txt"></span>
         </div>
 
-        <!-- Main Batch Recording Form Container Card -->
-        <div class="form-card-container">
+        <!-- RESPONSIVE LAYOUT MATRIX WRAPPER GRID (Splits on large screen viewports) -->
+        <div class="portal-grid-layout-hub">
             
-            <div class="form-card-header">
-                <span>⊕</span> Record New Batch
-            </div>
+            <!-- COLUMN 1 WORKSPACE: Batch Registration Form and Satellite coordinates box -->
+            <div>
+                <div class="form-card-container">
+                    <div class="form-card-header">
+                        <span>⊕</span> <span id="display-form-header"></span>
+                    </div>
 
-            <form onsubmit="handleBatchRegistration(event)">
-                
-                <!-- Input Box 1: Product Type Selector Dropdown -->
-                <div class="form-group-block">
-                    <label for="product-type">Product Type</label>
-                    <div class="input-icon-wrapper">
-                        <span class="input-decor-icon">📦</span>
-                        <select id="product-type" class="portal-form-input" required>
-                            <option value="pishori-rice" selected>Pishori rice</option>
-                            <option value="kinangop-potatoes">Kinangop Potatoes</option>
-                            <option value="lake-tilapia">Lake Tilapia</option>
-                            <option value="kitale-maize">Kitale Maize</option>
-                        </select>
+                    <form onsubmit="handleBatchRegistration(event)">
+                        
+                        <div class="form-group-block">
+                            <label for="product-type" id="lbl-prod-type"></label>
+                            <div class="input-icon-wrapper">
+                                <span class="input-decor-icon">📦</span>
+                                <select id="product-type" class="portal-form-input" required></select>
+                            </div>
+                        </div>
+
+                        <div class="form-group-block">
+                            <label for="harvest-date" id="lbl-harv-date"></label>
+                            <div class="input-icon-wrapper">
+                                <span class="input-decor-icon">📅</span>
+                                <input type="text" id="harvest-date" class="portal-form-input" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group-block">
+                            <label for="field-location" id="lbl-field-loc"></label>
+                            <div class="input-icon-wrapper">
+                                <span class="input-decor-icon">📍</span>
+                                <input type="text" id="field-location" class="portal-form-input" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-generate-qr" id="btn-submit-txt"></button>
+                        <p class="action-helper-caption" id="display-helper-caption"></p>
+
+                    </form>
+                </div>
+
+                <!-- Aerial Coordinates Field Preview Card Frame Layout -->
+                <div class="field-preview-card">
+                    <div class="coordinates-overlay-box">
+                        <div class="coord-title-lbl" id="display-coord-lbl"></div>
+                        <div class="coord-numeric-values" id="display-coord-vals"></div>
                     </div>
                 </div>
+            </div>
 
-                <!-- Input Box 2: Harvest Date Picker -->
-                <div class="form-group-block">
-                    <label for="harvest-date">Harvest Date</label>
-                    <div class="input-icon-wrapper">
-                        <span class="input-decor-icon">📅</span>
-                        <input type="text" id="harvest-date" class="portal-form-input" value="5/24/2026" required>
+            <!-- COLUMN 2 WORKSPACE: Live Analytics Scoreboard & Historical Ledger Table -->
+            <div>
+                <!-- Live Harvest Analytics Dashboard Banner Card -->
+                <div class="live-harvest-analytics-card">
+                    <div class="analytics-header-row">
+                        <span class="shield-check-icon">🛡️</span>
+                        <span class="live-status-pill" id="display-live-status-lbl"></span>
                     </div>
+                    <div class="analytics-massive-value" id="display-analytics-val"></div>
+                    <div class="analytics-subtext-lbl" id="display-analytics-lbl"></div>
                 </div>
 
-                <!-- Input Box 3: Geographical Location Text Entry -->
-                <div class="form-group-block">
-                    <label for="field-location">Location / Field Block</label>
-                    <div class="input-icon-wrapper">
-                        <span class="input-decor-icon">📍</span>
-                        <input type="text" id="field-location" class="portal-form-input" placeholder="e.g. Ahero, Kisumu" required>
+                <!-- Active Supply Chain Ledger Table Card Component -->
+                <div class="batch-ledger-table-card">
+                    <div class="table-header-control-row">
+                        <div class="table-main-title">
+                            <span>⛓️</span> <div>Active Supply<br>Chain Batches</div>
+                        </div>
+                        <a href="farmer-inventory.html" class="table-action-link-btn" id="display-history-link-txt"></a>
                     </div>
-                </div>
 
-                <!-- Print QR Activation Action Button -->
-                <button type="submit" class="btn-generate-qr">
-                    <span>🔳</span> Generate & Print QR Code
-                </button>
+                    <!-- Table Column Descriptions Strip -->
+                    <div class="ledger-columns-label-strip">
+                        <span class="col-header-lbl-txt">Batch ID</span>
+                        <span class="col-header-lbl-txt">Product</span>
+                        <span class="col-header-lbl-txt">Last Status</span>
+                        <span class="col-header-lbl-txt" style="text-align: right;">Verific</span>
+                    </div>
 
-                <p class="action-helper-caption">
-                    This action will create a unique identifier for this batch.
-                </p>
-
-            </form>
-
-        </div>
-
-        <!-- Lower Aerial Coordinates Field Preview Card Frame Layout -->
-        <div class="field-preview-card">
-            <div class="coordinates-overlay-box">
-                <div class="coord-title-lbl">Origin Coordinates</div>
-                <div class="coord-numeric-values">4.7110° N, 74.0721° W</div>
-            </div>
-        </div>
-
-        <!-- Live Harvest Analytics Dashboard Banner Card Component -->
-        <div class="live-harvest-analytics-card">
-            <div class="analytics-header-row">
-                <span class="shield-check-icon">🛡️</span>
-                <span class="live-status-pill">LIVE</span>
-            </div>
-            <div class="analytics-massive-value">12.4 Tons</div>
-            <div class="analytics-subtext-lbl">Total Tracked Harvest (Q4)</div>
-        </div>
-
-        <!-- Active Supply Chain Ledger Table Card Component -->
-        <div class="batch-ledger-table-card">
-            <div class="table-header-control-row">
-                <div class="table-main-title">
-                    <span>⛓️</span> Active Supply<br>Chain Batches
-                </div>
-                <a href="#" class="table-action-link-btn">
-                    View All History <span>→</span>
-                </a>
-            </div>
-
-            <div class="ledger-columns-label-strip">
-                <span class="col-header-lbl-txt">Batch ID</span>
-                <span class="col-header-lbl-txt">Product</span>
-                <span class="col-header-lbl-txt">Last Status</span>
-                <span class="col-header-lbl-txt" style="text-align: right;">Verific</span>
-            </div>
-
-            <div class="ledger-data-row">
-                <div class="cell-bold-id">#GVF-88210</div>
-                <div class="cell-product-meta-block">
-                    <span class="crop-name-txt">Arabica Coffee</span>
-                    <span class="crop-sub-weights-lbl">2,400kg · Oct 12</span>
-                </div>
-                <div class="status-dot-indicator-cell">
-                    <span class="dot-marker dot-green"></span> In Transit (Port)
-                </div>
-                <div style="text-align: right;">
-                    <div class="onchain-capsule-badge">✓ ON-C</div>
+                    <!-- Dynamic target element for injection loop -->
+                    <div id="table-rows-container"></div>
                 </div>
             </div>
 
-            <div class="ledger-data-row">
-                <div class="cell-bold-id">#GVF-88194</div>
-                <div class="cell-product-meta-block">
-                    <span class="crop-name-txt">Cacao Beans</span>
-                    <span class="crop-sub-weights-lbl">1,200kg · Oct 05</span>
-                </div>
-                <div class="status-dot-indicator-cell">
-                    <span class="dot-marker dot-blue"></span> Processing Facility
-                </div>
-                <div style="text-align: right;">
-                    <div class="onchain-capsule-badge">✓ ON-C</div>
-                </div>
-            </div>
-        </div> 
+        </div> <!-- Closes .portal-grid-layout-hub wrapper grid -->
 
         <!-- Sticky Persistent Tray Navigation Bar Dock Layout -->
         <div class="app-bottom-dock">
@@ -153,28 +152,120 @@
                 <div class="pill-overlay-badge">📍</div>
                 <span>Trace</span>
             </a>
-            <a href="#" class="dock-tab-link">
+            <a href="farmer-profile.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">🕒</span>
                 <span>History</span>
             </a>
-            <a href="#" class="dock-tab-link">
+            <a href="farmer-inventory.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">📓</span>
                 <span>Ledger</span>
             </a>
-            <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
-                <span>Profile</span>
+            <a href="settings.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">⚙️</span>
+                <span>Settings</span>
             </a>
         </div>
 
     </div>
 
+    <!-- ZERO-HARDCODING ENGINE CONTROL SCRIPT BLOCK -->
     <script>
+
+                // --- SLIDE-OUT PANEL WINDOW INTERACTION CONTROLLER ---
+        function toggleFarmerNavigationDrawer(shouldOpenDrawer) {
+            const backgroundOverlay = document.getElementById('farmerOverlay');
+            const movingDrawerPane = document.getElementById('farmerNavDrawer');
+            
+            if (shouldOpenDrawer) {
+                backgroundOverlay.classList.add('panel-active-state');
+                movingDrawerPane.classList.add('panel-active-state');
+            } else {
+                backgroundOverlay.classList.remove('panel-active-state');
+                movingDrawerPane.classList.remove('panel-active-state');
+            }
+        }
+
+        // --- BACKEND API OBJECT PAYLOAD TABLES ---
+        const farmConfig = {
+            appName: "ShambaChain",
+            portalLabel: "Farmer Portal",
+            farmName: "Green Valley Farm",
+            badgeText: "Verified Producer",
+            batchNumberText: "Batch ID: 88219",
+            formTitle: "Record New Batch",
+            lblProductType: "Product Type",
+            lblHarvestDate: "Harvest Date",
+            lblLocation: "Location / Field Block",
+            defaultHarvestDate: "5/24/2026",
+            defaultLocationPlaceholder: "e.g. Ahero, Kisumu",
+            btnSubmitText: "🔳 Generate & Print QR Code",
+            helperCaptionText: "This action will create a unique identifier for this batch.",
+            coordLabel: "Origin Coordinates",
+            coordValues: "4.7110° N, 74.0721° W",
+            liveLabel: "LIVE",
+            analyticsValue: "12.4 Tons",
+            analyticsLabel: "Total Tracked Harvest (Q4)",
+            historyLinkText: "View Inventory →"
+        };
+
+        const dropdownOptions = [
+            { value: "pishori-rice", label: "Pishori Rice" },
+            { value: "kinangop-potatoes", label: "Kinangop Potatoes" },
+            { value: "lake-tilapia", label: "Lake Tilapia" },
+            { value: "kitale-maize", label: "Kitale Maize" }
+        ];
+
+        const activeBatchesPayload = [
+            { id: "#GVF-88210", name: "Arabica Coffee", weight: "2,400kg · Oct 12", status: "In Transit", dotClass: "dot-green", verifiedBadge: "✓ ON-C" },
+            { id: "#GVF-88194", name: "Cacao Beans", weight: "1,200kg · Oct 05", status: "Processing", dotClass: "dot-blue", verifiedBadge: "✓ ON-C" }
+        ];
+
+                    // --- CORE INTERFACE INJECTION HANDLING ENGINE CONT. ---
+            document.getElementById('field-location').placeholder = farmConfig.defaultLocationPlaceholder;
+            document.getElementById('btn-submit-txt').innerText = farmConfig.btnSubmitText;
+            document.getElementById('display-helper-caption').innerText = farmConfig.helperCaptionText;
+            document.getElementById('display-coord-lbl').innerText = farmConfig.coordLabel;
+            document.getElementById('display-coord-vals').innerText = farmConfig.coordValues;
+            document.getElementById('display-live-status-lbl').innerText = farmConfig.liveLabel;
+            document.getElementById('display-analytics-val').innerText = farmConfig.analyticsValue;
+            document.getElementById('display-analytics-lbl').innerText = farmConfig.analyticsLabel;
+            document.getElementById('display-history-link-txt').innerText = farmConfig.historyLinkText;
+
+            // Generate dropdown selector option elements loop
+            const dropdownElement = document.getElementById('product-type');
+            dropdownElement.innerHTML = '';
+            dropdownOptions.forEach(opt => {
+                dropdownElement.innerHTML += `<option value="${opt.value}">${opt.label}</option>`;
+            });
+
+            // Generate active supply chain rows layout inside matrix box
+            const rowsContainer = document.getElementById('table-rows-container');
+            rowsContainer.innerHTML = '';
+            activeBatchesPayload.forEach(row => {
+                rowsContainer.innerHTML += `
+                    <div class="ledger-data-row" onclick="window.location.href='farmer-inventory.html'" style="cursor: pointer;">
+                        <div class="cell-bold-id">${row.id}</div>
+                        <div class="cell-product-meta-block">
+                            <span class="crop-name-txt">${row.name}</span>
+                            <span class="crop-sub-weights-lbl">${row.weight}</span>
+                        </div>
+                        <div class="status-dot-indicator-cell">
+                            <span class="dot-marker ${row.dotClass}"></span> ${row.status}
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="onchain-capsule-badge">${row.verifiedBadge}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+        // --- SUBMISSION LOGS REDIRECTION HANDLER ---
         function handleBatchRegistration(e) {
             e.preventDefault();
-            const cropSelected = document.getElementById('product-type').value;
-            alert(`Blockchain Transaction Triggered!\nGenerating QR cryptograph identifier for: ${cropSelected.replace('-', ' ').toUpperCase()}`);
+            const chosenCrop = document.getElementById('product-type').value;
+            alert(`On-Chain Smart Contract Invoked!\nProvisioning unique tracking identity hash for: ${chosenCrop.toUpperCase().replace('-', ' ')}`);
+            window.location.href = 'register-batch-detail.html'; 
         }
-    </script>
-</body>
-</html>
+    </script> <!-- Safely closes the rendering engine block -->
+</body> <!-- Safely closes the body context wrapper -->
+</html> <!-- Complete end of file -->

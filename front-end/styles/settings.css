@@ -1,10 +1,12 @@
+/* --- SETTINGS DESKTOP RESPONSIVE DESIGN SYSTEM --- */
 :root {
-    --primary-dark: #022c22;
-    --accent-mint: #22c55e;
-    --text-dark: #0f172a;
-    --text-muted: #475569;
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-mint: #22c55e;      /* Mint Green Accent */
+    --text-dark: #0f172a;        /* Dark Charcoal Text */
+    --text-muted: #475569;       /* Slate subtext */
     --border-color: #e2e8f0;
     --bg-card: #ffffff;
+    --max-width-desktop: 1200px;
 }
 
 * {
@@ -19,25 +21,22 @@ body {
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center;
-    padding: 20px;
+    align-items: flex-start;
+    padding: 24px 16px;
 }
 
-/* Fixed Mobile Container Layout Frame */
+/* Universal Workspace Fluid Canvas Wrapper Frame */
 .phone-container {
     background: #f8fafc;
     width: 100%;
-    max-width: 412px;
-    min-width: 320px;
-    min-height: 732px;
-    border-radius: 32px;
-    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    min-height: calc(100vh - 48px);
+    border-radius: 24px;
+    padding: 24px;
     position: relative;
-    border: 8px solid #ffffff;
-    overflow-y: auto;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+    overflow: hidden;
 }
 
 /* Global Top Navigation row layout bar */
@@ -46,7 +45,8 @@ body {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 24px;
-    padding: 4px 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .menu-icon, .profile-shortcut {
@@ -79,7 +79,20 @@ body {
     text-align: left;
 }
 
-/* Categorized Section Dividers */
+/* --- RESPONSIVE SETTINGS HUB GRID PANEL WRAPPER --- */
+.settings-grid-layout-hub {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+}
+
+/* Individual Option Box Segment Group Block */
+.settings-segment-block {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Categorized Sub-Section Dividers */
 .settings-category-lbl {
     font-size: 11px;
     font-weight: 800;
@@ -97,11 +110,10 @@ body {
     border: 1px solid var(--border-color);
     border-radius: 16px;
     overflow: hidden;
-    margin-bottom: 20px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
 }
 
-/* Row Action Links */
+/* Row Interactive Action Links */
 .settings-row-item {
     display: flex;
     align-items: center;
@@ -128,7 +140,7 @@ body {
 
 .settings-icon-marker {
     font-size: 18px;
-    color: #115e59;
+    color: #115e59; 
     display: flex;
     align-items: center;
     justify-content: center;
@@ -147,7 +159,7 @@ body {
     gap: 10px;
 }
 
-/* Green Wallet Connected Badge */
+/* Green Wallet Connected Badge Badge */
 .connected-pill-status {
     background-color: #dcfce7;
     color: #15803d;
@@ -163,13 +175,12 @@ body {
     font-weight: 700;
     font-size: 14px;
 }
-/* --- SIGN OUT & BOTTOM DOCK NAVIGATION REFINEMENTS --- */
 
 /* High-contrast explicit red outline pill button style */
 .btn-signout-outline {
     background-color: #ffffff;
-    border: 1.5px solid #b91c1c;
-    color: #b91c1c;
+    border: 1.5px solid #b91c1c;        
+    color: #b91c1c;                     
     border-radius: 12px;
     padding: 16px;
     width: 100%;
@@ -182,16 +193,16 @@ body {
     cursor: pointer;
     text-decoration: none;
     margin-top: 24px;
-    margin-bottom: 90px;
+    margin-bottom: 90px;                /* Room cushion space allowance above dock tray bar */
     box-shadow: 0 4px 12px rgba(185, 28, 28, 0.03);
     transition: all 0.2s ease;
 }
 
 .btn-signout-outline:hover {
-    background-color: #fef2f2;
+    background-color: #fef2f2;          
 }
 
-/* Global App Bottom Menu Bar Dock Layout */
+/* Global Sticky App Bottom Menu Bar Dock Layout */
 .app-bottom-dock {
     position: absolute;
     bottom: 0;
@@ -223,11 +234,11 @@ body {
 }
 
 .dock-tab-link.active-pill-state {
-    color: #022c22 !important;
+    color: #022c22 !important;          
 }
 
 .dock-tab-link.active-pill-state .pill-overlay-badge {
-    background-color: #bbf7d0 !important;
+    background-color: #bbf7d0 !important; 
     padding: 6px 20px;
     border-radius: 20px;
     display: flex;
@@ -237,8 +248,22 @@ body {
     transition: all 0.2s ease;
 }
 
-.dock-tab-link .unselected-icon-spacing {
+.unselected-icon-spacing {
     padding: 6px 0;
     font-size: 16px;
     display: inline-block;
+}
+
+/* --- THE DESKTOP LAYOUT MULTI-COLUMN MEDIA QUERY CHANGE --- */
+@media (min-width: 850px) {
+    .settings-grid-layout-hub {
+        grid-template-columns: 1fr 1fr; /* Splits menu cards into a balanced dual-column display matrix on wide desktop monitors */
+        gap: 24px;
+    }
+    
+    .btn-signout-outline {
+        max-width: 300px;              /* Caps size width of signout line on laptop monitors */
+        margin-top: 32px;
+        margin-bottom: 20px;
+    }
 }

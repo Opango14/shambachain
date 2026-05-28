@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Sign Up</title>
-    <link rel="stylesheet" href="../styles/signup.css">
+    <title>ShambaChain - Register Account</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/signup.css?v=2">
 </head>
 <body>
 
@@ -13,113 +14,172 @@
         <!-- Top App Branding Bar Area -->
         <div class="nav-header">
             <div class="logo-block">
-                <span>🚜</span> ShambaChain
+                <span id="brand-emoji"></span> 
+                <span id="brand-text"></span>
             </div>
-            <a href="#" class="help-link">Help</a>
+            <a href="help-center.html" class="help-link" id="nav-help-label"></a>
         </div>
 
-        <h1 class="main-title">Create your account</h1>
-        <p class="main-subtitle">Join the global network of transparent food supply chains.</p>
+        <!-- Form Onboarding Subtitles Row Header Group Container -->
+        <div class="intro-summary-block">
+            <h1 class="main-title" id="display-title"></h1>
+            <p class="main-subtitle" id="display-subtitle"></p>
+        </div>
 
-        <!-- White Interactive Registration Panel Card Container -->
+        <!-- White Interactive Form Surface Panel Container -->
         <div class="registration-card">
             
-            <!-- Two-Step Progress Bar Indicator (Step 2 Active) -->
+            <!-- Two-Step Progress Bar Indicator -->
             <div class="step-indicator">
                 <div class="indicator-bar active"></div>
                 <div class="indicator-bar active"></div>
             </div>
 
-            <!-- Role Selector Tabs -->
+            <!-- Role Tabs Toggle Selector Buttons Grid Row (UPDATED: Added Transporter Tab) -->
             <div class="toggle-container">
-                <button type="button" class="toggle-tab" id="tab-consumer" onclick="switchRole('consumer')">Consumer</button>
-                <button type="button" class="toggle-tab" id="tab-farmer" onclick="switchRole('farmer')">Farmer/Producer</button>
+                <button type="button" class="toggle-tab" id="tab-consumer" onclick="toggleActiveRoleState('consumer')"></button>
+                <button type="button" class="toggle-tab" id="tab-farmer" onclick="toggleActiveRoleState('farmer')"></button>
+                <button type="button" class="toggle-tab" id="tab-transporter" onclick="toggleActiveRoleState('transporter')"></button>
             </div>
 
-            <!-- Signup Form Elements -->
-            <form id="signupForm" onsubmit="executeRegistration(event)">
+            <!-- Entry Core Input Controls Form Element -->
+            <form id="signupForm" onsubmit="executeOnChainRegistration(event)">
+                
                 <div class="form-group">
-                    <label for="reg-username">Username</label>
+                    <label for="reg-username" id="lbl-user"></label>
                     <input type="text" id="reg-username" class="form-control" placeholder="e.g. jirani_farm" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="reg-email">Email Address</label>
+                    <label for="reg-email" id="lbl-email"></label>
                     <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="reg-password">Password</label>
+                    <label for="reg-password" id="lbl-pass"></label>
                     <div class="password-wrapper">
                         <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="togglePassVisibility('reg-password')">👁️</span>
+                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-password')">👁️</span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="reg-confirm">Confirm Password</label>
+                    <label for="reg-confirm" id="lbl-confirm"></label>
                     <div class="password-wrapper">
                         <input type="password" id="reg-confirm" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="togglePassVisibility('reg-confirm')">👁️</span>
+                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-confirm')">👁️</span>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Create Account</button>
+                <button type="submit" class="btn-submit" id="btn-submit-txt"></button>
             </form>
 
         </div>
 
-        <p class="footer-prompt">
-            Already have an account? <a href="login.html">Log In</a>
+        <!-- Baseline Redirection Footer Prompt -->
+        <p class="footer-prompt" id="display-footer-box">
+            <!-- Text layout elements generated cleanly by the runtime system script below -->
         </p>
 
     </div>
 
-    <!-- Dynamic JavaScript Routing Logic -->
+    <!-- DECOUPLED RUNTIME DATA HUB & VALIDATION ENGINE -->
     <script>
-        let currentRole = 'consumer';
+        // --- BACKEND API REPLICATED DATA DICTIONARIES ---
+        const pageSettings = {
+            name: "ShambaChain",
+            logo: "🚜",
+            helpText: "Help",
+            headline: "Create your account",
+            tagline: "Join the global network of transparent food supply chains.",
+            tabConsumerLabel: "Consumer Hub",
+            tabFarmerLabel: "Producer Hub",
+            tabTransporterLabel: "Logistics Hub", // Added label string
+            lblUsername: "Username",
+            lblEmail: "Email Address",
+            lblPassword: "Password",
+            lblConfirmPassword: "Confirm Password",
+            btnText: "Create Account",
+            footerPromptText: "Already have an account?",
+            footerLinkText: "Log In",
+            footerTargetUrl: "login.html"
+        };
 
-        // Read URL Parameters to see what the user picked on page 1
+        // Keeps track of runtime state selection parameters
+        let activeWorkspaceRole = 'consumer';
+
+        // --- CORE INTERFACE INJECTION ENGINE ---
         window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const selectedRole = urlParams.get('role');
-            if (selectedRole === 'farmer') {
-                switchRole('farmer');
+            // Mapping schema configurations across structural element targets
+            document.getElementById('brand-emoji').innerText = pageSettings.logo;
+            document.getElementById('brand-text').innerText = pageSettings.name;
+            document.getElementById('nav-help-label').innerText = pageSettings.helpText;
+            document.getElementById('display-title').innerText = pageSettings.headline;
+            document.getElementById('display-subtitle').innerText = pageSettings.tagline;
+            document.getElementById('tab-consumer').innerText = pageSettings.tabConsumerLabel;
+            document.getElementById('tab-farmer').innerText = pageSettings.tabFarmerLabel;
+            document.getElementById('tab-transporter').innerText = pageSettings.tabTransporterLabel;
+            document.getElementById('lbl-user').innerText = pageSettings.lblUsername;
+            document.getElementById('lbl-email').innerText = pageSettings.lblEmail;
+            document.getElementById('lbl-pass').innerText = pageSettings.lblPassword;
+            document.getElementById('lbl-confirm').innerText = pageSettings.lblConfirmPassword;
+            document.getElementById('btn-submit-txt').innerText = pageSettings.btnText;
+
+            // Generate footer layout structure nodes
+            const footerContainer = document.getElementById('display-footer-box');
+            footerContainer.innerHTML = `${pageSettings.footerPromptText} <a href="${pageSettings.footerTargetUrl}">${pageSettings.footerLinkText}</a>`;
+
+            // READ INITIAL CHOICE: Read state variables from homepage localStorage session storage safely
+            const cachedChoice = localStorage.getItem('selectedRole');
+            if (cachedChoice === 'farmer') {
+                toggleActiveRoleState('farmer');
+            } else if (cachedChoice === 'transporter') {
+                toggleActiveRoleState('transporter');
             } else {
-                switchRole('consumer');
+                toggleActiveRoleState('consumer');
             }
         });
 
-        // Toggle visual active state between Consumer / Farmer forms
-        function switchRole(role) {
-            currentRole = role;
+        // --- VISUAL CONTROL STATE TOGGLERS ---
+        function toggleActiveRoleState(targetRoleModeId) {
+            activeWorkspaceRole = targetRoleModeId;
+            
+            // Sync current configuration status to session variables memory trace cache
+            localStorage.setItem('selectedRole', targetRoleModeId);
+
+            // Fetch and flush style assignments across toggle pills
             document.getElementById('tab-consumer').classList.remove('active');
             document.getElementById('tab-farmer').classList.remove('active');
+            document.getElementById('tab-transporter').classList.remove('active');
 
-            if (role === 'consumer') {
+            if (targetRoleModeId === 'consumer') {
                 document.getElementById('tab-consumer').classList.add('active');
-            } else {
+            } else if (targetRoleModeId === 'farmer') {
                 document.getElementById('tab-farmer').classList.add('active');
-            }
-        }
-
-        // Show/hide password utility helper
-        function togglePassVisibility(fieldId) {
-            const field = document.getElementById(fieldId);
-            if (field.type === "password") {
-                field.type = "text";
             } else {
-                field.type = "password";
+                document.getElementById('tab-transporter').classList.add('active');
             }
         }
 
-        // Simulate form processing submission link out
-        function executeRegistration(e) {
+        // Show/hide password input mask tool
+        function togglePasswordInputMask(inputElementFieldId) {
+            const targetField = document.getElementById(inputElementFieldId);
+            targetField.type = (targetField.type === "password") ? "text" : "password";
+        }
+
+        // --- BACKEND PIPELINE SIMULATION TRIGGER ---
+        function executeOnChainRegistration(e) {
             e.preventDefault();
             
-            // Redirect based on the active role tab
-            if (currentRole === 'farmer') {
-                window.location.href = 'farmer-dashboard.html';
+            // Capture standard validation entries to memory spaces
+            const usernameInput = document.getElementById('reg-username').value;
+            localStorage.setItem('cachedUsername', usernameInput);
+
+            // Contextual dynamic routing: forwards users based on their active workspace configuration pill
+            if (activeWorkspaceRole === 'farmer') {
+                window.location.href = 'farmer-portal.html';
+            } else if (activeWorkspaceRole === 'transporter') {
+                window.location.href = 'transporter-hub.html'; // Points to newly identified logistics dashboard file
             } else {
                 window.location.href = 'consumer-dashboard.html';
             }

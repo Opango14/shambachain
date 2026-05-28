@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Log In</title>
-    <!-- Linking directly up one level out to our custom login css file -->
-    <link rel="stylesheet" href="../styles/login.css">
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/login.css?v=2">
 </head>
 <body>
 
@@ -14,65 +14,115 @@
         <!-- Top App Branding Bar Area -->
         <div class="nav-header">
             <div class="logo-block">
-                <span>🚜</span> ShambaChain
+                <span id="brand-emoji"></span> 
+                <span id="brand-text"></span>
             </div>
-            <a href="#" class="help-link">Help</a>
+            <a href="help-center.html" class="help-link" id="nav-help-label"></a>
         </div>
 
-        <h1 class="main-title">Welcome back</h1>
-        <p class="main-subtitle">Log in to track batches, view histories, or manage your farm ledger.</p>
+        <!-- Form Onboarding Subtitles Row Header Group Container -->
+        <div class="intro-summary-block">
+            <h1 class="main-title" id="display-title"></h1>
+            <p class="main-subtitle" id="display-subtitle"></p>
+        </div>
 
-        <!-- White Interactive Container Box -->
+        <!-- White Interactive Form Container Card -->
         <div class="registration-card">
             
-            <form onsubmit="executeLogin(event)">
+            <form onsubmit="executeSmartAuthRouting(event)">
+                
                 <div class="form-group">
-                    <label for="login-email">Email Address</label>
+                    <label for="login-email" id="lbl-email"></label>
                     <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="login-password">Password</label>
+                    <label for="login-password" id="lbl-pass"></label>
                     <div class="password-wrapper">
                         <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="toggleVisibility()">👁️</span>
+                        <span class="password-toggle" onclick="togglePasswordInputMask()">👁️</span>
                     </div>
                 </div>
 
-                <button type="submit" class="btn-submit">Sign In →</button>
+                <button type="submit" class="btn-submit" id="btn-submit-txt"></button>
             </form>
 
-            <div class="divider">OR CONTINUE WITH</div>
+            <div class="divider" id="display-divider"></div>
             
-            <button class="btn-submit btn-google" type="button" onclick="alert('Google Authentication Simulation Activated')">
-                🌐 Sign in with Google
+            <button type="button" class="btn-submit btn-google" onclick="alert('Google Authentication Service Connected Successfully!')">
+                <span id="google-icon">🌐</span> <span id="google-btn-txt"></span>
             </button>
 
         </div>
 
-        <!-- Links to index.html within the same templates directory -->
-        <p class="footer-prompt">
-            Don't have an account? <a href="index.html">Sign Up</a>
+        <!-- Baseline Redirection Footer Prompt (UPDATED: Pointing back to signup.html) -->
+        <p class="footer-prompt" id="display-footer-box">
+            <!-- Content layout elements generated cleanly by the runtime script engine below -->
         </p>
 
     </div>
 
+    <!-- DECOUPLED AUTHENTICATION MANAGEMENT ROUTING ENGINE -->
     <script>
-        function toggleVisibility() {
-            const field = document.getElementById('login-password');
-            field.type = (field.type === "password") ? "text" : "password";
+        // --- BACKEND API REPLICATED DATA DICTIONARIES ---
+        const pageSettings = {
+            name: "ShambaChain",
+            logo: "🚜",
+            helpText: "Help",
+            headline: "Welcome back",
+            tagline: "Log in to track batches, view histories, or manage your supply chain ledger.",
+            lblEmail: "Email Address",
+            lblPassword: "Password",
+            btnText: "Sign In →",
+            dividerText: "OR CONTINUE WITH",
+            btnGoogleText: "Sign in with Google",
+            footerPromptText: "Don't have an account?",
+            footerLinkText: "Sign Up",
+            footerTargetUrl: "signup.html" // Matches your local signup file configuration precisely
+        };
+
+        // --- CORE INTERFACE INJECTION ENGINE ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assigning data variables parameters over to layout view anchors
+            document.getElementById('brand-emoji').innerText = pageSettings.logo;
+            document.getElementById('brand-text').innerText = pageSettings.name;
+            document.getElementById('nav-help-label').innerText = pageSettings.helpText;
+            document.getElementById('display-title').innerText = pageSettings.headline;
+            document.getElementById('display-subtitle').innerText = pageSettings.tagline;
+            document.getElementById('lbl-email').innerText = pageSettings.lblEmail;
+            document.getElementById('lbl-pass').innerText = pageSettings.lblPassword;
+            document.getElementById('btn-submit-txt').innerText = pageSettings.btnText;
+            document.getElementById('display-divider').innerText = pageSettings.dividerText;
+            document.getElementById('google-btn-txt').innerText = pageSettings.btnGoogleText;
+
+            // Generate footer link elements markup node structure
+            const footerContainer = document.getElementById('display-footer-box');
+            footerContainer.innerHTML = `${pageSettings.footerPromptText} <a href="${pageSettings.footerTargetUrl}">${pageSettings.footerLinkText}</a>`;
+        });
+
+        // Show/hide password input mask utility tool
+        function togglePasswordInputMask() {
+            const targetField = document.getElementById('login-password');
+            targetField.type = (targetField.type === "password") ? "text" : "password";
         }
 
-        // Demo navigation routing rules
-        function executeLogin(e) {
+        // --- CORE CONTEXTUAL WORKFLOW REDIRECTION CONTROLLER ---
+        function executeSmartAuthRouting(e) {
             e.preventDefault();
-            const emailValue = document.getElementById('login-email').value.toLowerCase();
+            const emailInputLower = document.getElementById('login-email').value.toLowerCase();
 
-            // Direct route matching for testing dashboard versions:
-            // Input an email containing 'farmer' to test the farmer portal view layout
-            if (emailValue.includes('farmer')) {
-                window.location.href = 'farmer-dashboard.html';
+            // SMART DEMO ROUTING MAP RULES:
+            if (emailInputLower.includes('farmer')) {
+                // If user types any email with "farmer" (e.g., Silas_farmer@valley.com)
+                localStorage.setItem('selectedRole', 'farmer');
+                window.location.href = 'farmer-portal.html';
+            } else if (emailInputLower.includes('transporter')) {
+                // If user types any email with "transporter" (e.g., transit_transporter@plus.com)
+                localStorage.setItem('selectedRole', 'transporter');
+                window.location.href = 'transporter-hub.html';
             } else {
+                // Defaults safely to standard consumer tracking dashboard layout view 
+                localStorage.setItem('selectedRole', 'consumer');
                 window.location.href = 'consumer-dashboard.html';
             }
         }

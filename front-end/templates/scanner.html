@@ -3,78 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Scanner</title>
-    <link rel="stylesheet" href="../styles/scanner.css">
+    <title>ShambaChain - Scanner Viewfinder</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/scanner.css?v=3">
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- White Top Navigation App Bar -->
+        <!-- White Top Navigation App Bar Row -->
         <div class="top-app-bar">
+            <!-- Returns back to main consumer hub screen workspace -->
             <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">☰</button>
-            <div class="app-bar-title">ShambaChain</div>
-            <button class="qr-shortcut">🔳</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='consumer-dashboard.html'">🔳</button>
         </div>
 
-        <!-- Main Viewfinder Tracking Camera Space -->
+        <!-- Main Viewfinder Tracking Camera Space Content Area -->
         <div class="scanner-body-area">
             
-            <!-- Top Align Warning Pill Badge -->
+            <!-- Top Align Warning Pill Badge overlay -->
             <div class="align-badge">
-                <span style="color: #22c55e;">⚙</span> ALIGN QR CODE
+                <span id="badge-icon-field"></span> <span id="badge-text-field"></span>
             </div>
 
-            <!-- Viewfinder Brackets Frame layout -->
-            <!-- Simulated shortcut trigger: Clicking the frame acts like a scan and opens details.html -->
-            <div class="viewfinder-box" onclick="window.location.href='details.html'" style="cursor: pointer;">
+            <!-- Target brackets camera simulation mask box -->
+            <!-- Clicking inside the brackets acts as a mockup scan trigger link pointing to details.html -->
+            <div class="viewfinder-box" onclick="window.location.href='details.html'">
                 <div class="corner-target top-left"></div>
                 <div class="corner-target top-right"></div>
                 <div class="corner-target bot-left"></div>
                 <div class="corner-target bot-right"></div>
             </div>
 
-            <!-- Directions Headers -->
-            <h2 class="verification-header">Verification</h2>
-            <p class="instruction-text">Scan the batch label to trace origin</p>
+            <!-- Descriptive Instructions Headings -->
+            <h2 class="verification-header" id="display-headline"></h2>
+            <p class="instruction-text" id="display-instruction"></p>
 
-            <!-- Bottom utility buttons block belt -->
+            <!-- Bottom utility belt button layout tools -->
             <div class="control-belt">
-                <!-- Left utility: Flashlight -->
-                <button class="circle-btn" onclick="alert('Flashlight Activated')">🔦</button>
+                <!-- Flashlight flash tool mock layout button -->
+                <button type="button" class="circle-btn" onclick="alert('Device Flashlight Triggered Successfully!')">🔦</button>
                 
-                <!-- Center main action pill link back to main dashboard history stack -->
-                <a href="consumer-dashboard.html" class="btn-scan-history">
-                    <span>⏳</span> Scan History
-                </a>
+                <!-- Main central action redirection path back into dashboard history log anchor -->
+                <a href="consumer-dashboard.html" class="btn-scan-history" id="btn-history-lbl"></a>
                 
-                <!-- Right utility: Gallery upload picker -->
-                <button class="circle-btn" onclick="alert('Open Gallery Upload Selection')">🖼️</button>
+                <!-- Gallery photo file selector mock layout button -->
+                <button type="button" class="circle-btn" onclick="alert('Opening Native Device Image Gallery Selection...')">🖼️</button>
             </div>
 
         </div>
 
-        <!-- Sticky Persistent Tray Bottom Menu Bar -->
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
         <div class="app-bottom-dock">
             
-            <!-- Trace tab matches active accent state frame layout -->
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
                 <div class="pill-overlay-badge">📍</div>
                 <span>Trace</span>
             </a>
 
             <a href="consumer-dashboard.html" class="dock-tab-link">
-                <div style="font-size: 16px; padding: 4px 0;">🕒</div>
+                <span class="unselected-icon-spacing">🕒</span>
                 <span>History</span>
             </a>
 
-            <a href="#" class="dock-tab-link">
-                <div style="font-size: 16px; padding: 4px 0;">📓</div>
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
                 <span>Ledger</span>
             </a>
 
             <a href="login.html" class="dock-tab-link">
-                <div style="font-size: 16px; padding: 4px 0;">👤</div>
+                <span class="unselected-icon-spacing">👤</span>
                 <span>Profile</span>
             </a>
 
@@ -82,5 +81,27 @@
 
     </div>
 
+    <!-- ZERO HARDCODING ARCHITECTURE RENDERING LOGIC SCRIPT -->
+    <script>
+        // --- DATA OBJECT MAPPERS (Simulates standard API data models) ---
+        const scannerConfig = {
+            appName: "ShambaChain",
+            warningIcon: "⚙",
+            warningBadgeText: "ALIGN QR CODE",
+            headlineText: "Verification",
+            instructionText: "Scan the batch label to trace origin",
+            historyButtonText: "⏳ Scan History"
+        };
+
+        // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('app-title-txt').innerText = scannerConfig.appName;
+            document.getElementById('badge-icon-field').innerText = scannerConfig.warningIcon;
+            document.getElementById('badge-text-field').innerText = scannerConfig.warningBadgeText;
+            document.getElementById('display-headline').innerText = scannerConfig.headlineText;
+            document.getElementById('display-instruction').innerText = scannerConfig.instructionText;
+            document.getElementById('btn-history-lbl').innerHTML = scannerConfig.historyButtonText;
+        });
+    </script>
 </body>
 </html>
