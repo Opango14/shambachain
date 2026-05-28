@@ -20,6 +20,13 @@ func InitDB() {
 	}
 	db.AutoMigrate(
 		&models.User{},
+		&models.Batch{},
+		&models.Block{},
 	)
 	fmt.Println("Database connnected")
+}
+
+// GetDB returns the database connection instance
+func GetDB() *gorm.DB {
+	return db
 }
