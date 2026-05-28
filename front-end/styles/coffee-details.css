@@ -1,0 +1,278 @@
+/* --- PREMIUM CROP COMPONENT DESKTOP RESPONSIVE SYSTEM --- */
+:root {
+    --primary-dark: #1e1b18;     /* Premium Matte Charcoal Black text style */
+    --accent-coffee: #7c2d12;    /* Warm Roasted Coffee Brown Accent */
+    --accent-mint: #22c55e;      /* ShambaChain Secure Green Badge Tint */
+    --bg-light: #fafaf9;         /* Warm Stone White Canvas Background */
+    --text-muted: #57534e;       /* Earthy Slate subtext */
+    --border-color: #e7e5e4;
+    --max-width-desktop: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f5f5f4;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px;
+}
+
+/* Universal Workspace Canvas Container Wrapper Frame */
+.phone-container {
+    background: var(--bg-light);
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    min-height: calc(100vh - 48px);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(27, 25, 24, 0.02);
+    overflow-y: auto;
+}
+
+/* Top App Bar Navigation Row Layout Bar */
+.top-app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.btn-back, .btn-share {
+    font-size: 20px;
+    color: var(--accent-coffee);
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.app-bar-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--accent-coffee);
+}
+
+/* RESPONSIVE LAYOUT DESKTOP CORE GRID PANEL SPLIT WRAPPER */
+.crop-detail-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+}
+
+/* Premium Visual Showcase Image Frame Block Card */
+.crop-banner-showcase-frame {
+    height: 240px;
+    border-radius: 20px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    background-color: #cbd5e1;
+}
+
+.secure-onchain-floating-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background-color: #dcfce7;
+    color: #166534;
+    border: 1px solid #bbf7d0;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
+
+/* Main Profile Typography Text Content blocks */
+.crop-typography-panel {
+    text-align: left;
+}
+
+.crop-main-title {
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--primary-dark);
+    line-height: 1.1;
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+}
+
+.crop-provenance-sub-label {
+    font-size: 14px;
+    color: var(--accent-coffee);
+    font-weight: 700;
+    margin-bottom: 16px;
+}
+
+.crop-narrative-paragraph {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 24px;
+}
+
+/* Segment Category Section Mini Headers */
+.block-section-headline {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+    text-align: left;
+}
+
+/* High-Contrast Twin/Quad Split Stats Analytics Grids */
+.crop-specs-split-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.spec-info-box-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: left;
+}
+
+.spec-icon-avatar {
+    font-size: 18px;
+    margin-bottom: 8px;
+    display: inline-block;
+}
+
+.spec-lbl-txt {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 2px;
+}
+
+.spec-val-num {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* Cryptographic Block Explorer Ribbon Link Bar */
+.explorer-ribbon-card {
+    background: #fdf8f6;        /* Warm toasted amber-white backdrop matching coffee theme */
+    border: 1px solid #f5e3dd;
+    border-radius: 16px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 80px;        /* Spacing padding clearance above the baseline navigation dock menu tray */
+    text-decoration: none;
+}
+
+.explorer-icon-block {
+    font-size: 18px;
+    color: var(--accent-coffee);
+}
+
+.explorer-labels-stack {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.explorer-lbl-title-txt {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.explorer-hash-string-display {
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+/* Sticky Global Desktop/Mobile App Bottom Menu Tab Bar Dock */
+.app-bottom-dock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 8px;
+    height: 70px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.dock-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    flex: 1;
+}
+
+.dock-tab-link.active-pill-state {
+    color: #0f2e24 !important;
+}
+
+.dock-tab-link.active-pill-state .pill-overlay-badge {
+    background-color: #bbf7d0 !important;
+    padding: 6px 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.unselected-icon-spacing {
+    padding: 6px 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* --- THE DESKTOP LAYOUT MULTI-COLUMN RESPONSIVE LAYOUT CHANGE --- */
+@media (min-width: 850px) {
+    .crop-detail-grid-layout {
+        grid-template-columns: 1.1fr 1fr; /* Splits left product picture/narrative from right data scorecard cards grids side-by-side */
+        align-items: start;
+        gap: 32px;
+    }
+    
+    .crop-banner-showcase-frame {
+        height: 340px;                 /* Expands image canvas depth beautifully inside wide screen monitors viewports */
+    }
+    
+    .explorer-ribbon-card {
+        margin-bottom: 20px;
+    }
+}

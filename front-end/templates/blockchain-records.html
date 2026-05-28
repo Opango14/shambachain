@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - On-Chain Ledger Explorer</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/blockchain-records.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <button class="btn-back" onclick="window.location.href='farmer-inventory.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="btn-export" onclick="alert('Raw JSON Transaction Logs Exported Successfully!')">📥</button>
+        </div>
+
+        <!-- Page Introduction Block Header Title summary strings -->
+        <h1 class="explorer-main-title" id="display-main-title"></h1>
+        <p class="explorer-subtext-para" id="display-subtext-lbl"></p>
+
+        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX GRID (Splits contextually on desktop windows) -->
+        <div class="explorer-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Smart Contract Parameter Summary Specification Card -->
+            <div>
+                <div class="contract-profile-card">
+                    <h3 class="profile-section-title" id="display-profile-title"></h3>
+                    <div id="parameters-rows-container"></div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Immutable Cryptographic Block Timeline Audit Trail Feed -->
+            <div style="margin-bottom: 90px;"> <!-- Cushion spacer allocation above bottom nav dock bar -->
+                <h3 class="profile-section-title" id="display-timeline-title"></h3>
+                <div class="vertical-audit-timeline" id="audit-nodes-container"></div>
+            </div>
+
+        </div> <!-- Closes .explorer-grid-layout-hub responsive grid -->
+
+        <!-- Sticky Persistent Profile Inventory Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="farmer-portal.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🔳</span>
+                <span>Trace</span>
+            </a>
+            <a href="farmer-inventory.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📊</div>
+                <span>Impact</span>
+            </a>
+            <a href="farmer-profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="settings.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ZERO-HARDCODING DECOUPLED INJECTION ENGINE SCRIPT CONTROL HUB -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD TABLES ---
+        const explorerSettings = {
+            appName: "Ledger Explorer",
+            mainTitle: "Blockchain Records",
+            subtextLabel: "Verify raw block hashes and cryptographic signatures for asset lot items.",
+            profileTitle: "Smart Contract Metadata",
+            timelineTitle: "On-Chain Audit Trail"
+        };
+
+        const contractParametersPayload = [
+            { label: "Deployment Network", value: "Polygon PoS Mainnet" },
+            { label: "Contract Owner", value: "0xShamba...8819" },
+            { label: "Active Gas Used", value: "42,109 Gwei" },
+            { label: "Total Asset Tokens", value: "24 Batches Minted" },
+            { label: "Security Consensus", value: "Proof of Stake (PoS)" }
+        ];
+
+        const auditTrailNodesPayload = [
+            { status: "CONFIRMED", block: "Block #14,882,109", desc: "Batch #COF-9921 signed and anchored by Silas Thorne.", hash: "0x72a1...bc33e8", icon: "✓" },
+            { status: "VALIDATED", block: "Block #14,881,954", desc: "Quality inspection signature verification confirmed by Eco-Pack.", hash: "0x5f8e...4412ab", icon: "🛡️" },
+            { status: "BROADCASTED", block: "Block #14,880,412", desc: "Route tracking dispatch log update injected by AeroExpress Carrier.", hash: "0x3c2b...77102f", icon: "📦" }
+        ];
+
+        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign primary metadata text headers
+            document.getElementById('app-title-txt').innerText = explorerSettings.appName;
+            document.getElementById('display-main-title').innerText = explorerSettings.mainTitle;
+            document.getElementById('display-subtext-lbl').innerText = explorerSettings.subtextLabel;
+            document.getElementById('display-profile-title').innerText = explorerSettings.profileTitle;
+            document.getElementById('display-timeline-title').innerText = explorerSettings.timelineTitle;
+
+            // Generate parameter layout data items rows loop
+            const paramsContainer = document.getElementById('parameters-rows-container');
+            paramsContainer.innerHTML = '';
+            contractParametersPayload.forEach(row => {
+                paramsContainer.innerHTML += `
+                    <div class="parameter-info-row-item">
+                        <span class="parameter-lbl-txt">${row.label}</span>
+                        <span class="parameter-val-hash-txt">${row.value}</span>
+                    </div>
+                `;
+            });
+
+            // Generate vertical blockchain audit trail timeline node blocks loop
+            const nodesContainer = document.getElementById('audit-nodes-container');
+            nodesContainer.innerHTML = '';
+            
+            auditTrailNodesPayload.forEach(node => {
+                nodesContainer.innerHTML += `
+                    <div class="audit-node-block confirmed-state">
+                        <div class="node-graphic-icon-wrap">${node.icon}</div>
+                        <div class="node-uppercase-status">${node.status} · ${node.block}</div>
+                        <p class="node-meta-description">${node.desc}</p>
+                        <div class="node-hash-lbl">TX Hash: ${node.hash}</div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

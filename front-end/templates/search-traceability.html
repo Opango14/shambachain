@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Traceability Search Engine</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/search-traceability.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout Area -->
+        <div class="top-app-bar">
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+        </div>
+
+        <!-- Headline Query Title Banner -->
+        <h2 class="help-main-headline" id="display-headline-txt"></h2>
+
+        <!-- Rounded Input Search Bar Box -->
+        <div class="search-box-wrapper">
+            <span class="search-icon-marker">🔍</span>
+            <input type="text" id="traceSearchInput" class="search-query-input" placeholder="Enter batch ID, crop name, or farm location...">
+        </div>
+
+        <!-- Filter Capsules Links Horizontal Row Selection Strip -->
+        <div class="filter-capsules-row" id="filter-pills-container"></div>
+
+        <!-- RESPONSIVE LAYOUT MATRIX GRID WORKSPACE (Splits side-by-side contextually on desktops wide windows) -->
+        <div class="search-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Historical Recent Searches List Tracking items -->
+            <div>
+                <div class="section-title-strip">
+                    <h3 id="display-recent-lbl"></h3>
+                    <span class="clear-action" onclick="clearRecentSearchesFeedLog(event)">Clear Feed</span>
+                </div>
+                <div class="recent-searches-stack" id="recent-queries-container"></div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: High-Fidelity Regional Certified Agricultural Center cards grid -->
+            <div>
+                <div class="section-title-strip">
+                    <h3 id="display-recommend-lbl"></h3>
+                </div>
+                <div class="recommended-cards-viewport" id="recommended-farms-container"></div>
+            </div>
+
+        </div> <!-- Closes .search-grid-layout-hub responsive grids layout wrapper frame -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+            <a href="details.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ZERO-HARDCODING ENGINE RUNTIME INJECTION CONTROLLER SCRIPT -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD DATA DICTIONARIES TABLES ---
+        const searchConfig = {
+            appName: "ShambaChain",
+            headline: "Search Registry",
+            recentLabel: "Recent Searches",
+            recommendLabel: "Certified Producers"
+        };
+
+        const filterPillsPayload = [
+            { label: "All Records", id: "all", isActive: true },
+            { label: "Crop Batches", id: "batches", isActive: false },
+            { label: "Verified Farms", id: "farms", isActive: false },
+            { label: "Logistics Logs", id: "logistics", isActive: false }
+        ];
+
+        const recentSearchesPayload = [
+            { query: "Batch #88219 (Avocado)", type: "batch", icon: "🥑", targetUrl: "details.html" },
+            { query: "Nyeri Arabica Coffee AA", type: "crop", icon: "☕", targetUrl: "coffee-details.html" },
+            { query: "Kinangop Potato Cooperatives", type: "farm", icon: "🚜", targetUrl: "farmer-profile.html" }
+        ];
+
+        const recommendedFarmsPayload = [
+            { title: "Green Valley Cooperatives", region: "📍 Ahero, Kisumu County", imgUrl: "https://unsplash.com", badge: "🛡️ ON-CHAIN" },
+            { title: "Timau Premium Growers", region: "📍 Timau, Meru County", imgUrl: "https://unsplash.com", badge: "🛡️ ON-CHAIN" }
+        ];
+
+        // --- CORE APPLICATION INJECTION RENDERING ENGINE CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign static header summary strings variables 
+            document.getElementById('app-title-txt').innerText = searchConfig.appName;
+            document.getElementById('display-headline-txt').innerText = searchConfig.headline;
+            document.getElementById('display-recent-lbl').innerText = searchConfig.recentLabel;
+            document.getElementById('display-recommend-lbl').innerText = searchConfig.recommendLabel;
+
+            // Generate capsule option pill select tags items loop
+            const filterContainer = document.getElementById('filter-pills-container');
+            filterContainer.innerHTML = '';
+            filterPillsPayload.forEach(pill => {
+                let activeStyleStateClass = pill.isActive ? "active-filter-state" : "";
+                filterContainer.innerHTML += `
+                    <button type="button" class="filter-pill-btn ${activeStyleStateClass}" onclick="alert('Filtering registry dataset context via: ${pill.label.toUpperCase()}...')">
+                        ${pill.label}
+                    </button>
+                `;
+            });
+
+            // Generate Historical Query items stack lists
+            renderRecentQueriesStackFeed();
+
+            // Generate Recommended high fidelity visual crop items cards loop matrix
+            const farmsContainer = document.getElementById('recommended-farms-container');
+            farmsContainer.innerHTML = '';
+            recommendedFarmsPayload.forEach(farm => {
+                farmsContainer.innerHTML += `
+                    <a href="farmer-profile.html" class="recommended-producer-card">
+                        <div class="card-visual-header" style="background-image: url('${farm.imgUrl}');">
+                            <div class="badge-overlay-certified">${farm.badge}</div>
+                        </div>
+                        <div class="card-lower-body">
+                            <div class="card-main-title-lbl">${farm.title}</div>
+                            <div class="card-sub-metadata-lbl">${farm.region}</div>
+                        </div>
+                    </a>
+                `;
+            });
+        });
+
+        function renderRecentQueriesStackFeed() {
+            const queriesContainer = document.getElementById('recent-queries-container');
+            queriesContainer.innerHTML = '';
+            recentSearchesPayload.forEach(item => {
+                queriesContainer.innerHTML += `
+                    <a href="${item.targetUrl}" class="search-history-item">
+                        <div class="history-item-left">
+                            <span>${item.icon}</span> <span>${item.query}</span>
+                        </div>
+                        <span class="history-item-chevron">&gt;</span>
+                    </a>
+                `;
+            });
+        }
+
+        function clearRecentSearchesFeedLog(e) {
+            e.preventDefault();
+            recentSearchesPayload.length = 0; // Clear the memory table array list elements points
+            renderRecentQueriesStackFeed();    // Redraw layout context immediately
+            alert('Trace Search Engine Local Cache Search Logs Cleared Successfully.');
+        }
+    </script>
+</body>
+</html>

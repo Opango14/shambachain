@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Live Cold Chain Telematics</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/transit-tracker.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Bar layout -->
+        <div class="top-app-bar">
+            <!-- Returns back safely to the primary logistics carrier cockpit dashboard -->
+            <button class="btn-back" onclick="window.location.href='transporter-hub.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="btn-refresh" onclick="window.location.reload()">🔄</button>
+        </div>
+
+        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX (Splits side-by-side on desktop windows) -->
+        <div class="transit-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Vector routing map chassis preview block container -->
+            <div>
+                <div class="live-map-chassis-card">
+                    <!-- Floating Map Route Details HUD Ribbon overlay row item -->
+                    <div class="map-route-hud-ribbon">
+                        <div class="hud-route-text-block">
+                            <span class="hud-route-heading-lbl" id="display-hud-lbl"></span>
+                            <span class="hud-route-nodes-value" id="display-hud-route"></span>
+                        </div>
+                        <span class="hud-eta-pill-badge" id="display-hud-eta"></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: IoT Live Telemetry Sensors Grids and Cryptographic Ledger info block -->
+            <div>
+                <h3 class="telemetry-section-title" id="display-sec-telemetry-lbl"></h3>
+                
+                <!-- Target container element wrapper for dynamic IoT sensors cards row loop -->
+                <div class="iot-sensors-split-grid" id="iot-cards-container"></div>
+
+                <!-- Blockchain Receipts Cryptographic Validation Card logs stack -->
+                <h3 class="telemetry-section-title" id="display-sec-receipt-lbl"></h3>
+                <div class="blockchain-receipt-panel-card">
+                    
+                    <div class="receipt-row-item-line">
+                        <span class="receipt-lbl-txt">Active Batch ID</span>
+                        <span class="receipt-val-hash-txt" id="display-receipt-batch-id"></span>
+                    </div>
+
+                    <div class="receipt-row-item-line">
+                        <span class="receipt-lbl-txt">Smart Contract Node</span>
+                        <span class="receipt-val-hash-txt" id="display-receipt-contract-addr" style="font-size:11px;"></span>
+                    </div>
+
+                    <div class="receipt-row-item-line">
+                        <span class="receipt-lbl-txt">Ledger Block Height</span>
+                        <span class="receipt-val-hash-txt" id="display-receipt-block-num" style="color:#115e59;"></span>
+                    </div>
+
+                </div>
+            </div>
+
+        </div> <!-- Closes .transit-grid-layout-hub responsive grids layout wrapper -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="transporter-hub.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">🚚</div>
+                <span>Logistics</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Carrier milestone performance history logs coming soon!')">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Global smart contract transaction explorer logs loading...')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🚪</span>
+                <span>Sign Out</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- CLEAN DECOUPLED DATA STRUCTURING INJECTION LOGIC SCRIPT ENGINE -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD TABLES ---
+        const transitSettings = {
+            appName: "Transit Telematics",
+            hudLabel: "Current Route",
+            hudRouteText: "Nairobi → Mombasa Hwy",
+            hudEtaText: "ETA: 2h 15m",
+            lblTelemetry: "IoT Sensor Streams",
+            lblReceipt: "Ledger Security Parameters",
+            receiptBatchId: "#TRK-9011",
+            receiptContract: "0x4f92bc33...e88219",
+            receiptBlockHeight: "Block #14,882,109 (CONFIRMED)"
+        };
+
+        const iotSensorsPayload = [
+            { label: "Cargo Temp", value: "4.2 °C", icon: "🌡️", status: "Optimal", isAlert: false },
+            { label: "Humidity", value: "84%", icon: "💧", status: "Stable", isAlert: false },
+            { label: "GPS Latitude", value: "-1.2921° S", icon: "🛰️", status: "Tracking", isAlert: false },
+            { label: "Shock / G-Force", value: "0.1 G", icon: "🫨", status: "Safe", isAlert: false }
+        ];
+
+        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mapping texts variables over to element layout targets
+            document.getElementById('app-title-txt').innerText = transitSettings.appName;
+            document.getElementById('display-hud-lbl').innerText = transitSettings.hudLabel;
+            document.getElementById('display-hud-route').innerText = transitSettings.hudRouteText;
+            document.getElementById('display-hud-eta').innerText = transitSettings.hudEtaText;
+            document.getElementById('display-sec-telemetry-lbl').innerText = transitSettings.lblTelemetry;
+            document.getElementById('display-sec-receipt-lbl').innerText = transitSettings.lblReceipt;
+            document.getElementById('display-receipt-batch-id').innerText = transitSettings.receiptBatchId;
+            document.getElementById('display-receipt-contract-addr').innerText = transitSettings.receiptContract;
+            document.getElementById('display-receipt-block-num').innerText = transitSettings.receiptBlockHeight;
+
+            // Generate IoT sensors grid info layout modules cards loop
+            const iotContainer = document.getElementById('iot-cards-container');
+            iotContainer.innerHTML = '';
+            
+            iotSensorsPayload.forEach(card => {
+                let alertModifierStyleClass = card.isAlert ? "alert-trigger-state" : "";
+                
+                iotContainer.innerHTML += `
+                    <div class="sensor-metric-card-box ${alertModifierStyleClass}">
+                        <div class="sensor-card-top-line">
+                            <span class="sensor-icon-avatar">${card.icon}</span>
+                            <span class="sensor-status-indicator-badge">${card.status}</span>
+                        </div>
+                        <div>
+                            <div class="sensor-lbl-txt">${card.label}</div>
+                            <div class="sensor-val-num-display">${card.value}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Inventory Ledger</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/farmer-inventory.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout Bar context -->
+        <div class="top-app-bar">
+            <button class="btn-back" onclick="window.location.href='farmer-portal.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="btn-action-add" onclick="window.location.href='register-batch-detail.html'">+</button>
+        </div>
+
+        <!-- Page Introduction Title headers -->
+        <h1 class="inventory-main-title" id="display-main-title"></h1>
+        <p class="inventory-subtext-para" id="display-subtext-lbl"></p>
+
+        <!-- RESPONSIVE LAYOUT ENGINE CORE WRAPPER GRID (Splits contextually on desktop windows) -->
+        <div class="inventory-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Tokenized Weight storage volume metrics panels cards -->
+            <div class="metrics-stack-panel" id="metrics-stack-box"></div>
+
+            <!-- COLUMN 2 WORKSPACE: Comprehensive On-Chain Crop Batch Table Matrix dashboard card -->
+            <div>
+                <div class="inventory-table-card">
+                    <div class="table-header-title-bar">
+                        <h3 class="table-title-headline" id="display-table-lbl"></h3>
+                    </div>
+
+                    <!-- Table columns description labels strip -->
+                    <div class="table-columns-label-strip">
+                        <span class="col-header-txt">Batch Asset</span>
+                        <span class="col-header-txt">Crop Lot / Sku</span>
+                        <span class="col-header-txt">Chain State</span>
+                        <span class="col-header-txt" style="text-align: right;">Ledger</span>
+                    </div>
+
+                    <!-- Target anchor element for loops rows generation injection -->
+                    <div id="inventory-rows-container"></div>
+                </div>
+            </div>
+
+        </div> <!-- Closes .inventory-grid-layout-hub responsive wrapper grid context -->
+
+        <!-- Sticky Persistent Profile Inventory Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="farmer-portal.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🔳</span>
+                <span>Trace</span>
+            </a>
+            <a href="farmer-inventory.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📊</div>
+                <span>Impact</span>
+            </a>
+            <a href="farmer-profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="settings.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ZERO-HARDCODING CONTEXT MANAGEMENT SYSTEM LOGIC RUNTIME ENGINE -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD PAYLOAD TABLES ---
+        const inventorySettings = {
+            appName: "ShambaChain",
+            mainTitle: "Active Inventory",
+            subtextLabel: "Manage and track tokenized on-chain agricultural batches.",
+            tableTitle: "Registered Storage Vaults"
+        };
+
+        const volumeMetricsPayload = [
+            { label: "Total Yield Volume", value: "5,700 kg", token: "SHM-WT", icon: "🌾" },
+            { label: "Transit Dispatch", value: "2,400 kg", token: "ETH-TX", icon: "🚚" },
+            { label: "Vaulted Reserve", value: "3,300 kg", token: "POL-SEC", icon: "🏬" }
+        ];
+
+        const inventoryBatchesPayload = [
+            { id: "#COF-9921", crop: "Arabica Coffee", sku: "SKU-NYS-AA", status: "In Transit", dotClass: "dot-green", badge: "✓ POLY" },
+            { id: "#AVO-8821", crop: "Organic Avocado", sku: "SKU-HAS-B12", status: "Processing", dotClass: "dot-blue", badge: "✓ ARB" },
+            { id: "#RIC-4402", crop: "Pishori Rice", sku: "SKU-AHR-R1", status: "In Transit", dotClass: "dot-green", badge: "✓ ETH" }
+        ];
+
+        // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign header summary string properties 
+            document.getElementById('app-title-txt').innerText = inventorySettings.appName;
+            document.getElementById('display-main-title').innerText = inventorySettings.mainTitle;
+            document.getElementById('display-subtext-lbl').innerText = inventorySettings.subtextLabel;
+            document.getElementById('display-table-lbl').innerText = inventorySettings.tableTitle;
+
+            // Generate Tokenized storage metrics modules cards loops
+            const metricsBox = document.getElementById('metrics-stack-box');
+            metricsBox.innerHTML = '';
+            volumeMetricsPayload.forEach(card => {
+                metricsBox.innerHTML += `
+                    <div class="inventory-metric-card">
+                        <div class="metric-header-strip">
+                            <span class="metric-icon-avatar">${card.icon}</span>
+                            <span class="metric-pill-token-lbl">${card.token}</span>
+                        </div>
+                        <div>
+                            <div class="metric-txt-lbl">${card.label}</div>
+                            <div class="metric-val-display-num">${card.value}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Generate active vault registry items loop rows table matrix
+            const rowsContainer = document.getElementById('inventory-rows-container');
+            rowsContainer.innerHTML = '';
+            inventoryBatchesPayload.forEach(row => {
+                rowsContainer.innerHTML += `
+                    <div class="inventory-data-row" onclick="window.location.href='blockchain-records.html'" style="cursor: pointer;">
+                        <div class="cell-bold-id">${row.id}</div>
+                        <div class="cell-crop-meta-block">
+                            <span class="crop-main-title-txt">${row.crop}</span>
+                            <span class="crop-sub-sku-lbl">${row.sku}</span>
+                        </div>
+                        <div class="status-indicator-cell-block">
+                            <span class="dot-status-marker ${row.dotClass}"></span> ${row.status}
+                        </div>
+                        <div style="text-align: right;">
+                            <span class="onchain-capsule-badge">${row.badge}</span>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Crop Verification Profile</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/coffee-details.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <!-- Smooth return route loop back onto consumer master trace dashboard -->
+            <button class="btn-back" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="btn-share" onclick="alert('Product Traceability URL Copied to Clipboard!')">🔗</button>
+        </div>
+
+        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX GRID (Splits contextually on desktop windows) -->
+        <div class="crop-detail-grid-layout">
+            
+            <!-- COLUMN 1 WORKSPACE: Main visual image box and branding text descriptions -->
+            <div class="crop-typography-panel">
+                
+                <!-- Premium High-Res Image Showcase Frame Card -->
+                <div class="crop-banner-showcase-frame" id="crop-img-bg">
+                    <div class="secure-onchain-floating-badge" id="display-badge-lbl"></div>
+                </div>
+
+                <div style="padding: 20px 4px 0 4px;">
+                    <h1 class="crop-main-title" id="display-crop-name"></h1>
+                    <div class="crop-provenance-sub-label" id="display-provenance-lbl"></div>
+                    <p class="crop-narrative-paragraph" id="display-narrative-txt"></p>
+                </div>
+
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Environmental data matrices and blockchain receipts block explorer panel -->
+            <div>
+                <h2 class="block-section-headline" id="sec-analytics-lbl"></h2>
+                
+                <!-- Target container node element for split specifications metrics inject loops -->
+                <div class="crop-specs-split-grid" id="specs-cards-container"></div>
+
+                <!-- On-Chain Smart Contract Block Explorer Link Ribbon Ribbon -->
+                <h2 class="block-section-headline" id="sec-ledger-lbl"></h2>
+                
+                <a href="#" class="explorer-ribbon-card" onclick="alert('Redirecting directly out to the cryptographic public block scanner explorer...')">
+                    <div class="explorer-icon-block">⛓️</div>
+                    <div class="explorer-labels-stack">
+                        <span class="explorer-lbl-title-txt">Smart Contract Address</span>
+                        <span class="explorer-hash-string-display" id="display-contract-hash"></span>
+                    </div>
+                </a>
+            </div>
+
+        </div> <!-- Closes .crop-detail-grid-layout responsive grid structure wrapper frame -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
+        <div class="app-bottom-dock">
+            
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+
+        </div>
+
+    </div> <!-- Closes parent mobile .phone-container viewport container frame -->
+
+    <!-- UTILITY ZERO-HARDCODING RUNTIME COMPILER INJECTION SCRIPT -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD PAYLOAD TABLES ---
+        const cropConfig = {
+            appName: "Product Verification",
+            badgeText: "✓ LEDGER SECURED",
+            cropName: "Nyeri Arabica Coffee",
+            provenanceText: "📍 Mutheka Co-operative · Batch #COF-9921",
+            narrativeText: "Premium single-origin AA beans hand-harvested along the rich volcanic slopes of Mount Kenya. Traced through an immutable cold-chain log from washing station to your cup.",
+            analyticsHeading: "Sustainability & Spec Score",
+            ledgerHeading: "Blockchain Network Parameters",
+            smartContractHash: "0x992a...f74b12c9"
+        };
+
+        const cropSpecsPayload = [
+            { label: "Altitude", value: "1,800m ASL", symbol: "🏔️" },
+            { label: "Water Footprint", value: "12.4 L / kg", symbol: "💧" },
+            { label: "FairTrade Payout", value: "100% Transparent", symbol: "🤝" },
+            { label: "Carbon Offset", value: "-0.8 kg CO₂e", symbol: "🌱" }
+        ];
+
+        // --- CORE APPLICATION INJECTION HANDLING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mapping texts variables over to layout interface selectors
+            document.getElementById('app-title-txt').innerText = cropConfig.appName;
+            document.getElementById('crop-img-bg').style.backgroundImage = "url('https://unsplash.com')";
+            document.getElementById('display-badge-lbl').innerText = cropConfig.badgeText;
+            document.getElementById('display-crop-name').innerText = cropConfig.cropName;
+            document.getElementById('display-provenance-lbl').innerText = cropConfig.provenanceText;
+            document.getElementById('display-narrative-txt').innerText = cropConfig.narrativeText;
+            document.getElementById('sec-analytics-lbl').innerText = cropConfig.analyticsHeading;
+            document.getElementById('sec-ledger-lbl').innerText = cropConfig.ledgerHeading;
+            document.getElementById('display-contract-hash').innerText = cropConfig.smartContractHash;
+
+            // Generate specifications quadrants grid data cards loops template nodes
+            const specsContainer = document.getElementById('specs-cards-container');
+            specsContainer.innerHTML = '';
+            
+            cropSpecsPayload.forEach(card => {
+                specsContainer.innerHTML += `
+                    <div class="spec-info-box-card">
+                        <span class="spec-icon-avatar">${card.symbol}</span>
+                        <div class="spec-lbl-txt">${card.label}</div>
+                        <div class="spec-val-num">${card.value}</div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Logistics Hub</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/transporter-hub.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <!-- Simulated exit shortcut loop back to login gate context -->
+            <button class="menu-icon" onclick="window.location.href='login.html'">☰</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <div style="width: 20px;"></div> <!-- Balance layout alignment spacings anchor -->
+        </div>
+
+        <!-- Portal Header Subtitles labels identifiers info -->
+        <div class="hub-tag-lbl" id="display-hub-lbl"></div>
+        <h1 class="hub-main-title" id="display-carrier-name"></h1>
+        
+        <div class="hub-meta-row">
+            <div class="active-carrier-badge">
+                <span>🚚</span> <span id="display-badge-txt"></span>
+            </div>
+        </div>
+
+        <!-- RESPONSIVE LAYOUT ENGINE CORE WRAPPER GRID (Splits side-by-side on wide screens) -->
+        <div class="transporter-grid-layout">
+            
+            <!-- COLUMN 1 WORKSPACE: Live Telematics Sensor telemetry tracking metrics block card -->
+            <div>
+                <div class="telematics-summary-card">
+                    <div class="telematics-top-strip">
+                        <span style="font-size: 18px;">❄️ Cold Chain Tracker</span>
+                        <span class="telematics-status-pill" id="display-status-pill-txt"></span>
+                    </div>
+                    
+                    <div class="telematics-grid-cells" id="telematics-cells-box"></div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Ongoing Cargo Shipments Checklists table stack panel -->
+            <div>
+                <div class="shipments-table-card">
+                    <div class="table-headline-row">
+                        <h3 class="table-title-lbl" id="display-table-lbl"></h3>
+                        <a href="#" class="table-action-link-btn" onclick="alert('Map routing navigation telemetry systems loading...')">Map Routes →</a>
+                    </div>
+
+                    <!-- Table Columns headers strip descriptions -->
+                    <div class="table-labels-strip">
+                        <span class="col-txt-lbl">Shipment ID</span>
+                        <span class="col-txt-lbl">Cargo / Origin</span>
+                        <span class="col-txt-lbl">Route Node</span>
+                    </div>
+
+                    <!-- Target container element for data row loops injection mapping -->
+                    <div id="shipments-rows-container"></div>
+                </div>
+            </div>
+
+        </div> <!-- Closes .transporter-grid-layout grid context wrapper frame -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="transporter-hub.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">🚚</div>
+                <span>Logistics</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Carrier milestone performance history logs coming soon!')">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Global smart contract transaction explorer logs loading...')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🚪</span>
+                <span>Sign Out</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ZERO-HARDCODING ENGINE RUNTIME CONTROLLER HANDLING SCRIPT -->
+    <script>
+        // --- BACKEND OBJECT REPLICATED DATA PAYLOAD DICTIONARIES ---
+        const logisticsSettings = {
+            appName: "ShambaChain",
+            hubLabel: "Logistics Dashboard",
+            carrierName: "AeroExpress Transit",
+            badgeLabel: "Verified Cold-Chain Carrier",
+            telematicsStatus: "STABLE",
+            tableTitle: "Assigned Transit Lots"
+        };
+
+        const telematicsSensorPayload = [
+            { label: "Core Temperature", value: "4.2 °C Optimal", id: "sensor-temp" },
+            { label: "Ambient Humidity", value: "84% Steady", id: "sensor-humid" },
+            { label: "Active Truck ID", value: "KBZ-992A (Fleet 4)", id: "sensor-truck" },
+            { label: "Route Speed", value: "62 km/h avg", id: "sensor-speed" }
+        ];
+
+        const transitCargoPayload = [
+            { id: "#TRK-9011", product: "Kinangop Potatoes", weight: "4,500kg", node: "Mombasa Hwy", status: "In Transit", isStable: false },
+            { id: "#TRK-8842", product: "Lake Victoria Tilapia", weight: "1,800kg", node: "Kisumu Depot", status: "Loaded (On-Chain)", isStable: true },
+            { id: "#TRK-7714", product: "Kitale Maize Sacks", weight: "6,000kg", node: "Nairobi Hub", status: "Arrived / Signed", isStable: true }
+        ];
+
+        // --- CORE APPLICATION INJECTION MANAGEMENT ENGINE ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mapping configuration text properties directly over viewport layout selectors
+            document.getElementById('app-title-txt').innerText = logisticsSettings.appName;
+            document.getElementById('display-hub-lbl').innerText = logisticsSettings.hubLabel;
+            document.getElementById('display-carrier-name').innerText = logisticsSettings.carrierName;
+            document.getElementById('display-badge-txt').innerText = logisticsSettings.badgeLabel;
+            document.getElementById('display-status-pill-txt').innerText = logisticsSettings.telematicsStatus;
+            document.getElementById('display-table-lbl').innerText = logisticsSettings.tableTitle;
+
+            // Generate telematics grids data panels blocks loop
+            const cellsBox = document.getElementById('telematics-cells-box');
+            cellsBox.innerHTML = '';
+            telematicsSensorPayload.forEach(cell => {
+                cellsBox.innerHTML += `
+                    <div>
+                        <div class="cell-sub-lbl">${cell.label}</div>
+                        <div class="cell-main-val">${cell.value}</div>
+                    </div>
+                `;
+            });
+
+            // Generate Assigned Shipments row elements checklist loops table matrix
+            const rowsContainer = document.getElementById('shipments-rows-container');
+            rowsContainer.innerHTML = '';
+            transitCargoPayload.forEach(row => {
+                let statusMarkerDotClass = row.isStable ? "stable" : "";
+                
+                rowsContainer.innerHTML += `
+                    <div class="shipment-log-row" onclick="window.location.href='transit-tracker.html'" style="cursor: pointer;">
+                        <div class="id-bold-cell">${row.id}</div>
+                        <div class="cargo-details-cell">
+                            <span class="cargo-main-name">${row.product}</span>
+                            <span class="cargo-sub-origin">${row.weight} volume</span>
+                        </div>
+                        <div class="route-checkpoint-cell">
+                            <span class="pulse-dot ${statusMarkerDotClass}"></span>
+                            <div>
+                                <div style="font-weight:700;">${row.node}</div>
+                                <div style="font-size:10px; color:#64748b; font-weight:500;">${row.status}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
