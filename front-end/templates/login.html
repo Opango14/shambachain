@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Log In</title>
+    <!-- Linking directly up one level out to our custom login css file -->
+    <link rel="stylesheet" href="../styles/login.css">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Branding Bar Area -->
+        <div class="nav-header">
+            <div class="logo-block">
+                <span>🚜</span> ShambaChain
+            </div>
+            <a href="#" class="help-link">Help</a>
+        </div>
+
+        <h1 class="main-title">Welcome back</h1>
+        <p class="main-subtitle">Log in to track batches, view histories, or manage your farm ledger.</p>
+
+        <!-- White Interactive Container Box -->
+        <div class="registration-card">
+            
+            <form onsubmit="executeLogin(event)">
+                <div class="form-group">
+                    <label for="login-email">Email Address</label>
+                    <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="login-password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
+                        <span class="password-toggle" onclick="toggleVisibility()">👁️</span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">Sign In →</button>
+            </form>
+
+            <div class="divider">OR CONTINUE WITH</div>
+            
+            <button class="btn-submit btn-google" type="button" onclick="alert('Google Authentication Simulation Activated')">
+                🌐 Sign in with Google
+            </button>
+
+        </div>
+
+        <!-- Links to index.html within the same templates directory -->
+        <p class="footer-prompt">
+            Don't have an account? <a href="index.html">Sign Up</a>
+        </p>
+
+    </div>
+
+    <script>
+        function toggleVisibility() {
+            const field = document.getElementById('login-password');
+            field.type = (field.type === "password") ? "text" : "password";
+        }
+
+        // Demo navigation routing rules
+        function executeLogin(e) {
+            e.preventDefault();
+            const emailValue = document.getElementById('login-email').value.toLowerCase();
+
+            // Direct route matching for testing dashboard versions:
+            // Input an email containing 'farmer' to test the farmer portal view layout
+            if (emailValue.includes('farmer')) {
+                window.location.href = 'farmer-dashboard.html';
+            } else {
+                window.location.href = 'consumer-dashboard.html';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,187 @@
+/* --- LOGIN COMPACT VIEWPORT STYLES --- */
+
+:root {
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-mint: #22c55e;      /* Mint Green Accent */
+    --bg-gradient: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
+    --text-dark: #0f172a;        /* Charcoal text */
+    --text-muted: #475569;       /* Slate subtext */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Force mobile container constraints */
+.phone-container {
+    background: var(--bg-gradient);
+    width: 100%;
+    max-width: 412px;
+    min-width: 320px;
+    min-height: 732px;
+    border-radius: 32px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 8px solid #ffffff; 
+}
+
+/* Header Alignment */
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+    width: 100%;
+}
+
+.logo-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--primary-dark);
+}
+
+.help-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.main-title {
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.main-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 16px;
+    margin-bottom: 36px;
+}
+
+/* White Form Panel Box */
+.registration-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    width: 100%;
+}
+
+/* Input Row Styles */
+.form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-dark);
+}
+
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+}
+
+/* Buttons */
+.btn-submit {
+    background-color: var(--primary-dark) !important;
+    color: #ffffff !important;
+    border: none;
+    border-radius: 99px;
+    padding: 14px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+    display: block;
+}
+
+.btn-google {
+    background-color: white !important;
+    border: 1.5px solid #e2e8f0;
+    color: var(--text-dark) !important;
+    font-weight: 600;
+    margin-top: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.divider {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 11px;
+    font-weight: 600;
+    margin: 24px 0;
+    letter-spacing: 0.5px;
+}
+
+.footer-prompt {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: auto;
+    padding-bottom: 12px;
+}
+
+.footer-prompt a {
+    color: var(--text-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
