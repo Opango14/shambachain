@@ -17,3 +17,16 @@ type AddEventRequest struct {
 	EventType string                 `json:"event_type" binding:"required"`
 	EventData map[string]interface{} `json:"event_data" binding:"required"`
 }
+
+// RegisterUserRequest represents the request body for user registration
+type RegisterUserRequest struct {
+	UserName string `json:"username" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required,min=6"`
+}
+
+// LoginUserRequest represents the request body for user login
+type LoginUserRequest struct {
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required"`
+}

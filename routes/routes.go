@@ -11,6 +11,13 @@ func SetupRoutes(router *gin.Engine) {
 	// API routes
 	api := router.Group("/api")
 	{
+		// Auth routes
+		authGroup := api.Group("/auth")
+		{
+			authGroup.POST("/register", handlers.RegisterHandler)
+			authGroup.POST("/login", handlers.LoginHandler)
+		}
+
 		// Protected routes (require authentication)
 		protected := api.Group("")
 		protected.Use(auth.AuthMiddleware())

@@ -15,3 +15,8 @@ type TraceabilityResponse struct {
 	Verified   bool    `json:"verified"`
 	ChainValid bool    `json:"chain_valid"`
 }
+
+// ErrorResponse represents a generic error response
+type ErrorResponse struct {
+	Error string `json:"error"`
+}

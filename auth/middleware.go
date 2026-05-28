@@ -2,6 +2,7 @@ package auth
 
 import (
 	"net/http"
+	"shambachain/utils"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -30,7 +31,16 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set("token", tokenString)
+		claims, err := utils.ValidateToken(tokenString)
+		if err != nil {
+			ctx.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+				"error": "invalid token: " + err.Error(),
+			})
+			return
+		}
+
+		ctx.Set("user_id", claims["user_id"])
+		ctx.Set("username", claims["username"])
 		ctx.Next()
 	}
 }

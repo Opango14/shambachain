@@ -75,7 +75,7 @@ This implementation plan converts the blockchain produce traceability design int
 - [ ] 3. Checkpoint - Verify blockchain core logic
   - Ensure all tests pass, ask the user if questions arise.
 
-- [~] 4. Implement QR code generation
+- [ ] 4. Implement QR code generation
   - [x] 4.1 Add QR code library dependency
     - Add `github.com/skip2/go-qrcode` to go.mod
     - Run `go mod tidy`
@@ -94,7 +94,7 @@ This implementation plan converts the blockchain produce traceability design int
     - **Validates: Requirements 1.6, 5.1, 5.2, 5.3, 5.4**
     - Test QR code format, size, and uniqueness
 
-- [~] 5. Implement batch registration service
+- [ ] 5. Implement batch registration service
   - [x] 5.1 Create batch registration service function
     - Create `services/batch_service.go` with RegisterBatch function
     - Begin database transaction
@@ -152,7 +152,7 @@ This implementation plan converts the blockchain produce traceability design int
     - Test concurrent event handling with locking
     - _Requirements: 7.1, 7.2, 7.3, 7.5, 8.1, 8.2, 8.3, 8.4, 8.5, 9.1, 9.2, 9.3, 9.4_
 
-- [~] 7. Implement traceability retrieval service
+- [ ] 7. Implement traceability retrieval service
   - [x] 7.1 Create traceability retrieval function
     - Create `services/traceability_service.go` with GetTraceability function
     - Fetch batch record by ID
@@ -200,7 +200,7 @@ This implementation plan converts the blockchain produce traceability design int
     - Handle errors with appropriate HTTP status codes
     - _Requirements: 2.4, 2.5, 3.7, 7.5, 8.5, 11.6, 11.7, 11.8_
   
-  - [~] 9.3 Create traceability retrieval handler
+  - [ ] 9.3 Create traceability retrieval handler
     - Create `handlers/traceability_handler.go` with GetTraceabilityHandler
     - Extract batch ID from URL parameter or query string
     - Call GetTraceability service function
@@ -208,7 +208,7 @@ This implementation plan converts the blockchain produce traceability design int
     - Handle errors with appropriate HTTP status codes
     - _Requirements: 6.1, 6.5_
   
-  - [~] 9.4 Create QR code serving handler
+  - [ ] 9.4 Create QR code serving handler
     - Create handler to serve QR code images from filesystem
     - Validate batch ID and file path
     - Return PNG image with appropriate content-type header
@@ -222,8 +222,8 @@ This implementation plan converts the blockchain produce traceability design int
     - Test QR code serving endpoint
     - Test error responses and validation
 
-- [~] 10. Set up API routes
-  - [~] 10.1 Create route configuration
+- [ ] 10. Set up API routes
+  - [ ] 10.1 Create route configuration
     - Create `routes/routes.go` with SetupRoutes function
     - Define POST /api/batches for batch registration
     - Define POST /api/batches/:id/events for event recording
@@ -232,22 +232,22 @@ This implementation plan converts the blockchain produce traceability design int
     - Apply authentication middleware to protected routes
     - _Requirements: 1.1, 3.1, 6.1_
   
-  - [~] 10.2 Update main.go to use new routes
+  - [ ] 10.2 Update main.go to use new routes
     - Import routes package
     - Initialize database with new models
     - Call SetupRoutes with Gin router
     - Remove old blockchain demo code
     - _Requirements: 1.1, 2.1_
 
-- [~] 11. Integration and wiring
-  - [~] 11.1 Wire all components together
+- [ ] 11. Integration and wiring
+  - [ ] 11.1 Wire all components together
     - Ensure database initialization includes all models
     - Ensure all handlers are registered with routes
     - Ensure QR code directory is created on startup
     - Add logging for key operations
     - _Requirements: 1.1, 2.1, 5.6_
   
-  - [~] 11.2 Add input validation helpers
+  - [ ] 11.2 Add input validation helpers
     - Create `utils/validation.go` with validation helper functions
     - Add ValidateEventType function
     - Add ValidateActorRole function
