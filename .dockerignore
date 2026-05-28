@@ -1,0 +1,18 @@
+# git
+.git
+.gitignore
+
+# binaries
+shambachain
+bin/
+dist/
+
+# env
+.env
+
+# editors
+.vscode
+.idea
+
+# excluded service
+services/qrcodes
