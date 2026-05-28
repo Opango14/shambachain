@@ -136,7 +136,7 @@ func TestGenerateQRCode_UniqueFiles(t *testing.T) {
 func TestGenerateQRCode_InvalidOutputPath(t *testing.T) {
 	// Try to write to a path that should fail (e.g., a file instead of directory)
 	tempDir := t.TempDir()
-	
+
 	// Create a file
 	filePath := filepath.Join(tempDir, "notadir")
 	if err := os.WriteFile(filePath, []byte("test"), 0644); err != nil {

@@ -37,9 +37,9 @@ import (
 //   - New block's PrevHash = previous block's Hash
 //   - Updates batch's CurrentHash to new block's Hash
 //   - Updates batch's Status based on event type:
-//     * "transport" -> "in_transit"
-//     * "transfer" -> "delivered"
-//     * "sale" -> "sold"
+//   - "transport" -> "in_transit"
+//   - "transfer" -> "delivered"
+//   - "sale" -> "sold"
 //   - Returns nil on success, error on failure
 //   - Transaction is atomic: either all updates succeed or all rollback
 //
@@ -153,7 +153,7 @@ func AddEvent(db *gorm.DB, batchID string, actorID string, actorRole string,
 		batch.Status = "delivered"
 	case "sale":
 		batch.Status = "sold"
-	// For "registration" and "quality_check", status remains unchanged
+		// For "registration" and "quality_check", status remains unchanged
 	}
 
 	if err := tx.Save(&batch).Error; err != nil {

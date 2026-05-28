@@ -22,6 +22,9 @@ func SetupRoutes(router *gin.Engine) {
 		protected := api.Group("")
 		protected.Use(auth.AuthMiddleware())
 		{
+			// User profile
+			protected.GET("/user/profile", handlers.GetProfileHandler)
+
 			// Batch registration
 			protected.POST("/batches", handlers.RegisterBatchHandler)
 

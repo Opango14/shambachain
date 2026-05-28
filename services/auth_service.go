@@ -55,3 +55,15 @@ func LoginUser(req models.LoginUserRequest) (string, error) {
 
 	return token, nil
 }
+
+// GetUserByID retrieves a user's details by their ID
+func GetUserByID(userID uint) (*models.User, error) {
+	db := database.GetDB()
+
+	var user models.User
+	if err := db.First(&user, userID).Error; err != nil {
+		return nil, errors.New("user not found")
+	}
+
+	return &user, nil
+}
