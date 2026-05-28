@@ -27,11 +27,12 @@ body {
     padding: 20px;
 }
 
-/* Simulated Mobile Viewport Screen */
+/* Force strict width caps so it stays a mobile layout on any screen size */
 .phone-container {
     background: var(--bg-gradient);
     width: 100%;
-    max-width: 412px;
+    max-width: 412px;      /* Standard mobile screen maximum width */
+    min-width: 320px;      /* Prevents breaking on tiny devices */
     min-height: 732px;
     border-radius: 32px;
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
@@ -39,7 +40,8 @@ body {
     display: flex;
     flex-direction: column;
     position: relative;
-    border: 8px solid #ffffff; /* Gives it an app frame feel */
+    border: 8px solid #ffffff; 
+    box-sizing: border-box; /* Ensures padding doesn't stretch the width */
 }
 
 /* Top App Branding Navigation */
@@ -84,13 +86,15 @@ body {
     margin-bottom: 36px;
 }
 
-/* Registration White Panel Card */
+/* Force the form card to adapt strictly to the parent phone viewport width */
 .registration-card {
     background: #ffffff;
     border: 1px solid #e2e8f0;
     border-radius: 20px;
     padding: 24px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    width: 100%;           /* Fill out phone width perfectly */
+    box-sizing: border-box; 
 }
 
 /* Two-Step Progress Bar Indicator */

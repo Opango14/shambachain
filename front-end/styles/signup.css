@@ -1,0 +1,169 @@
+/* --- REGISTRATION FORM STYLES --- */
+
+body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.phone-container {
+    background: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
+    width: 100%;
+    max-width: 412px;
+    min-width: 320px;
+    min-height: 732px;
+    border-radius: 32px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 8px solid #ffffff; 
+    box-sizing: border-box;
+}
+
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 36px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.logo-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    color: #022c22;
+}
+
+.logo-block span {
+    font-size: 20px;
+}
+
+.help-link {
+    color: #475569;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.help-link:hover {
+    color: #022c22;
+    text-decoration: underline;
+}
+
+/* Tab/Pill Toggle Navigation */
+.toggle-container {
+    display: flex;
+    background: #f1f5f9;
+    padding: 4px;
+    border-radius: 99px;
+    margin-bottom: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+.toggle-tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.toggle-tab.active {
+    background: var(--primary-dark);
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(2, 44, 34, 0.15);
+}
+
+/* Input Fields */
+.form-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 6px;
+}
+
+/* Force the interactive white card to mold itself cleanly to the phone width */
+.registration-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 14px;
+    color: var(--text-dark);
+    outline: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    border-color: var(--primary-dark);
+    background: #ffffff;
+}
+
+/* Password wrapper for eye toggle placement */
+.password-wrapper {
+    position: relative;
+}
+
+.password-toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-muted);
+}
+
+/* Primary Action Buttons */
+.btn-submit {
+    background-color: #022c22 !important;
+    color: #ffffff;
+    border: none;
+    border-radius: 99px;
+    padding: 14px;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: opacity 0.2s;
+}
+
+.btn-submit:hover {
+    opacity: 0.95;
+}
