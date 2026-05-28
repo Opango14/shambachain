@@ -1,0 +1,207 @@
+/* Core Design Variables matched to UI */
+:root {
+    --primary-dark: #022c22;
+    --accent-mint: #22c55e;
+    --bg-light-mint: #e8faf0;
+    --bg-dark-mint: #115e59;
+    --bg-gradient: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
+    --text-dark: #0f172a;
+    --text-muted: #475569;
+    --border-color: #cbd5e1;
+}
+
+/* Global Reset */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Simulated Mobile Viewport Screen */
+.phone-container {
+    background: var(--bg-gradient);
+    width: 100%;
+    max-width: 412px;
+    min-height: 732px;
+    border-radius: 32px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 8px solid #ffffff; /* Gives it an app frame feel */
+}
+
+/* Top App Branding Navigation */
+.nav-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 48px;
+}
+
+.logo-block {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 700;
+    font-size: 18px;
+    color: var(--primary-dark);
+}
+
+.help-link {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Headers */
+.main-title {
+    font-size: 26px;
+    font-weight: 800;
+    text-align: center;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+}
+
+.main-subtitle {
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 16px;
+    margin-bottom: 36px;
+}
+
+/* Registration White Panel Card */
+.registration-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+}
+
+/* Two-Step Progress Bar Indicator */
+.step-indicator {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 28px;
+}
+
+.indicator-bar {
+    height: 5px;
+    flex: 1;
+    background: #e2e8f0;
+    border-radius: 10px;
+}
+
+.indicator-bar.active {
+    background: var(--primary-dark);
+}
+
+.prompt-text {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Role Selector Options Buttons */
+.role-btn {
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 16px;
+    width: 100%;
+    margin-bottom: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    text-align: left;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.role-btn:hover {
+    border-color: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+/* Specific Role Icon Circles */
+.icon-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    margin-right: 14px;
+    flex-shrink: 0;
+}
+
+.icon-consumer {
+    background-color: var(--bg-light-mint);
+    color: var(--accent-mint);
+}
+
+.icon-farmer {
+    background-color: var(--primary-dark);
+    color: #ffffff;
+}
+
+.role-body {
+    flex: 1;
+}
+
+.role-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 3px;
+}
+
+.role-description {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.4;
+}
+
+.role-arrow {
+    color: #94a3b8;
+    font-size: 14px;
+    font-weight: bold;
+    padding-left: 8px;
+}
+
+/* Footer Switching Prompts */
+.footer-prompt {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-top: auto;
+    padding-bottom: 12px;
+}
+
+.footer-prompt a {
+    color: var(--text-dark);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.footer-prompt a:hover {
+    text-decoration: underline;
+}
