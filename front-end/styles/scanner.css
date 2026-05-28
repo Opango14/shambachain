@@ -1,0 +1,223 @@
+:root {
+    --primary-dark: #022c22;
+    --accent-mint: #86efac;     /* Bright mint green matching the picture buttons */
+    --accent-text: #064e3b;     /* Darker forest tint for active button text */
+    --text-light: #ffffff;
+    --text-muted: #cbd5e1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Base phone viewport container */
+.phone-container {
+    background: linear-gradient(rgba(15,46,36,0.65), rgba(15,46,36,0.85)), url('https://unsplash.com');
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    max-width: 412px;
+    min-width: 320px;
+    min-height: 732px;
+    border-radius: 32px;
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    border: 8px solid #ffffff;
+    overflow: hidden;
+}
+
+/* White top navigation app bar */
+.top-app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #ffffff;
+    padding: 16px 20px;
+    width: 100%;
+}
+
+.menu-icon, .qr-shortcut {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+}
+
+.app-bar-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* Viewfinder layout grid mask */
+.scanner-body-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* White Align Badge */
+.align-badge {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    border-radius: 20px;
+    padding: 8px 18px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* Core Target Box viewport */
+.viewfinder-box {
+    width: 260px;
+    height: 260px;
+    position: relative;
+    border-radius: 16px;
+    margin-bottom: 24px;
+    background: rgba(255,255,255,0.03);
+}
+
+/* Corner bracket targeting layers */
+.corner-target {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    border: 4px solid var(--accent-mint);
+}
+
+.top-left  { top: 0; left: 0; border-right: none; border-bottom: none; border-top-left-radius: 12px; }
+.top-right { top: 0; right: 0; border-left: none; border-bottom: none; border-top-right-radius: 12px; }
+.bot-left  { bottom: 0; left: 0; border-right: none; border-top: none; border-bottom-left-radius: 12px; }
+.bot-right { bottom: 0; right: 0; border-left: none; border-top: none; border-bottom-right-radius: 12px; }
+
+/* Subtext strings */
+.verification-header {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 6px;
+    opacity: 0.9;
+}
+
+.instruction-text {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-align: center;
+    max-width: 240px;
+    line-height: 1.4;
+    margin-bottom: 40px;
+}
+
+/* Button control layout belt */
+.control-belt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    margin-bottom: 80px; /* Space room for bottom navigation menu */
+}
+
+.circle-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(5px);
+    color: var(--text-light);
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.btn-scan-history {
+    background-color: var(--accent-mint);
+    color: var(--accent-text);
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+    border-radius: 25px;
+    padding: 0 24px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 15px rgba(134, 239, 172, 0.25);
+    text-decoration: none;
+}
+
+/* Bottom Tray Menu container layout */
+.app-bottom-dock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 8px;
+    height: 70px;
+}
+
+.dock-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    flex: 1;
+}
+
+.dock-tab-link.active-pill-state {
+    color: #0f2e24;
+}
+
+.pill-overlay-badge {
+    background-color: #bbf7d0;
+    padding: 4px 16px;
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}

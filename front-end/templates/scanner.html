@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Scanner</title>
+    <link rel="stylesheet" href="../styles/scanner.css">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- White Top Navigation App Bar -->
+        <div class="top-app-bar">
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">☰</button>
+            <div class="app-bar-title">ShambaChain</div>
+            <button class="qr-shortcut">🔳</button>
+        </div>
+
+        <!-- Main Viewfinder Tracking Camera Space -->
+        <div class="scanner-body-area">
+            
+            <!-- Top Align Warning Pill Badge -->
+            <div class="align-badge">
+                <span style="color: #22c55e;">⚙</span> ALIGN QR CODE
+            </div>
+
+            <!-- Viewfinder Brackets Frame layout -->
+            <!-- Simulated shortcut trigger: Clicking the frame acts like a scan and opens details.html -->
+            <div class="viewfinder-box" onclick="window.location.href='details.html'" style="cursor: pointer;">
+                <div class="corner-target top-left"></div>
+                <div class="corner-target top-right"></div>
+                <div class="corner-target bot-left"></div>
+                <div class="corner-target bot-right"></div>
+            </div>
+
+            <!-- Directions Headers -->
+            <h2 class="verification-header">Verification</h2>
+            <p class="instruction-text">Scan the batch label to trace origin</p>
+
+            <!-- Bottom utility buttons block belt -->
+            <div class="control-belt">
+                <!-- Left utility: Flashlight -->
+                <button class="circle-btn" onclick="alert('Flashlight Activated')">🔦</button>
+                
+                <!-- Center main action pill link back to main dashboard history stack -->
+                <a href="consumer-dashboard.html" class="btn-scan-history">
+                    <span>⏳</span> Scan History
+                </a>
+                
+                <!-- Right utility: Gallery upload picker -->
+                <button class="circle-btn" onclick="alert('Open Gallery Upload Selection')">🖼️</button>
+            </div>
+
+        </div>
+
+        <!-- Sticky Persistent Tray Bottom Menu Bar -->
+        <div class="app-bottom-dock">
+            
+            <!-- Trace tab matches active accent state frame layout -->
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <div style="font-size: 16px; padding: 4px 0;">🕒</div>
+                <span>History</span>
+            </a>
+
+            <a href="#" class="dock-tab-link">
+                <div style="font-size: 16px; padding: 4px 0;">📓</div>
+                <span>Ledger</span>
+            </a>
+
+            <a href="login.html" class="dock-tab-link">
+                <div style="font-size: 16px; padding: 4px 0;">👤</div>
+                <span>Profile</span>
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
