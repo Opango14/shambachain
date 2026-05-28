@@ -63,6 +63,10 @@ Hackathon project on Blockchain.
 
 ### Public Routes
 
+- **`GET /api/marketplace`**
+  Fetch all products currently available on the market (e.g. status is `registered` or `in_transit`).
+  **Expected Payload:** None.
+
 - **`GET /api/trace/:batchID`**
   Retrieve traceability information for a specific batch. Publicly accessible so buyers can scan QR codes.
 

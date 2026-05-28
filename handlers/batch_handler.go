@@ -102,3 +102,22 @@ func containsHelper(s, substr string) bool {
 	}
 	return false
 }
+
+// GetMarketplaceHandler handles GET /api/marketplace to fetch available market products
+func GetMarketplaceHandler(ctx *gin.Context) {
+	db := database.GetDB()
+
+	batches, err := services.GetMarketBatches(db)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"error":   "Failed to fetch market products",
+			"details": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message":  "Successfully fetched market products",
+		"products": batches,
+	})
+}

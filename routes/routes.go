@@ -33,6 +33,9 @@ func SetupRoutes(router *gin.Engine) {
 		}
 
 		// Public routes (no authentication required)
+		// Marketplace - public so buyers can see available products
+		api.GET("/marketplace", handlers.GetMarketplaceHandler)
+
 		// Traceability retrieval - public so buyers can scan QR codes
 		api.GET("/trace/:batchID", handlers.GetTraceabilityHandler)
 	}

@@ -203,3 +203,19 @@ func readAndEncodeQRCode(filePath string) (string, error) {
 	encoded := base64.StdEncoding.EncodeToString(data)
 	return encoded, nil
 }
+
+// GetMarketBatches retrieves batches that are available in the marketplace.
+// It filters out batches that have been "sold" or "delivered".
+func GetMarketBatches(db *gorm.DB) ([]models.Batch, error) {
+	if db == nil {
+		return nil, fmt.Errorf("database connection cannot be nil")
+	}
+
+	var batches []models.Batch
+	// Retrieve batches with status 'registered' or 'in_transit'
+	if err := db.Where("status IN ?", []string{"registered", "in_transit"}).Find(&batches).Error; err != nil {
+		return nil, fmt.Errorf("failed to fetch market batches: %w", err)
+	}
+
+	return batches, nil
+}
