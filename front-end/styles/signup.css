@@ -167,3 +167,24 @@ body {
 .btn-submit:hover {
     opacity: 0.95;
 }
+
+.footer-prompt {
+    text-align: center;
+    font-size: 14px;
+    color: #475569;
+    margin-top: auto;
+    padding-top: 24px;
+    padding-bottom: 12px;
+    width: 100%;
+}
+
+.footer-prompt a {
+    color: #022c22;
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.footer-prompt a:hover {
+    text-decoration: underline;
+}
