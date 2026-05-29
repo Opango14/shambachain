@@ -23,10 +23,20 @@ type RegisterUserRequest struct {
 	UserName string `json:"username" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required,min=6"`
+	Role     string `json:"role" binding:"required,oneof=consumer farmer transporter"`
 }
 
 // LoginUserRequest represents the request body for user login
 type LoginUserRequest struct {
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
+}
+
+// UpdateProfileRequest represents the request body for updating user profile
+type UpdateProfileRequest struct {
+	FullName    string `json:"full_name"`
+	PhoneNumber string `json:"phone_number"`
+	Address     string `json:"address"`
+	FarmName    string `json:"farm_name"`
+	Company     string `json:"company"`
 }

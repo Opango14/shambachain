@@ -28,6 +28,7 @@ func RegisterHandler(c *gin.Context) {
 			"id":       user.ID,
 			"username": user.UserName,
 			"email":    user.Email,
+			"role":     user.Role,
 		},
 	})
 }
@@ -53,6 +54,7 @@ func LoginHandler(c *gin.Context) {
 			"id":         user.ID,
 			"username":   user.UserName,
 			"email":      user.Email,
+			"role":       user.Role,
 			"created_at": user.CreatedAt,
 		},
 	})
@@ -89,6 +91,47 @@ func GetProfileHandler(c *gin.Context) {
 		"id":         user.ID,
 		"username":   user.UserName,
 		"email":      user.Email,
+		"role":       user.Role,
+		"profile":    user.Profile,
 		"created_at": user.CreatedAt,
+	})
+}
+
+// UpdateProfileHandler updates the profile of the currently authenticated user
+func UpdateProfileHandler(c *gin.Context) {
+	userIDVal, exists := c.Get("user_id")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User ID not found in context"})
+		return
+	}
+
+	var userID uint
+	switch v := userIDVal.(type) {
+	case float64:
+		userID = uint(v)
+	case uint:
+		userID = v
+	case int:
+		userID = uint(v)
+	default:
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Invalid user ID type in context"})
+		return
+	}
+
+	var req models.UpdateProfileRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(http.StatusBadRequest, models.ErrorResponse{Error: err.Error()})
+		return
+	}
+
+	profile, err := services.UpdateProfile(userID, req)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, models.ErrorResponse{Error: err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Profile updated successfully",
+		"profile": profile,
 	})
 }

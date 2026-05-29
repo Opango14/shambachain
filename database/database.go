@@ -20,6 +20,7 @@ func InitDB() {
 	}
 	db.AutoMigrate(
 		&models.User{},
+		&models.Profile{},
 		&models.Batch{},
 		&models.Block{},
 	)

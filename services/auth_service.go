@@ -26,6 +26,7 @@ func RegisterUser(req models.RegisterUserRequest) (*models.User, error) {
 		UserName: req.UserName,
 		Email:    req.Email,
 		Password: hashedPassword,
+		Role:     req.Role,
 	}
 
 	if err := db.Create(user).Error; err != nil {
@@ -66,4 +67,26 @@ func GetUserByID(userID uint) (*models.User, error) {
 	}
 
 	return &user, nil
+}
+
+// UpdateProfile updates or creates a user's profile
+func UpdateProfile(userID uint, req models.UpdateProfileRequest) (*models.Profile, error) {
+	db := database.GetDB()
+
+	profile := &models.Profile{}
+	if err := db.Where("user_id = ?", userID).First(profile).Error; err != nil {
+		profile = &models.Profile{UserID: userID}
+	}
+
+	profile.FullName = req.FullName
+	profile.PhoneNumber = req.PhoneNumber
+	profile.Address = req.Address
+	profile.FarmName = req.FarmName
+	profile.Company = req.Company
+
+	if err := db.Save(profile).Error; err != nil {
+		return nil, err
+	}
+
+	return profile, nil
 }
