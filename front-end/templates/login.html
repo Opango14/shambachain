@@ -15,7 +15,7 @@
         <div class="nav-header">
             <div class="logo-block">
                 <span id="brand-emoji"></span> 
-                <span id="brand-text"></span>
+                <span id="brand-text" onclick="window.location.href='index.html'"></span>
             </div>
             <a href="help-center.html" class="help-link" id="nav-help-label"></a>
         </div>
@@ -49,8 +49,8 @@
 
             <div class="divider" id="display-divider"></div>
             
-            <button type="button" class="btn-submit btn-google" onclick="alert('Google Authentication Service Connected Successfully!')">
-                <span id="google-icon">🌐</span> <span id="google-btn-txt"></span>
+            <button type="button" class="btn-submit btn-google" onclick="window.location.href='signup.html'">
+                <span id="google-btn-txt"></span>
             </button>
 
         </div>
@@ -74,10 +74,10 @@
             lblEmail: "Email Address",
             lblPassword: "Password",
             btnText: "Sign In →",
-            dividerText: "OR CONTINUE WITH",
-            btnGoogleText: "Sign in with Google",
-            footerPromptText: "Don't have an account?",
-            footerLinkText: "Sign Up",
+            dividerText: "Don't have an account?",
+            btnGoogleText: "Sign Up",
+            footerPromptText: "",
+            footerLinkText: "",
             footerTargetUrl: "signup.html" // Matches your local signup file configuration precisely
         };
 
