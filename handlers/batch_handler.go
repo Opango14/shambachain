@@ -1,12 +1,14 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
-	"github.com/gin-gonic/gin"
 	"shambachain/database"
 	"shambachain/models"
 	"shambachain/services"
+
+	"github.com/gin-gonic/gin"
 )
 
 // RegisterBatchHandler handles POST /api/batches for batch registration
@@ -45,9 +47,18 @@ func RegisterBatchHandler(ctx *gin.Context) {
 		}
 	}
 
-	// Convert farmer ID to string
-	farmerIDStr, ok := farmerID.(string)
-	if !ok {
+	// Convert farmer ID to string — JWT stores numbers as float64
+	var farmerIDStr string
+	switch v := farmerID.(type) {
+	case string:
+		farmerIDStr = v
+	case float64:
+		farmerIDStr = fmt.Sprintf("%.0f", v)
+	case uint:
+		farmerIDStr = fmt.Sprintf("%d", v)
+	case int:
+		farmerIDStr = fmt.Sprintf("%d", v)
+	default:
 		ctx.JSON(http.StatusUnauthorized, gin.H{
 			"error": "invalid farmer ID format",
 		})

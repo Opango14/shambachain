@@ -40,7 +40,7 @@ func LoginHandler(c *gin.Context) {
 		return
 	}
 
-	token, err := services.LoginUser(req)
+	token, user, err := services.LoginUser(req)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, models.ErrorResponse{Error: err.Error()})
 		return
@@ -49,6 +49,12 @@ func LoginHandler(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Login successful",
 		"token":   token,
+		"user": gin.H{
+			"id":         user.ID,
+			"username":   user.UserName,
+			"email":      user.Email,
+			"created_at": user.CreatedAt,
+		},
 	})
 }
 

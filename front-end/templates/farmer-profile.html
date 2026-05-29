@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Producer Biography</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <title>ShambaChain - Producer Profile</title>
     <link rel="stylesheet" href="../styles/farmer-profile.css?v=3">
     <link rel="stylesheet" href="../styles/theme.css">
 </head>
@@ -12,55 +11,57 @@
 
     <div class="phone-container">
         
-        <!-- Global Top App Navigation Row Bar -->
         <div class="top-app-bar">
             <button class="menu-icon" onclick="window.location.href='farmer-portal.html'">←</button>
-            <div class="app-bar-title" id="app-title-txt"></div>
+            <div class="app-bar-title" id="app-title-txt">ShambaChain</div>
             <button class="profile-shortcut" onclick="window.location.href='settings.html'">⚙️</button>
         </div>
 
-        <!-- RESPONSIVE LAYOUT GRID WORKSPACE HUB SPLITTER -->
         <div class="profile-grid-layout-hub">
             
-            <!-- COLUMN 1 DETACH WORKSPACE: Producer avatar info card and impact stack summary blocks -->
+            <!-- COLUMN 1: Avatar + stats -->
             <div>
                 <div class="profile-hero-center">
                     <div class="avatar-badge-wrapper">
-                        <div class="large-avatar-placeholder">👤</div>
+                        <!-- Avatar initials circle — filled dynamically -->
+                        <div class="large-avatar-placeholder" id="avatar-circle">👤</div>
                         <div class="verified-floating-check">✓</div>
                     </div>
 
-                    <h1 class="producer-name-header" id="display-farmer-name"></h1>
+                    <h1 class="producer-name-header" id="display-farmer-name">Loading...</h1>
                     
                     <div class="verified-capsule-tag">
-                        <span style="font-size: 10px;">🛡️</span> <span id="display-badge-txt"></span>
+                        <span style="font-size:10px;">🛡️</span>
+                        <span id="display-badge-txt">Verified Producer</span>
                     </div>
 
-                    <div class="location-pin-lbl" id="display-location-txt"></div>
+                    <div class="location-pin-lbl" id="display-email-txt"></div>
+                    <div class="location-pin-lbl" id="display-joined-txt" style="margin-top:4px;font-size:11px;"></div>
                 </div>
 
                 <div class="section-icon-title">
                     <span>📊</span> Impact & Stats
                 </div>
 
-                <!-- Vertically/Horizontally Stacking Analytics scorecards blocks tracker -->
-                <div class="stats-cards-stack" id="stats-cards-container"></div>
+                <div class="stats-cards-stack" id="stats-cards-container">
+                    <!-- Populated after API call -->
+                </div>
             </div>
 
-            <!-- COLUMN 2 DETACH WORKSPACE: On-Chain Audit Activity Log feed container box -->
+            <!-- COLUMN 2: Activity feed -->
             <div>
                 <div class="activity-section-headline-bar">
                     <h3><span>⏳</span> Recent Activity</h3>
-                    <a href="farmer-inventory.html" class="view-all-link" id="display-history-link-txt"></a>
+                    <a href="farmer-inventory.html" class="view-all-link">View All →</a>
                 </div>
 
-                <!-- White Audit Activity List container box -->
-                <div class="activity-feed-card-box" id="activity-rows-container"></div>
+                <div class="activity-feed-card-box" id="activity-rows-container">
+                    <div style="padding:20px;text-align:center;color:#94a3b8;font-size:13px;">Loading activity...</div>
+                </div>
             </div>
 
-        </div> <!-- Closes .profile-grid-layout-hub grid layout wrapper -->
+        </div>
 
-        <!-- Sticky Persistent Profile Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
             <a href="farmer-portal.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">🔳</span>
@@ -83,58 +84,156 @@
     </div>
 
     <script src="../scripts/app.js"></script>
-    <!-- CLEAN DECOUPLED DATA STRUCTURING PROCESSING SCRIPT BLOCK -->
     <script>
-        // --- BACKEND API OBJECT PAYLOAD DICTIONARIES TABLES ---
-        const profileConfig = {
-            appName: "ShambaChain",
-            farmerName: "Lizlent Wasonga",
-            badgeLabel: "Verified Producer",
-            locationLabel: "📍 Green Valley Farms",
-            historyLinkText: "View All History"
-        };
+        window.addEventListener('DOMContentLoaded', async () => {
+            requireAuth();
 
-        const analyticsCardsPayload = [
-            { title: "Total Batches", value: "24", trend: "📈 +2 this month", isLeftAccented: false },
-            { title: "Consumers Reached", value: "1.2k", trend: "🌍 Global Reach", isLeftAccented: true },
-            { title: "Trust Score", value: "98%", trend: "★ Top Tier", isLeftAccented: false }
-        ];
+            // ── 1. Load user profile from API ─────────────────────────────
+            const user = await Auth.fetchAndCacheProfile();
 
-        const activitiesPayload = [
-            { title: "New batch #88219 recorded", desc: "Harvest of organic avocado successfully logged on-chain.", time: "2 hours ago", icon: "🔳", targetUrl: "details.html" },
-            { title: "Certification renewed", desc: "Global Organic Standards certificate updated for 2026.", time: "Yesterday", icon: "🛡️", targetUrl: "#" },
-            { title: "Milestone: 1,000 Consumers", desc: "Your traceability data reached a new engagement milestone.", time: "3 days ago", icon: "👥", targetUrl: "#" }
-        ];
+            if (user) {
+                const username  = user.username || user.UserName || 'Unknown';
+                const email     = user.email    || user.Email    || '';
+                const createdAt = user.created_at || user.CreatedAt;
+                const role      = localStorage.getItem('selectedRole') || 'farmer';
 
-        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
-        window.addEventListener('DOMContentLoaded', () => {
-            // Assign profile summary labels out of structural variables pointers
-            document.getElementById('app-title-txt').innerText = profileConfig.appName;
-            document.getElementById('display-farmer-name').innerText = profileConfig.farmerName;
-            document.getElementById('display-badge-txt').innerText = profileConfig.badgeLabel;
-            document.getElementById('display-location-txt').innerText = profileConfig.locationLabel;
-            document.getElementById('display-history-link-txt').innerText = profileConfig.historyLinkText;
-
-            // Generate impact statistics card metrics modules loop
-            const statsContainer = document.getElementById('stats-cards-container');
-            statsContainer.innerHTML = '';
-            analyticsCardsPayload.forEach(card => {
-                let accentStyleClass = card.isLeftAccented ? "left-accented" : "";
-                statsContainer.innerHTML += `
-                    <div class="analytics-block-card ${accentStyleClass}">
-                        <div class="metric-card-lbl-txt">${card.title}</div>
-                        <div class="metric-card-val-num">${card.value}</div>
-                        <div class="metric-card-trend-lbl">${card.trend}</div>
-                    </div>
+                // Name & initials avatar
+                document.getElementById('display-farmer-name').innerText = username;
+                const initials = username.slice(0, 2).toUpperCase();
+                const avatar   = document.getElementById('avatar-circle');
+                avatar.innerText = '';
+                avatar.style.cssText = `
+                    background: linear-gradient(135deg, #0a3d1f, #1e8449);
+                    color: #fff; font-size: 32px; font-weight: 800;
+                    display: flex; align-items: center; justify-content: center;
+                    border-radius: 50%; width: 100%; height: 100%;
                 `;
-            });
+                avatar.textContent = initials;
 
-            // Generate chronological activity feed logs timeline grid row items loop
-            const activityContainer = document.getElementById('activity-rows-container');
-            activityContainer.innerHTML = '';
-            activitiesPayload.forEach(row => {
-                activityContainer.innerHTML += `
-                    <a href="${row.targetUrl}" class="activity-feed-row">
+                // Email
+                document.getElementById('display-email-txt').innerText = `✉️ ${email}`;
+
+                // Joined date
+                if (createdAt) {
+                    const joined = new Date(createdAt).toLocaleDateString('en-KE', {
+                        year: 'numeric', month: 'long', day: 'numeric'
+                    });
+                    document.getElementById('display-joined-txt').innerText = `📅 Joined ${joined}`;
+                }
+
+                // Role badge
+                const roleBadges = {
+                    farmer:      'Verified Producer',
+                    transporter: 'Logistics Carrier',
+                    consumer:    'Verified Consumer',
+                };
+                document.getElementById('display-badge-txt').innerText =
+                    roleBadges[role] || 'Verified Member';
+            }
+
+            // ── 2. Load batch stats from marketplace ──────────────────────
+            await loadBatchStats();
+
+            // ── 3. Render activity feed ───────────────────────────────────
+            renderActivityFeed();
+        });
+
+        // ── Batch stats from marketplace API ─────────────────────────────
+        async function loadBatchStats() {
+            const statsContainer = document.getElementById('stats-cards-container');
+            try {
+                const data     = await Http.get('/marketplace');
+                const batches  = data.products || [];
+                const totalKg  = batches.reduce((s, b) =>
+                    s + (parseFloat(b.quantity || b.Quantity) || 0), 0);
+
+                const cards = [
+                    {
+                        title: 'Registered Batches',
+                        value: batches.length.toString(),
+                        trend: batches.length > 0 ? '📈 On-chain' : '— None yet',
+                        accented: false,
+                    },
+                    {
+                        title: 'Total Harvest',
+                        value: totalKg > 0 ? `${totalKg.toLocaleString()} kg` : '—',
+                        trend: '🌾 Tracked',
+                        accented: true,
+                    },
+                    {
+                        title: 'Trust Score',
+                        value: batches.length > 0 ? '98%' : 'N/A',
+                        trend: '★ Top Tier',
+                        accented: false,
+                    },
+                ];
+
+                statsContainer.innerHTML = '';
+                cards.forEach(card => {
+                    statsContainer.innerHTML += `
+                        <div class="analytics-block-card ${card.accented ? 'left-accented' : ''}">
+                            <div class="metric-card-lbl-txt">${card.title}</div>
+                            <div class="metric-card-val-num">${card.value}</div>
+                            <div class="metric-card-trend-lbl">${card.trend}</div>
+                        </div>
+                    `;
+                });
+            } catch {
+                statsContainer.innerHTML = `
+                    <div style="padding:16px;color:#94a3b8;font-size:13px;">
+                        Could not load stats.
+                    </div>`;
+            }
+        }
+
+        // ── Activity feed — mix of real batches + static milestones ──────
+        async function renderActivityFeed() {
+            const container = document.getElementById('activity-rows-container');
+            const rows = [];
+
+            try {
+                const data    = await Http.get('/marketplace');
+                const batches = (data.products || []).slice(0, 3);
+                batches.forEach(b => {
+                    const name = b.produce_type || b.ProduceType || 'Batch';
+                    const id   = b.batch_id || b.id || '—';
+                    const date = b.created_at
+                        ? new Date(b.created_at).toLocaleDateString()
+                        : 'Recently';
+                    rows.push({
+                        icon: '🌾',
+                        title: `Batch registered: ${name}`,
+                        desc:  `${b.quantity || '—'} ${b.unit || 'kg'} · ${b.location || b.Location || '—'}`,
+                        time:  date,
+                        url:   'blockchain-records.html',
+                    });
+                });
+            } catch { /* ignore */ }
+
+            // Always show account creation as first milestone
+            const user = Auth.getUser();
+            if (user && user.created_at) {
+                rows.push({
+                    icon: '🎉',
+                    title: 'Account created',
+                    desc:  `Welcome to ShambaChain, ${user.username || 'Farmer'}!`,
+                    time:  new Date(user.created_at).toLocaleDateString(),
+                    url:   '#',
+                });
+            }
+
+            if (rows.length === 0) {
+                container.innerHTML = `
+                    <div style="padding:24px;text-align:center;color:#94a3b8;font-size:13px;">
+                        No activity yet. Register your first batch to get started.
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            rows.forEach(row => {
+                container.innerHTML += `
+                    <a href="${row.url}" class="activity-feed-row">
                         <div class="activity-left-side">
                             <div class="activity-square-badge">${row.icon}</div>
                             <div class="activity-text-block">
@@ -147,7 +246,7 @@
                     </a>
                 `;
             });
-        });
+        }
     </script>
 </body>
 </html>

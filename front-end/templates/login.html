@@ -151,6 +151,7 @@
                 });
 
                 Auth.setToken(data.token);
+                if (data.user) Auth.setUser(data.user);
 
                 // Determine role from email for routing (can be improved with a role field from API)
                 const emailLower = email.value.toLowerCase();

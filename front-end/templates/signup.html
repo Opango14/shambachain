@@ -185,6 +185,7 @@
                 });
 
                 Auth.setToken(loginData.token);
+                if (loginData.user) Auth.setUser(loginData.user);
                 localStorage.setItem('cachedUsername', username.value.trim());
 
                 setTimeout(() => {

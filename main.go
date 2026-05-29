@@ -25,6 +25,9 @@ func main() {
 	// Serve static JS files
 	router.Static("/scripts", "./front-end/scripts")
 
+	// Silence favicon 404s
+	router.GET("/favicon.ico", func(c *gin.Context) { c.Status(204) })
+
 	// Serve HTML templates
 	router.LoadHTMLGlob("front-end/templates/*")
 
@@ -32,9 +35,14 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.html", nil)
 	})
-	// Serve all HTML pages
+	// Serve all HTML pages — only handle .html requests, ignore favicon/devtools/etc.
 	router.GET("/:page", func(c *gin.Context) {
 		page := c.Param("page")
+		// Only serve files that end in .html
+		if len(page) < 5 || page[len(page)-5:] != ".html" {
+			c.Status(404)
+			return
+		}
 		c.HTML(200, page, nil)
 	})
 

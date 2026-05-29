@@ -34,6 +34,17 @@ const Auth = {
     localStorage.removeItem('cachedUsername');
     window.location.href = 'login.html';
   },
+
+  // Fetch fresh profile from API and cache it, returns the user object
+  async fetchAndCacheProfile() {
+    try {
+      const data = await Http.get('/user/profile', true);
+      this.setUser(data);
+      return data;
+    } catch {
+      return this.getUser(); // fall back to cached copy
+    }
+  },
 };
 
 // HTTP CLIENT

@@ -35,25 +35,25 @@ func RegisterUser(req models.RegisterUserRequest) (*models.User, error) {
 	return user, nil
 }
 
-// LoginUser verifies credentials and returns a JWT token
-func LoginUser(req models.LoginUserRequest) (string, error) {
+// LoginUser verifies credentials and returns a JWT token and the user
+func LoginUser(req models.LoginUserRequest) (string, *models.User, error) {
 	db := database.GetDB()
 
 	var user models.User
 	if err := db.Where("email = ?", req.Email).First(&user).Error; err != nil {
-		return "", errors.New("invalid email or password")
+		return "", nil, errors.New("invalid email or password")
 	}
 
 	if !utils.IsHashed(user.Password, req.Password) {
-		return "", errors.New("invalid email or password")
+		return "", nil, errors.New("invalid email or password")
 	}
 
 	token, err := utils.GenerateToken(user.ID, user.UserName)
 	if err != nil {
-		return "", err
+		return "", nil, err
 	}
 
-	return token, nil
+	return token, &user, nil
 }
 
 // GetUserByID retrieves a user's details by their ID
