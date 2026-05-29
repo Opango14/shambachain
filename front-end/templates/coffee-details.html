@@ -6,6 +6,7 @@
     <title>ShambaChain - Crop Verification Profile</title>
     <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/coffee-details.css?v=3">
+    <link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body>
 
@@ -112,7 +113,7 @@
         window.addEventListener('DOMContentLoaded', () => {
             // Mapping texts variables over to layout interface selectors
             document.getElementById('app-title-txt').innerText = cropConfig.appName;
-            document.getElementById('crop-img-bg').style.backgroundImage = "url('https://unsplash.com')";
+            document.getElementById('crop-img-bg').style.backgroundImage = "url('https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=800&q=80&fit=crop')";
             document.getElementById('display-badge-lbl').innerText = cropConfig.badgeText;
             document.getElementById('display-crop-name').innerText = cropConfig.cropName;
             document.getElementById('display-provenance-lbl').innerText = cropConfig.provenanceText;

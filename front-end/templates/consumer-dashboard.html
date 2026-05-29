@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../styles/consumer-dashboard.css?v=3">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { corePlugins: { preflight: false }, prefix: 'tw-' }</script>
+    <link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body>
 
@@ -135,6 +136,26 @@
             renderScanHistoryListLog();
         });
 
+        // Curated Unsplash images per crop type (free, no API key needed)
+        const cropImages = {
+            coffee:     'https://images.unsplash.com/photo-1447933601403-0c6688de566e?w=400&q=80&fit=crop',
+            rice:       'https://images.unsplash.com/photo-1536304993881-ff86e0c9b7b5?w=400&q=80&fit=crop',
+            potato:     'https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80&fit=crop',
+            maize:      'https://images.unsplash.com/photo-1551754655-cd27e38d2076?w=400&q=80&fit=crop',
+            avocado:    'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?w=400&q=80&fit=crop',
+            tilapia:    'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=400&q=80&fit=crop',
+            cacao:      'https://images.unsplash.com/photo-1606312619070-d48b4c652a52?w=400&q=80&fit=crop',
+            default:    'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80&fit=crop',
+        };
+
+        function getCropImage(name) {
+            const key = (name || '').toLowerCase();
+            for (const [k, url] of Object.entries(cropImages)) {
+                if (key.includes(k)) return url;
+            }
+            return cropImages.default;
+        }
+
         async function loadMarketplaceCarousel() {
             const carousel = document.getElementById('featured-produce-carousel');
             try {
@@ -146,19 +167,16 @@
                     return;
                 }
 
-                const cropEmojis = { 'coffee': '☕', 'rice': '🌾', 'potato': '🥔', 'maize': '🌽', 'avocado': '🥑', 'tilapia': '🐟', 'cacao': '🍫' };
                 carousel.innerHTML = '';
                 products.slice(0, 6).forEach(item => {
                     const name = item.produce_type || item.ProduceType || 'Produce';
-                    const key = name.toLowerCase();
-                    const emoji = Object.entries(cropEmojis).find(([k]) => key.includes(k))?.[1] || '🌿';
                     const batchId = item.batch_id || item.id || '';
+                    const imgUrl = getCropImage(name);
 
                     carousel.innerHTML += `
                         <a href="search-traceability.html" class="carousel-crop-card"
                             onclick="sessionStorage.setItem('sc_scan_result','${batchId}')">
-                            <div class="crop-image-frame" style="background:#e8faf0;display:flex;align-items:center;justify-content:center;font-size:40px;">
-                                ${emoji}
+                            <div class="crop-image-frame" style="background-image:url('${imgUrl}');background-size:cover;background-position:center;position:relative;">
                                 <div class="authentic-overlay-badge">✓ LIVE</div>
                             </div>
                             <div class="crop-footer-details">
