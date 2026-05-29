@@ -22,6 +22,9 @@ func main() {
 	// Serve static CSS files
 	router.Static("/styles", "./front-end/styles")
 
+	// Serve static JS files
+	router.Static("/scripts", "./front-end/scripts")
+
 	// Serve HTML templates
 	router.LoadHTMLGlob("front-end/templates/*")
 
