@@ -17,7 +17,7 @@
 }
 
 body {
-    background: linear-gradient(180deg, #f4fbf7 0%, #ffffff 50%, #f0f9f4 100%);
+    background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -25,15 +25,18 @@ body {
     padding: 24px;
 }
 
-/* UNIVERSAL CONTAINER SYSTEM */
-/* Fills out the entire workspace width naturally on any device screen */
+/* Universal Container System */
 .phone-container {
     width: 100%;
-    max-width: var(--max-width-desktop); /* Caps layout on giant screens to keep it elegant */
+    max-width: var(--max-width-desktop);
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - 48px);
+    background: rgba(253, 250, 245, 0.97);
+    border-radius: 20px;
+    padding: 32px;
+    box-shadow: 0 24px 80px rgba(10, 61, 31, 0.35);
 }
 
 /* TOP BRANDING NAVIGATION HEADER */

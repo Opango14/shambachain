@@ -26,7 +26,7 @@ body {
 
 /* Universal Workspace Canvas Wrapper */
 .phone-container {
-    background: linear-gradient(rgba(15,46,36,0.7), rgba(15,46,36,0.9)), url('https://unsplash.com');
+    background: linear-gradient(rgba(10,61,31,0.75), rgba(10,61,31,0.92)), url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80&fit=crop');
     background-size: cover;
     background-position: center;
     width: 100%;

@@ -1,0 +1,599 @@
+/**
+ * ShambaChain — Agricultural Theme Override
+ * Impactful earth tones, harvest golds, soil browns, and deep canopy greens.
+ * This file loads after all page-specific CSS and overrides the colour system globally.
+ */
+
+/* ─── DESIGN TOKENS ──────────────────────────────────────────────────────────
+   Palette inspired by:
+   - Canopy Green   : deep forest, tea leaves, avocado skin
+   - Harvest Gold   : ripe maize, wheat, sunflower
+   - Soil Brown     : rich earth, coffee, cacao
+   - Sky Blue       : irrigation, water, clear sky
+   - Flame Orange   : ripe tomato, paprika, sunset
+   - Cream          : fresh milk, cassava, coconut flesh
+*/
+:root {
+  /* Primary greens */
+  --agri-canopy:      #0a3d1f;   /* deepest forest canopy */
+  --agri-forest:      #145a32;   /* mature tree bark green */
+  --agri-leaf:        #1e8449;   /* fresh leaf */
+  --agri-mint:        #27ae60;   /* mint / young shoot */
+  --agri-lime:        #58d68d;   /* lime highlight */
+  --agri-pale-green:  #d5f5e3;   /* very light mint wash */
+
+  /* Harvest golds */
+  --agri-gold:        #d4ac0d;   /* ripe maize / wheat */
+  --agri-amber:       #e67e22;   /* harvest amber */
+  --agri-straw:       #f9e79f;   /* dry straw / pale gold */
+
+  /* Soil & earth */
+  --agri-soil:        #6e2c00;   /* rich red soil */
+  --agri-coffee:      #4a235a;   /* deep coffee / cacao — actually use brown */
+  --agri-coffee:      #5d3a1a;   /* rich coffee brown */
+  --agri-earth:       #935116;   /* warm earth */
+  --agri-sand:        #f0e6d3;   /* dry sand / cassava */
+
+  /* Sky & water */
+  --agri-sky:         #1a5276;   /* deep irrigation blue */
+  --agri-water:       #2e86c1;   /* water channel */
+  --agri-mist:        #d6eaf8;   /* morning mist */
+
+  /* Flame / alert */
+  --agri-flame:       #c0392b;   /* ripe tomato / danger */
+  --agri-sunset:      #e74c3c;   /* sunset orange-red */
+
+  /* Neutrals */
+  --agri-cream:       #fdfaf5;   /* cream / off-white */
+  --agri-parchment:   #f5f0e8;   /* parchment / dry leaf */
+  --agri-charcoal:    #1c2833;   /* charcoal text */
+  --agri-slate:       #566573;   /* muted slate */
+  --agri-border:      #d5dbdb;   /* soft border */
+
+  /* Semantic mappings — override existing vars */
+  --primary-dark:     var(--agri-canopy);
+  --accent-mint:      var(--agri-mint);
+  --bg-light-mint:    var(--agri-pale-green);
+  --text-dark:        var(--agri-charcoal);
+  --text-muted:       var(--agri-slate);
+  --border-color:     var(--agri-border);
+}
+
+/* ─── BODY & PAGE BACKGROUNDS ────────────────────────────────────────────────*/
+body {
+  background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%) !important;
+  min-height: 100vh;
+}
+
+/* Auth pages (login, signup, index) keep a softer gradient */
+body.auth-page {
+  background: linear-gradient(160deg, #f5f0e8 0%, #d5f5e3 50%, #fdfaf5 100%) !important;
+}
+
+/* ─── MAIN CONTAINER ─────────────────────────────────────────────────────────*/
+.phone-container {
+  background: var(--agri-cream) !important;
+  border: 1px solid rgba(20, 90, 50, 0.12) !important;
+  box-shadow: 0 24px 80px rgba(10, 61, 31, 0.35) !important;
+}
+
+/* ─── TOP APP BAR ────────────────────────────────────────────────────────────*/
+.top-app-bar {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border-bottom: 2px solid var(--agri-gold) !important;
+  border-radius: 20px 20px 0 0;
+  padding: 16px 24px !important;
+  margin-bottom: 0 !important;
+}
+
+.app-bar-title {
+  color: #ffffff !important;
+  font-size: 20px !important;
+  letter-spacing: -0.3px;
+}
+
+.menu-icon, .qr-shortcut, .profile-shortcut,
+.btn-back, .btn-export, .btn-refresh, .btn-search-icon,
+.btn-action-add {
+  color: #ffffff !important;
+  font-size: 20px;
+}
+
+/* ─── NAV HEADER (auth pages) ────────────────────────────────────────────────*/
+.nav-header {
+  border-bottom: 2px solid var(--agri-pale-green) !important;
+  padding-bottom: 16px;
+}
+
+.logo-block {
+  color: var(--agri-canopy) !important;
+  font-weight: 900 !important;
+}
+
+/* ─── HERO BANNER ────────────────────────────────────────────────────────────*/
+.hero-image-card {
+  background:
+    linear-gradient(160deg, rgba(10,61,31,0.55) 0%, rgba(20,90,50,0.82) 100%),
+    url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=1200&q=80&fit=crop') center/cover !important;
+  border-radius: 20px !important;
+  border: 2px solid rgba(212, 172, 13, 0.4) !important;
+  box-shadow: 0 8px 32px rgba(10, 61, 31, 0.3) !important;
+}
+
+.hero-image-card h2 {
+  color: #ffffff !important;
+  text-shadow: 0 2px 8px rgba(0,0,0,0.4);
+}
+
+.hero-image-card p {
+  color: rgba(255,255,255,0.9) !important;
+}
+
+.btn-scan-bar {
+  background: linear-gradient(135deg, var(--agri-gold) 0%, var(--agri-amber) 100%) !important;
+  color: var(--agri-canopy) !important;
+  font-weight: 800 !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(212, 172, 13, 0.4) !important;
+}
+
+.btn-scan-bar:hover {
+  opacity: 0.92 !important;
+  transform: translateY(-1px);
+}
+
+/* ─── METRIC CARDS ───────────────────────────────────────────────────────────*/
+.metric-box {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border: 1px solid rgba(212, 172, 13, 0.3) !important;
+  color: #ffffff !important;
+}
+
+.metric-sub-label  { color: rgba(255,255,255,0.7) !important; }
+.metric-main-value { color: #ffffff !important; }
+.metric-badge-label {
+  color: var(--agri-lime) !important;
+  font-weight: 800 !important;
+}
+.metric-top-line span:first-child { color: var(--agri-gold) !important; }
+
+/* ─── CAROUSEL / PRODUCE CARDS ───────────────────────────────────────────────*/
+.carousel-crop-card {
+  border: 1px solid var(--agri-border) !important;
+  box-shadow: 0 4px 16px rgba(10, 61, 31, 0.08) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.carousel-crop-card:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 32px rgba(10, 61, 31, 0.18) !important;
+}
+
+.crop-image-frame {
+  background-color: var(--agri-pale-green) !important;
+}
+
+.authentic-overlay-badge {
+  background: linear-gradient(135deg, var(--agri-gold), var(--agri-amber)) !important;
+  color: var(--agri-canopy) !important;
+  border: none !important;
+  font-weight: 800 !important;
+}
+
+.crop-name-label { color: var(--agri-charcoal) !important; font-weight: 700 !important; }
+
+/* ─── SECTION HEADLINES ──────────────────────────────────────────────────────*/
+.section-headline-bar h3,
+.section-icon-title,
+.inventory-main-title,
+.explorer-main-title,
+.farm-main-title,
+.hub-main-title,
+.help-main-headline,
+.producer-name-header {
+  color: var(--agri-canopy) !important;
+}
+
+.section-headline-bar .view-all,
+.table-action-link-btn,
+.view-all-link {
+  color: var(--agri-leaf) !important;
+  font-weight: 700 !important;
+}
+
+/* ─── SCAN HISTORY ROWS ──────────────────────────────────────────────────────*/
+.scan-history-row {
+  background: #ffffff !important;
+  border: 1px solid var(--agri-border) !important;
+  border-left: 4px solid var(--agri-mint) !important;
+}
+
+.scan-history-row:hover {
+  background: var(--agri-pale-green) !important;
+}
+
+.scan-headline-text { color: var(--agri-charcoal) !important; }
+.scan-sub-meta      { color: var(--agri-slate) !important; }
+
+/* ─── BOTTOM DOCK ────────────────────────────────────────────────────────────*/
+.app-bottom-dock {
+  background: linear-gradient(0deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border-top: 2px solid var(--agri-gold) !important;
+}
+
+.dock-tab-link {
+  color: rgba(255,255,255,0.55) !important;
+  transition: color 0.2s ease;
+}
+
+.dock-tab-link:hover { color: rgba(255,255,255,0.9) !important; }
+
+.dock-tab-link.active-pill-state {
+  color: #ffffff !important;
+}
+
+.dock-tab-link.active-pill-state .pill-overlay-badge {
+  background: linear-gradient(135deg, var(--agri-gold), var(--agri-amber)) !important;
+  color: var(--agri-canopy) !important;
+  box-shadow: 0 2px 8px rgba(212, 172, 13, 0.4) !important;
+}
+
+.unselected-icon-spacing { color: rgba(255,255,255,0.55) !important; }
+
+/* ─── NAVIGATION DRAWER ──────────────────────────────────────────────────────*/
+.navigation-drawer-pane {
+  background: linear-gradient(180deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border-right: 2px solid var(--agri-gold) !important;
+}
+
+.drawer-header {
+  border-bottom: 1px solid rgba(212, 172, 13, 0.3) !important;
+}
+
+.drawer-header h4 { color: #ffffff !important; }
+.btn-close-drawer { color: rgba(255,255,255,0.8) !important; }
+
+.drawer-link-item {
+  color: rgba(255,255,255,0.85) !important;
+  border-radius: 10px;
+}
+
+.drawer-link-item:hover {
+  background: rgba(255,255,255,0.12) !important;
+  color: #ffffff !important;
+}
+
+/* ─── FORM CARDS ─────────────────────────────────────────────────────────────*/
+.registration-card,
+.form-card-container,
+.contract-profile-card,
+.activity-feed-card-box,
+.inventory-table-card,
+.batch-ledger-table-card,
+.shipments-table-card {
+  background: #ffffff !important;
+  border: 1px solid var(--agri-border) !important;
+  box-shadow: 0 4px 24px rgba(10, 61, 31, 0.06) !important;
+}
+
+.form-card-header { color: var(--agri-canopy) !important; }
+
+.portal-form-input,
+.form-control,
+.search-query-input,
+.search-input-field,
+.batch-form-input {
+  border-color: var(--agri-border) !important;
+  background: var(--agri-cream) !important;
+  color: var(--agri-charcoal) !important;
+}
+
+.portal-form-input:focus,
+.form-control:focus,
+.search-query-input:focus {
+  border-color: var(--agri-leaf) !important;
+  box-shadow: 0 0 0 3px rgba(30, 132, 73, 0.15) !important;
+}
+
+/* ─── SUBMIT BUTTONS ─────────────────────────────────────────────────────────*/
+.btn-submit,
+.btn-generate-qr,
+.btn-commit-ledger {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  color: #ffffff !important;
+  border: none !important;
+  box-shadow: 0 4px 16px rgba(10, 61, 31, 0.3) !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn-submit:hover,
+.btn-generate-qr:hover {
+  opacity: 0.92 !important;
+  transform: translateY(-1px) !important;
+  box-shadow: 0 8px 24px rgba(10, 61, 31, 0.4) !important;
+}
+
+/* Sign-up role tabs */
+.toggle-tab.active {
+  background: linear-gradient(135deg, var(--agri-canopy), var(--agri-forest)) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 12px rgba(10, 61, 31, 0.25) !important;
+}
+
+/* ─── VERIFIED BADGES ────────────────────────────────────────────────────────*/
+.verified-producer-badge,
+.verified-capsule-tag,
+.active-carrier-badge {
+  background: var(--agri-pale-green) !important;
+  color: var(--agri-forest) !important;
+  border-color: var(--agri-lime) !important;
+}
+
+.onchain-capsule-badge {
+  background: linear-gradient(135deg, var(--agri-pale-green), #c8f7dc) !important;
+  color: var(--agri-canopy) !important;
+  border-color: var(--agri-lime) !important;
+  font-weight: 800 !important;
+}
+
+/* ─── ANALYTICS / LIVE CARD ──────────────────────────────────────────────────*/
+.live-harvest-analytics-card,
+.telematics-summary-card {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 60%, var(--agri-leaf) 100%) !important;
+  border: 1px solid rgba(212, 172, 13, 0.3) !important;
+  box-shadow: 0 8px 32px rgba(10, 61, 31, 0.25) !important;
+}
+
+.live-status-pill,
+.telematics-status-pill {
+  background: linear-gradient(135deg, var(--agri-gold), var(--agri-amber)) !important;
+  color: var(--agri-canopy) !important;
+  font-weight: 800 !important;
+}
+
+.analytics-massive-value { color: #ffffff !important; font-size: 28px !important; }
+.analytics-subtext-lbl   { color: rgba(255,255,255,0.75) !important; }
+.shield-check-icon        { color: var(--agri-gold) !important; }
+
+/* ─── PROFILE SECTION ────────────────────────────────────────────────────────*/
+.large-avatar-placeholder {
+  background: var(--agri-pale-green) !important;
+  border-color: var(--agri-lime) !important;
+}
+
+.verified-floating-check {
+  background: var(--agri-leaf) !important;
+  border-color: #ffffff !important;
+}
+
+.analytics-block-card {
+  background: #ffffff !important;
+  border: 1px solid var(--agri-border) !important;
+}
+
+.analytics-block-card.left-accented {
+  border-left: 4px solid var(--agri-gold) !important;
+}
+
+.metric-card-val-num   { color: var(--agri-canopy) !important; }
+.metric-card-trend-lbl { color: var(--agri-leaf) !important; }
+
+/* ─── ACTIVITY FEED ──────────────────────────────────────────────────────────*/
+.activity-feed-row { border-bottom-color: var(--agri-parchment) !important; }
+.activity-feed-row:hover { background: var(--agri-pale-green) !important; }
+
+.activity-square-badge {
+  background: var(--agri-pale-green) !important;
+  color: var(--agri-canopy) !important;
+}
+
+.activity-row-headline { color: var(--agri-charcoal) !important; }
+.activity-row-time-lbl { color: var(--agri-slate) !important; }
+
+/* ─── BLOCKCHAIN / AUDIT TRAIL ───────────────────────────────────────────────*/
+.profile-section-title {
+  color: var(--agri-canopy) !important;
+  border-left-color: var(--agri-gold) !important;
+}
+
+.audit-node-block.confirmed-state .node-graphic-icon-wrap {
+  background: var(--agri-pale-green) !important;
+  border-color: var(--agri-lime) !important;
+  color: var(--agri-canopy) !important;
+}
+
+.audit-node-block.confirmed-state .node-uppercase-status {
+  color: var(--agri-leaf) !important;
+}
+
+.node-hash-lbl { color: var(--agri-forest) !important; }
+
+.vertical-audit-timeline::before,
+.vertical-journey-timeline::before {
+  background: linear-gradient(180deg, var(--agri-gold), var(--agri-lime)) !important;
+}
+
+/* ─── SECURITY BANNER ────────────────────────────────────────────────────────*/
+.security-banner-card {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border: 1px solid rgba(212, 172, 13, 0.3) !important;
+}
+
+/* ─── CHAIN LINK RIBBON ──────────────────────────────────────────────────────*/
+.chain-link-ribbon {
+  background: var(--agri-pale-green) !important;
+  border-color: var(--agri-lime) !important;
+}
+
+.chain-hash-string { color: var(--agri-canopy) !important; }
+
+/* ─── ECO METRICS ────────────────────────────────────────────────────────────*/
+.eco-metric-split-box {
+  background: linear-gradient(135deg, var(--agri-pale-green), #f0fdf4) !important;
+  border: 1px solid var(--agri-lime) !important;
+}
+
+.eco-metric-val-num { color: var(--agri-canopy) !important; }
+
+/* ─── SEARCH / FILTER PILLS ──────────────────────────────────────────────────*/
+.filter-pill-btn {
+  background: var(--agri-parchment) !important;
+  border-color: var(--agri-border) !important;
+  color: var(--agri-slate) !important;
+}
+
+.filter-pill-btn.active-filter-state {
+  background: linear-gradient(135deg, var(--agri-canopy), var(--agri-forest)) !important;
+  color: #ffffff !important;
+  border-color: var(--agri-canopy) !important;
+}
+
+.search-history-item {
+  background: #ffffff !important;
+  border-color: var(--agri-border) !important;
+}
+
+.search-history-item:hover { background: var(--agri-pale-green) !important; }
+
+/* ─── RECOMMENDED FARM CARDS ─────────────────────────────────────────────────*/
+.recommended-producer-card {
+  border-color: var(--agri-border) !important;
+  box-shadow: 0 4px 16px rgba(10, 61, 31, 0.06) !important;
+}
+
+.recommended-producer-card:hover {
+  box-shadow: 0 12px 32px rgba(10, 61, 31, 0.16) !important;
+  transform: translateY(-3px) !important;
+}
+
+.badge-overlay-certified {
+  background: linear-gradient(135deg, var(--agri-gold), var(--agri-amber)) !important;
+  color: var(--agri-canopy) !important;
+  border: none !important;
+  font-weight: 800 !important;
+}
+
+/* ─── SETTINGS ROWS ──────────────────────────────────────────────────────────*/
+.settings-row-item:hover { background: var(--agri-pale-green) !important; }
+.settings-category-lbl   { color: var(--agri-forest) !important; font-weight: 800 !important; }
+.settings-item-text      { color: var(--agri-charcoal) !important; }
+.connected-pill-status {
+  background: var(--agri-pale-green) !important;
+  color: var(--agri-forest) !important;
+  border: 1px solid var(--agri-lime) !important;
+}
+
+.btn-signout-outline {
+  border: 2px solid var(--agri-flame) !important;
+  color: var(--agri-flame) !important;
+  background: transparent !important;
+}
+
+.btn-signout-outline:hover {
+  background: var(--agri-flame) !important;
+  color: #ffffff !important;
+}
+
+/* ─── HELP CENTER ────────────────────────────────────────────────────────────*/
+.topic-block-card.topic-card-mint {
+  background: linear-gradient(135deg, var(--agri-canopy), var(--agri-forest)) !important;
+  color: #ffffff !important;
+}
+
+.topic-block-card.topic-card-grey {
+  background: linear-gradient(135deg, var(--agri-earth), var(--agri-coffee)) !important;
+  color: #ffffff !important;
+}
+
+.support-banner-card {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 60%, var(--agri-leaf) 100%) !important;
+  color: #ffffff !important;
+}
+
+.btn-contact-support {
+  background: linear-gradient(135deg, var(--agri-gold), var(--agri-amber)) !important;
+  color: var(--agri-canopy) !important;
+  font-weight: 800 !important;
+  border: none !important;
+}
+
+.faq-question-trigger-bar:hover { background: var(--agri-pale-green) !important; }
+.faq-question-txt { color: var(--agri-charcoal) !important; }
+
+/* ─── INVENTORY METRICS ──────────────────────────────────────────────────────*/
+.inventory-metric-card {
+  background: linear-gradient(135deg, var(--agri-canopy) 0%, var(--agri-forest) 100%) !important;
+  border: 1px solid rgba(212, 172, 13, 0.25) !important;
+  color: #ffffff !important;
+}
+
+.metric-txt-lbl     { color: rgba(255,255,255,0.7) !important; }
+.metric-val-display-num { color: #ffffff !important; font-size: 24px !important; }
+.metric-pill-token-lbl {
+  background: rgba(255,255,255,0.15) !important;
+  color: var(--agri-straw) !important;
+  border-color: rgba(255,255,255,0.2) !important;
+}
+
+/* ─── TRANSPORTER HUB ────────────────────────────────────────────────────────*/
+.hub-tag-lbl { color: var(--agri-gold) !important; }
+
+.active-carrier-badge {
+  background: rgba(212, 172, 13, 0.15) !important;
+  color: var(--agri-earth) !important;
+  border-color: var(--agri-gold) !important;
+}
+
+.pulse-dot { background: var(--agri-amber) !important; }
+.pulse-dot.stable { background: var(--agri-mint) !important; }
+
+/* ─── SCANNER PAGE ───────────────────────────────────────────────────────────*/
+.phone-container .top-app-bar {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+/* ─── PORTAL LABEL TAG ───────────────────────────────────────────────────────*/
+.portal-label-tag { color: var(--agri-gold) !important; }
+
+/* ─── FIELD PREVIEW CARD ─────────────────────────────────────────────────────*/
+.field-preview-card {
+  background-image:
+    linear-gradient(160deg, rgba(10,61,31,0.4) 0%, rgba(10,61,31,0.7) 100%),
+    url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80&fit=crop') !important;
+  background-size: cover !important;
+  background-position: center !important;
+  border: 2px solid rgba(212, 172, 13, 0.3) !important;
+}
+
+/* ─── FARMER PROFILE HERO ────────────────────────────────────────────────────*/
+.profile-hero-center {
+  background: linear-gradient(160deg, var(--agri-pale-green) 0%, #ffffff 100%);
+  border-radius: 20px;
+  padding: 24px;
+  margin-bottom: 20px;
+  border: 1px solid var(--agri-lime);
+}
+
+/* ─── STEP INDICATOR ─────────────────────────────────────────────────────────*/
+.indicator-bar.active {
+  background: linear-gradient(90deg, var(--agri-canopy), var(--agri-leaf)) !important;
+}
+
+/* ─── FOOTER LINKS ───────────────────────────────────────────────────────────*/
+.footer-prompt a { color: var(--agri-forest) !important; }
+
+/* ─── SCROLLBAR ──────────────────────────────────────────────────────────────*/
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--agri-parchment); }
+::-webkit-scrollbar-thumb {
+  background: var(--agri-leaf);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: var(--agri-canopy); }
+
+/* ─── SELECTION HIGHLIGHT ────────────────────────────────────────────────────*/
+::selection {
+  background: var(--agri-pale-green);
+  color: var(--agri-canopy);
+}
