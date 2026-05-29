@@ -19,11 +19,21 @@ func main() {
 	// Create Gin router
 	router := gin.Default()
 
-	// Setup routes
+	// Serve static CSS files
+	router.Static("/styles", "./front-end/styles")
+
+	// Serve HTML templates
+	router.LoadHTMLGlob("front-end/templates/*")
+
+	// Homepage route
+	router.GET("/", func(c *gin.Context) {
+		c.HTML(200, "index.html", nil)
+	})
+
+	// Setup API routes
 	routes.SetupRoutes(router)
 
 	// Start server
-	fmt.Println("Starting server on :8080...")
 	port := "8080"
 
 	if envPort := os.Getenv("PORT"); envPort != "" {
