@@ -15,7 +15,7 @@
         <div class="top-app-bar">
             <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"></button>
         </div>
 
         <!-- Headline Query Title Banner -->
@@ -55,19 +55,19 @@
         <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
         <div class="app-bottom-dock">
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">📍</div>
-                <span>Trace</span>
+                <div class="pill-overlay-badge"></div>
+                <span>Home</span>
             </a>
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🕒</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>History</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
-                <span class="unselected-icon-spacing">📓</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Ledger</span>
             </a>
-            <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
+            <a href="consumer_profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"></span>
                 <span>Profile</span>
             </a>
         </div>
@@ -81,7 +81,7 @@
             appName: "ShambaChain",
             headline: "Search Registry",
             recentLabel: "Recent Searches",
-            recommendLabel: "Certified Producers"
+            recommendLabel: ""
         };
 
         const filterPillsPayload = [
@@ -92,14 +92,9 @@
         ];
 
         const recentSearchesPayload = [
-            { query: "Batch #88219 (Avocado)", type: "batch", icon: "🥑", targetUrl: "details.html" },
-            { query: "Nyeri Arabica Coffee AA", type: "crop", icon: "☕", targetUrl: "coffee-details.html" },
-            { query: "Kinangop Potato Cooperatives", type: "farm", icon: "🚜", targetUrl: "farmer-profile.html" }
-        ];
-
-        const recommendedFarmsPayload = [
-            { title: "Green Valley Cooperatives", region: "📍 Ahero, Kisumu County", imgUrl: "https://unsplash.com", badge: "🛡️ ON-CHAIN" },
-            { title: "Timau Premium Growers", region: "📍 Timau, Meru County", imgUrl: "https://unsplash.com", badge: "🛡️ ON-CHAIN" }
+            { query: "Batch #88219 (Avocado)", type: "batch", icon: "", targetUrl: "details.html" },
+            { query: "Nyeri Arabica Coffee AA", type: "crop", icon: "", targetUrl: "coffee-details.html" },
+            { query: "Kinangop Potato Cooperatives", type: "farm", icon: "", targetUrl: "farmer-profile.html" }
         ];
 
         // --- CORE APPLICATION INJECTION RENDERING ENGINE CONTROLLER ---

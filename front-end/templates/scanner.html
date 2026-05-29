@@ -16,7 +16,7 @@
             <!-- Returns back to main consumer hub screen workspace -->
             <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">☰</button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='consumer-dashboard.html'">🔳</button>
+            <button class="qr-shortcut" onclick="window.location.href='consumer-dashboard.html'"></button>
         </div>
 
         <!-- Main Viewfinder Tracking Camera Space Content Area -->
@@ -42,14 +42,10 @@
 
             <!-- Bottom utility belt button layout tools -->
             <div class="control-belt">
-                <!-- Flashlight flash tool mock layout button -->
-                <button type="button" class="circle-btn" onclick="alert('Device Flashlight Triggered Successfully!')">🔦</button>
                 
                 <!-- Main central action redirection path back into dashboard history log anchor -->
                 <a href="consumer-dashboard.html" class="btn-scan-history" id="btn-history-lbl"></a>
                 
-                <!-- Gallery photo file selector mock layout button -->
-                <button type="button" class="circle-btn" onclick="alert('Opening Native Device Image Gallery Selection...')">🖼️</button>
             </div>
 
         </div>
@@ -58,22 +54,22 @@
         <div class="app-bottom-dock">
             
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">📍</div>
+                <div class="pill-overlay-badge"></div>
                 <span>Trace</span>
             </a>
 
-            <a href="consumer-dashboard.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🕒</span>
+            <a href="details.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"></span>
                 <span>History</span>
             </a>
 
             <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
-                <span class="unselected-icon-spacing">📓</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Ledger</span>
             </a>
 
-            <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
+            <a href="consumer_profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"></span>
                 <span>Profile</span>
             </a>
 
@@ -86,11 +82,11 @@
         // --- DATA OBJECT MAPPERS (Simulates standard API data models) ---
         const scannerConfig = {
             appName: "ShambaChain",
-            warningIcon: "⚙",
+            warningIcon: "",
             warningBadgeText: "ALIGN QR CODE",
             headlineText: "Verification",
             instructionText: "Scan the batch label to trace origin",
-            historyButtonText: "⏳ Scan History"
+            historyButtonText: "Scan"
         };
 
         // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
