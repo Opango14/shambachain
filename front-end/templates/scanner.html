@@ -3,101 +3,387 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ShambaChain - Scanner Viewfinder</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <title>ShambaChain - QR Scanner</title>
     <link rel="stylesheet" href="../styles/scanner.css?v=3">
+    <!-- jsQR: pure-JS QR code decoder, no build step needed -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+    <style>
+        /* Scanner overlay styles */
+        #video-feed {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover;
+            border-radius: 16px;
+        }
+        #scan-canvas { display: none; }
+
+        .viewfinder-box {
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+        /* Animated scan line */
+        .scan-line {
+            position: absolute;
+            left: 8px; right: 8px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #86efac, transparent);
+            animation: scan-sweep 2s ease-in-out infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+        @keyframes scan-sweep {
+            0%   { top: 10%; opacity: 1; }
+            50%  { top: 85%; opacity: 1; }
+            100% { top: 10%; opacity: 0.3; }
+        }
+
+        /* Permission / error state card */
+        #permission-card {
+            display: none;
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 16px;
+            padding: 24px;
+            text-align: center;
+            max-width: 300px;
+            margin: 0 auto 24px;
+        }
+        #permission-card p { color: #e2e8f0; font-size: 14px; line-height: 1.5; margin-bottom: 16px; }
+
+        /* Result overlay that appears on successful scan */
+        #scan-result-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 44, 34, 0.92);
+            border-radius: 16px;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 20;
+        }
+        #scan-result-overlay.visible { display: flex; }
+        #scan-result-overlay .result-icon { font-size: 40px; margin-bottom: 8px; }
+        #scan-result-overlay .result-text { color: #86efac; font-size: 13px; font-weight: 700; text-align: center; word-break: break-all; margin-bottom: 16px; }
+        #scan-result-overlay .btn-trace {
+            background: #22c55e; color: #022c22; font-weight: 800;
+            border: none; border-radius: 25px; padding: 12px 28px;
+            font-size: 13px; cursor: pointer; margin-bottom: 8px; width: 100%;
+        }
+        #scan-result-overlay .btn-rescan {
+            background: transparent; color: #94a3b8; font-size: 12px;
+            border: 1px solid rgba(255,255,255,0.2); border-radius: 25px;
+            padding: 8px 20px; cursor: pointer; width: 100%;
+        }
+
+        /* Manual entry fallback */
+        #manual-entry {
+            display: flex; gap: 8px; width: 100%; max-width: 320px; margin-top: 16px;
+        }
+        #manual-entry input {
+            flex: 1; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 10px; padding: 10px 14px; color: #fff; font-size: 13px;
+        }
+        #manual-entry input::placeholder { color: #94a3b8; }
+        #manual-entry button {
+            background: #22c55e; color: #022c22; font-weight: 700;
+            border: none; border-radius: 10px; padding: 10px 16px; cursor: pointer; font-size: 13px;
+        }
+
+        .status-badge {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px; padding: 6px 16px;
+            font-size: 11px; font-weight: 800; color: #022c22;
+            text-transform: uppercase; letter-spacing: 0.5px;
+            margin-bottom: 20px;
+        }
+        .status-badge.scanning { color: #166534; }
+        .status-badge.error    { color: #991b1b; }
+    </style>
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- White Top Navigation App Bar Row -->
         <div class="top-app-bar">
-            <!-- Returns back to main consumer hub screen workspace -->
-            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">☰</button>
-            <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='consumer-dashboard.html'"></button>
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt">ShambaChain</div>
+            <button class="qr-shortcut" onclick="toggleTorch()" id="torch-btn" title="Toggle flashlight">🔦</button>
         </div>
 
-        <!-- Main Viewfinder Tracking Camera Space Content Area -->
         <div class="scanner-body-area">
-            
-            <!-- Top Align Warning Pill Badge overlay -->
-            <div class="align-badge">
-                <span id="badge-icon-field"></span> <span id="badge-text-field"></span>
+
+            <!-- Status badge -->
+            <div class="status-badge" id="status-badge">📷 STARTING CAMERA</div>
+
+            <!-- Camera permission error card -->
+            <div id="permission-card">
+                <p id="permission-msg">Camera access is required to scan QR codes.</p>
+                <button onclick="startCamera()"
+                    style="background:#22c55e;color:#022c22;font-weight:700;border:none;border-radius:25px;padding:10px 24px;cursor:pointer;font-size:13px;">
+                    Allow Camera
+                </button>
             </div>
 
-            <!-- Target brackets camera simulation mask box -->
-            <!-- Clicking inside the brackets acts as a mockup scan trigger link pointing to details.html -->
-            <div class="viewfinder-box" onclick="window.location.href='details.html'">
+            <!-- Viewfinder with live video -->
+            <div class="viewfinder-box" id="viewfinder">
+                <video id="video-feed" autoplay playsinline muted></video>
+                <canvas id="scan-canvas"></canvas>
+                <div class="scan-line" id="scan-line"></div>
+
+                <!-- Corner brackets (kept on top of video) -->
                 <div class="corner-target top-left"></div>
                 <div class="corner-target top-right"></div>
                 <div class="corner-target bot-left"></div>
                 <div class="corner-target bot-right"></div>
+
+                <!-- Scan result overlay -->
+                <div id="scan-result-overlay">
+                    <div class="result-icon">✅</div>
+                    <div class="result-text" id="result-text"></div>
+                    <button class="btn-trace" onclick="traceScannedBatch()">🔍 Trace This Batch</button>
+                    <button class="btn-rescan" onclick="resumeScanning()">↩ Scan Again</button>
+                </div>
             </div>
 
-            <!-- Descriptive Instructions Headings -->
-            <h2 class="verification-header" id="display-headline"></h2>
-            <p class="instruction-text" id="display-instruction"></p>
+            <h2 class="verification-header" id="display-headline">QR Verification</h2>
+            <p class="instruction-text" id="display-instruction">Point your camera at a ShambaChain QR code to trace the batch origin.</p>
 
-            <!-- Bottom utility belt button layout tools -->
-            <div class="control-belt">
-                
-                <!-- Main central action redirection path back into dashboard history log anchor -->
-                <a href="consumer-dashboard.html" class="btn-scan-history" id="btn-history-lbl"></a>
-                
+            <!-- Manual batch ID entry fallback -->
+            <div id="manual-entry">
+                <input type="text" id="manual-input" placeholder="Or enter Batch ID manually..." />
+                <button onclick="handleManualEntry()">Go</button>
             </div>
 
         </div>
 
-        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
         <div class="app-bottom-dock">
-            
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge"></div>
-                <span>Trace</span>
+                <div class="pill-overlay-badge">🏠</div>
+                <span>Home</span>
             </a>
-
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing">🕒</span>
                 <span>History</span>
             </a>
-
-            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
-                <span class="unselected-icon-spacing"></span>
+            <a href="blockchain-records.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">⛓️</span>
                 <span>Ledger</span>
             </a>
-
-            <a href="consumer_profile.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
-                <span>Profile</span>
+            <a href="search-traceability.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🔍</span>
+                <span>Search</span>
             </a>
-
         </div>
 
     </div>
 
     <script src="../scripts/app.js"></script>
-    <!-- ZERO HARDCODING ARCHITECTURE RENDERING LOGIC SCRIPT -->
     <script>
-        // --- DATA OBJECT MAPPERS (Simulates standard API data models) ---
-        const scannerConfig = {
-            appName: "ShambaChain",
-            warningIcon: "",
-            warningBadgeText: "ALIGN QR CODE",
-            headlineText: "Verification",
-            instructionText: "Scan the batch label to trace origin",
-            historyButtonText: "Scan"
-        };
+        let videoStream   = null;
+        let scanInterval  = null;
+        let scannedValue  = null;
+        let torchOn       = false;
+        let torchTrack    = null;
 
-        // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
+        const video      = document.getElementById('video-feed');
+        const canvas     = document.getElementById('scan-canvas');
+        const ctx        = canvas.getContext('2d');
+        const statusBadge = document.getElementById('status-badge');
+
+        // ── Start camera ──────────────────────────────────────────────────────
+        async function startCamera() {
+            document.getElementById('permission-card').style.display = 'none';
+            statusBadge.textContent = '📷 STARTING CAMERA';
+            statusBadge.className = 'status-badge';
+
+            try {
+                // Prefer rear camera on mobile
+                const constraints = {
+                    video: {
+                        facingMode: { ideal: 'environment' },
+                        width:  { ideal: 1280 },
+                        height: { ideal: 720 },
+                    }
+                };
+
+                videoStream = await navigator.mediaDevices.getUserMedia(constraints);
+                video.srcObject = videoStream;
+                torchTrack = videoStream.getVideoTracks()[0];
+
+                video.addEventListener('loadedmetadata', () => {
+                    canvas.width  = video.videoWidth;
+                    canvas.height = video.videoHeight;
+                    statusBadge.textContent = '🔍 SCANNING…';
+                    statusBadge.className = 'status-badge scanning';
+                    startScanLoop();
+                });
+
+            } catch (err) {
+                showCameraError(err);
+            }
+        }
+
+        // ── Continuous scan loop ──────────────────────────────────────────────
+        function startScanLoop() {
+            if (scanInterval) clearInterval(scanInterval);
+            scanInterval = setInterval(() => {
+                if (video.readyState !== video.HAVE_ENOUGH_DATA) return;
+
+                canvas.width  = video.videoWidth;
+                canvas.height = video.videoHeight;
+                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+                const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                const code = jsQR(imageData.data, imageData.width, imageData.height, {
+                    inversionAttempts: 'dontInvert',
+                });
+
+                if (code && code.data) {
+                    onQRDetected(code.data);
+                }
+            }, 200); // Check 5× per second
+        }
+
+        // ── QR code detected ─────────────────────────────────────────────────
+        function onQRDetected(rawValue) {
+            clearInterval(scanInterval);
+
+            // Extract batch ID — handle both plain IDs and full URLs
+            // e.g. "https://shambachain.com/trace/abc-123" or just "abc-123"
+            let batchId = rawValue;
+            try {
+                const url = new URL(rawValue);
+                const parts = url.pathname.split('/').filter(Boolean);
+                // Look for /trace/<id> or /api/trace/<id> pattern
+                const traceIdx = parts.findIndex(p => p === 'trace');
+                if (traceIdx !== -1 && parts[traceIdx + 1]) {
+                    batchId = parts[traceIdx + 1];
+                } else {
+                    batchId = parts[parts.length - 1] || rawValue;
+                }
+            } catch {
+                // Not a URL — use raw value as batch ID
+            }
+
+            scannedValue = batchId;
+
+            // Show result overlay
+            document.getElementById('result-text').textContent = `Batch ID: ${batchId}`;
+            document.getElementById('scan-result-overlay').classList.add('visible');
+            statusBadge.textContent = '✅ QR CODE DETECTED';
+            statusBadge.className = 'status-badge scanning';
+
+            // Vibrate on mobile if supported
+            if (navigator.vibrate) navigator.vibrate(100);
+
+            // Save to scan history
+            saveScanToHistory(batchId);
+        }
+
+        // ── Navigate to trace page ────────────────────────────────────────────
+        function traceScannedBatch() {
+            if (!scannedValue) return;
+            sessionStorage.setItem('sc_scan_result', scannedValue);
+            stopCamera();
+            window.location.href = 'search-traceability.html';
+        }
+
+        // ── Resume scanning after a result ────────────────────────────────────
+        function resumeScanning() {
+            scannedValue = null;
+            document.getElementById('scan-result-overlay').classList.remove('visible');
+            statusBadge.textContent = '🔍 SCANNING…';
+            statusBadge.className = 'status-badge scanning';
+            startScanLoop();
+        }
+
+        // ── Manual batch ID entry ─────────────────────────────────────────────
+        function handleManualEntry() {
+            const val = document.getElementById('manual-input').value.trim();
+            if (!val) { Toast.warning('Enter a batch ID first.'); return; }
+            sessionStorage.setItem('sc_scan_result', val);
+            saveScanToHistory(val);
+            stopCamera();
+            window.location.href = 'search-traceability.html';
+        }
+
+        // ── Torch / flashlight toggle ─────────────────────────────────────────
+        async function toggleTorch() {
+            if (!torchTrack) return;
+            try {
+                torchOn = !torchOn;
+                await torchTrack.applyConstraints({ advanced: [{ torch: torchOn }] });
+                document.getElementById('torch-btn').textContent = torchOn ? '💡' : '🔦';
+            } catch {
+                Toast.info('Torch not supported on this device.');
+            }
+        }
+
+        // ── Camera error handling ─────────────────────────────────────────────
+        function showCameraError(err) {
+            const card = document.getElementById('permission-card');
+            const msg  = document.getElementById('permission-msg');
+            card.style.display = 'block';
+            document.getElementById('scan-line').style.display = 'none';
+
+            if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+                msg.textContent = 'Camera permission was denied. Please allow camera access in your browser settings, then tap "Allow Camera".';
+                statusBadge.textContent = '🚫 PERMISSION DENIED';
+            } else if (err.name === 'NotFoundError') {
+                msg.textContent = 'No camera found on this device. Use the manual entry below to enter a Batch ID.';
+                statusBadge.textContent = '📵 NO CAMERA FOUND';
+            } else {
+                msg.textContent = `Camera error: ${err.message}. Try the manual entry below.`;
+                statusBadge.textContent = '⚠ CAMERA ERROR';
+            }
+            statusBadge.className = 'status-badge error';
+        }
+
+        // ── Stop camera stream ────────────────────────────────────────────────
+        function stopCamera() {
+            clearInterval(scanInterval);
+            if (videoStream) {
+                videoStream.getTracks().forEach(t => t.stop());
+                videoStream = null;
+            }
+        }
+
+        // ── Persist scan to localStorage history ──────────────────────────────
+        function saveScanToHistory(batchId) {
+            try {
+                const history = JSON.parse(localStorage.getItem('sc_scan_history') || '[]');
+                history.unshift({
+                    id: batchId,
+                    name: `Batch ${batchId}`,
+                    time: new Date().toLocaleString(),
+                });
+                localStorage.setItem('sc_scan_history', JSON.stringify(history.slice(0, 20)));
+            } catch {}
+        }
+
+        // ── Init ──────────────────────────────────────────────────────────────
         window.addEventListener('DOMContentLoaded', () => {
-            document.getElementById('app-title-txt').innerText = scannerConfig.appName;
-            document.getElementById('badge-icon-field').innerText = scannerConfig.warningIcon;
-            document.getElementById('badge-text-field').innerText = scannerConfig.warningBadgeText;
-            document.getElementById('display-headline').innerText = scannerConfig.headlineText;
-            document.getElementById('display-instruction').innerText = scannerConfig.instructionText;
-            document.getElementById('btn-history-lbl').innerHTML = scannerConfig.historyButtonText;
+            // Check if browser supports getUserMedia
+            if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+                showCameraError({ name: 'NotFoundError', message: 'getUserMedia not supported' });
+                return;
+            }
+            startCamera();
+        });
+
+        // Stop camera when leaving the page
+        window.addEventListener('beforeunload', stopCamera);
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                stopCamera();
+            } else if (!videoStream) {
+                startCamera();
+            }
         });
     </script>
 </body>
