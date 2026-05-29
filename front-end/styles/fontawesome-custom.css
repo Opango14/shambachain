@@ -1,0 +1,154 @@
+/* FontAwesome Icon Customizations for ShambaChain */
+
+/* Ensure icons are properly sized and aligned */
+.fas, .far, .fab {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Password toggle icons */
+.password-toggle .fas {
+    font-size: 14px;
+    color: #64748b;
+    transition: color 0.2s ease;
+}
+
+.password-toggle:hover .fas {
+    color: #22c55e;
+}
+
+/* Navigation and menu icons */
+.menu-icon .fas,
+.qr-shortcut .fas {
+    font-size: 16px;
+}
+
+/* Bottom dock icons */
+.dock-tab-link .fas {
+    font-size: 14px;
+    margin-bottom: 2px;
+}
+
+.pill-overlay-badge .fas {
+    font-size: 16px;
+}
+
+/* Form input icons */
+.input-decor-icon .fas {
+    font-size: 14px;
+    color: #64748b;
+}
+
+/* Button icons */
+.btn-submit .fas,
+.btn-generate-qr .fas,
+.btn-trace .fas,
+.btn-rescan .fas {
+    margin-right: 6px;
+}
+
+/* Status and metric icons */
+.shield-check-icon .fas,
+.metric-top-line .fas {
+    font-size: 16px;
+    color: #115e59;
+}
+
+/* Drawer menu icons */
+.drawer-link-item .fas {
+    font-size: 14px;
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Role selection icons */
+.icon-circle .fas {
+    font-size: 24px;
+}
+
+/* Scanner and camera icons */
+.status-badge .fas {
+    margin-right: 6px;
+}
+
+.result-icon .fas {
+    font-size: 32px;
+    color: #22c55e;
+}
+
+/* Telematics and cold chain icons */
+.telematics-top-strip .fas {
+    color: #0ea5e9;
+    margin-right: 8px;
+}
+
+/* Verification badges */
+.verified-producer-badge .fas,
+.active-carrier-badge .fas,
+.onchain-capsule-badge .fas,
+.authentic-overlay-badge .fas {
+    margin-right: 4px;
+}
+
+/* Table and ledger icons */
+.table-main-title .fas {
+    font-size: 18px;
+    color: #115e59;
+    margin-right: 8px;
+}
+
+/* Scan history icons */
+.scan-icon-wrapper .fas {
+    font-size: 16px;
+    color: #22c55e;
+}
+
+/* Arrow and chevron icons */
+.role-arrow .fas,
+.chevron-arrow .fas {
+    font-size: 12px;
+    color: #94a3b8;
+}
+
+/* Close button icons */
+.btn-close-drawer .fas {
+    font-size: 14px;
+}
+
+/* Form header icons */
+.form-card-header .fas {
+    font-size: 18px;
+    color: #22c55e;
+    margin-right: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 480px) {
+    .fas, .far, .fab {
+        font-size: 0.9em;
+    }
+    
+    .pill-overlay-badge .fas {
+        font-size: 14px;
+    }
+    
+    .icon-circle .fas {
+        font-size: 20px;
+    }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+    .input-decor-icon .fas {
+        color: #94a3b8;
+    }
+    
+    .password-toggle .fas {
+        color: #94a3b8;
+    }
+    
+    .password-toggle:hover .fas {
+        color: #22c55e;
+    }
+}

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Trace Hub</title>
     <link rel="stylesheet" href="../styles/consumer-dashboard.css?v=3">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { corePlugins: { preflight: false }, prefix: 'tw-' }</script>
     <link rel="stylesheet" href="../styles/theme.css">
@@ -14,9 +18,9 @@
     <div class="phone-container">
         
         <div class="top-app-bar">
-            <button class="menu-icon" onclick="toggleDashboardNavigationDrawer(true)">☰</button>
+            <button class="menu-icon" onclick="toggleDashboardNavigationDrawer(true)"><i class="fas fa-bars"></i></button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"></button>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"><i class="fas fa-qrcode"></i></button>
         </div>
 
         <!-- Slide-out Navigation Drawer -->
@@ -24,16 +28,16 @@
         
         <div class="navigation-drawer-pane" id="dashboardNavDrawer">
             <div class="drawer-header">
-                <h4 id="menu-drawer-title">🚜 ShambaMenu</h4>
-                <button class="btn-close-drawer" onclick="toggleDashboardNavigationDrawer(false)">✕</button>
+                <h4 id="menu-drawer-title"><i class="fas fa-tractor"></i> ShambaMenu</h4>
+                <button class="btn-close-drawer" onclick="toggleDashboardNavigationDrawer(false)"><i class="fas fa-times"></i></button>
             </div>
             <div class="drawer-links-stack">
-                <a href="details.html" class="drawer-link-item"><span>🔍</span> Trace Produce</a>
-                <a href="search-traceability.html" class="drawer-link-item"><span>🔎</span> Search Engine</a>
-                <a href="help-center.html" class="drawer-link-item"><span>❓</span> Help Center</a>
+                <a href="details.html" class="drawer-link-item"><span><i class="fas fa-search"></i></span> Trace Produce</a>
+                <a href="search-traceability.html" class="drawer-link-item"><span><i class="fas fa-search-plus"></i></span> Search Engine</a>
+                <a href="help-center.html" class="drawer-link-item"><span><i class="fas fa-question-circle"></i></span> Help Center</a>
                 <a href="#" class="drawer-link-item" data-action="signout"
                     style="color:#b91c1c;margin-top:40px;border-top:1px dashed #e2e8f0;padding-top:16px;">
-                    <span>🚪</span> Sign Out
+                    <span><i class="fas fa-sign-out-alt"></i></span> Sign Out
                 </a>
             </div>
         </div>
@@ -68,19 +72,19 @@
 
         <div class="app-bottom-dock">
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge"></div>
+                <div class="pill-overlay-badge"><i class="fas fa-home"></i></div>
                 <span>Home</span>
             </a>
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing"><i class="fas fa-history"></i></span>
                 <span>History</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="Toast.info('Blockchain explorer coming soon!')">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing"><i class="fas fa-link"></i></span>
                 <span>Ledger</span>
             </a>
             <a href="consumer_profile.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing"><i class="fas fa-user"></i></span>
                 <span>Profile</span>
             </a>
         </div>
@@ -100,8 +104,8 @@
         };
 
         const networkMetrics = [
-            { title: "Trust Score", value: "Verified", marker: "🛡️", badge: "100%" },
-            { title: "Nodes Active", value: "1,204", marker: "⛓️", badge: "Live" }
+            { title: "Trust Score", value: "Verified", marker: '<i class="fas fa-shield-alt"></i>', badge: "100%" },
+            { title: "Nodes Active", value: "1,204", marker: '<i class="fas fa-link"></i>', badge: "Live" }
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -177,7 +181,7 @@
                         <a href="search-traceability.html" class="carousel-crop-card"
                             onclick="sessionStorage.setItem('sc_scan_result','${batchId}')">
                             <div class="crop-image-frame" style="background-image:url('${imgUrl}');background-size:cover;background-position:center;position:relative;">
-                                <div class="authentic-overlay-badge">✓ LIVE</div>
+                                <div class="authentic-overlay-badge"><i class="fas fa-check"></i> LIVE</div>
                             </div>
                             <div class="crop-footer-details">
                                 <div class="crop-name-label">${name}</div>
@@ -208,13 +212,13 @@
                 feedContainer.innerHTML += `
                     <a href="details.html" class="scan-history-row">
                         <div class="scan-item-profile">
-                            <div class="scan-icon-wrapper">🔍</div>
+                            <div class="scan-icon-wrapper"><i class="fas fa-search"></i></div>
                             <div>
                                 <div class="scan-headline-text">${row.name}</div>
                                 <div class="scan-sub-meta">${row.time} · ID: ${row.id}</div>
                             </div>
                         </div>
-                        <div class="chevron-arrow">&gt;</div>
+                        <div class="chevron-arrow"><i class="fas fa-chevron-right"></i></div>
                     </a>
                 `;
             });

@@ -6,6 +6,10 @@
     <title>ShambaChain - Entry Portal</title>
     <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/index.css?v=2">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body>
@@ -58,7 +62,7 @@
         // --- DATA VARIABLES OBJECTS (Mocks your Backend database API structures) ---
         const appSettings = {
             name: "ShambaChain",
-            logo: "🚜",
+            logo: '<i class="fas fa-tractor"></i>',
             helpText: "Help",
             headline: "Create your account",
             tagline: "Join the global network of transparent food supply chains.",
@@ -74,21 +78,21 @@
                 id: "consumer",
                 title: "Consumer",
                 desc: "I want to trace food origins and verify sustainability.",
-                avatarIcon: "👤",
+                avatarIcon: '<i class="fas fa-user"></i>',
                 customStyleClass: "icon-consumer"
             },
             {
                 id: "transporter",
                 title: "Transporter/Logistics",
                 desc: "I want to update route coordinates and sign transit handovers.",
-                avatarIcon: "🚚",
+                avatarIcon: '<i class="fas fa-truck"></i>',
                 customStyleClass: "icon-transporter"
             },
             {
                 id: "farmer",
                 title: "Farmer/Producer",
                 desc: "I want to record batches and certify my production.",
-                avatarIcon: "🚜",
+                avatarIcon: '<i class="fas fa-tractor"></i>',
                 customStyleClass: "icon-farmer"
             }
         ];
@@ -96,7 +100,7 @@
         // --- RUNTIME RENDER CONTROLLER ENGINE ---
         window.addEventListener('DOMContentLoaded', () => {
             // Mapping primary text properties onto layout selector headers
-            document.getElementById('brand-emoji').innerText = appSettings.logo;
+            document.getElementById('brand-emoji').innerHTML = appSettings.logo;
             document.getElementById('brand-text').innerText = appSettings.name;
             document.getElementById('nav-help-label').innerText = appSettings.helpText;
             document.getElementById('display-title').innerText = appSettings.headline;
@@ -122,7 +126,7 @@
                             <div class="role-title">${role.title}</div>
                             <div class="role-description">${role.desc}</div>
                         </div>
-                        <div class="role-arrow">&gt;</div>
+                        <div class="role-arrow"><i class="fas fa-chevron-right"></i></div>
                     </div>
                 `;
                 rolesBox.innerHTML += dynamicCardNode;

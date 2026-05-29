@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Log In</title>
     <link rel="stylesheet" href="../styles/login.css?v=2">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -40,6 +44,16 @@
             <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
                 
                 <div class="form-group">
+                    <label for="user-role" id="lbl-role">I am a:</label>
+                    <select id="user-role" class="form-control" required>
+                        <option value="">Select your role</option>
+                        <option value="consumer">Consumer - I want to trace food origins</option>
+                        <option value="farmer">Farmer - I want to record batches</option>
+                        <option value="transporter">Transporter - I manage logistics</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
                     <label for="login-email" id="lbl-email"></label>
                     <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required autocomplete="email">
                 </div>
@@ -48,7 +62,7 @@
                     <label for="login-password" id="lbl-pass"></label>
                     <div class="password-wrapper">
                         <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
-                        <span class="password-toggle" onclick="togglePasswordInputMask()" title="Show/hide password" role="button" tabindex="0">👁️</span>
+                        <span class="password-toggle" onclick="togglePasswordInputMask()" title="Show/hide password" role="button" tabindex="0"><i class="fas fa-eye"></i></span>
                     </div>
                 </div>
 
@@ -72,11 +86,12 @@
     <script>
         const pageSettings = {
             name: "ShambaChain",
-            logo: "🚜",
+            logo: '<i class="fas fa-tractor"></i>',
             helpText: "Help",
             headline: "Welcome back",
             tagline: "Log in to track batches, view histories, or manage your supply chain ledger.",
             lblEmail: "Email Address",
+            lblRole: "I am a:",
             lblPassword: "Password",
             btnText: "Sign In →",
             dividerText: "Don't have an account?",
@@ -92,12 +107,13 @@
                 return;
             }
 
-            document.getElementById('brand-emoji').innerText = pageSettings.logo;
+            document.getElementById('brand-emoji').innerHTML = pageSettings.logo;
             document.getElementById('brand-text').innerText = pageSettings.name;
             document.getElementById('nav-help-label').innerText = pageSettings.helpText;
             document.getElementById('display-title').innerText = pageSettings.headline;
             document.getElementById('display-subtitle').innerText = pageSettings.tagline;
             document.getElementById('lbl-email').innerText = pageSettings.lblEmail;
+            document.getElementById('lbl-role').innerText = pageSettings.lblRole;
             document.getElementById('lbl-pass').innerText = pageSettings.lblPassword;
             document.getElementById('btn-submit-txt').innerText = pageSettings.btnText;
             document.getElementById('display-divider').innerText = pageSettings.dividerText;
@@ -125,6 +141,7 @@
             e.preventDefault();
             const form = document.getElementById('loginForm');
             const btn  = document.getElementById('btn-submit-txt');
+            const role = document.getElementById('user-role');
             const email    = document.getElementById('login-email');
             const password = document.getElementById('login-password');
 
@@ -132,6 +149,10 @@
 
             // Basic client-side validation
             let valid = true;
+            if (!role.value) {
+                Form.setError(role, 'Please select your role.');
+                valid = false;
+            }
             if (!email.value.trim()) {
                 Form.setError(email, 'Email is required.');
                 valid = false;
@@ -153,15 +174,11 @@
                 Auth.setToken(data.token);
                 if (data.user) Auth.setUser(data.user);
 
-                // Determine role from email for routing (can be improved with a role field from API)
-                const emailLower = email.value.toLowerCase();
-                let role = 'consumer';
-                if (emailLower.includes('farmer')) role = 'farmer';
-                else if (emailLower.includes('transporter')) role = 'transporter';
-                localStorage.setItem('selectedRole', role);
+                // Use selected role for routing
+                localStorage.setItem('selectedRole', role.value);
 
                 Toast.success('Login successful! Redirecting...');
-                setTimeout(() => redirectByRole(role), 900);
+                setTimeout(() => redirectByRole(role.value), 900);
 
             } catch (err) {
                 Toast.error(err.message || 'Login failed. Please check your credentials.');

@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - QR Scanner</title>
     <link rel="stylesheet" href="../styles/scanner.css?v=3">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <!-- jsQR: pure-JS QR code decoder, no build step needed -->
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
     <style>
@@ -111,15 +115,15 @@
     <div class="phone-container">
         
         <div class="top-app-bar">
-            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'"><i class="fas fa-arrow-left"></i></button>
             <div class="app-bar-title" id="app-title-txt">ShambaChain</div>
-            <button class="qr-shortcut" onclick="toggleTorch()" id="torch-btn" title="Toggle flashlight">🔦</button>
+            <button class="qr-shortcut" onclick="toggleTorch()" id="torch-btn" title="Toggle flashlight"><i class="fas fa-flashlight"></i></button>
         </div>
 
         <div class="scanner-body-area">
 
             <!-- Status badge -->
-            <div class="status-badge" id="status-badge">📷 STARTING CAMERA</div>
+            <div class="status-badge" id="status-badge"><i class="fas fa-camera"></i> STARTING CAMERA</div>
 
             <!-- Camera permission error card -->
             <div id="permission-card">
@@ -144,10 +148,10 @@
 
                 <!-- Scan result overlay -->
                 <div id="scan-result-overlay">
-                    <div class="result-icon">✅</div>
+                    <div class="result-icon"><i class="fas fa-check-circle"></i></div>
                     <div class="result-text" id="result-text"></div>
-                    <button class="btn-trace" onclick="traceScannedBatch()">🔍 Trace This Batch</button>
-                    <button class="btn-rescan" onclick="resumeScanning()">↩ Scan Again</button>
+                    <button class="btn-trace" onclick="traceScannedBatch()"><i class="fas fa-search"></i> Trace This Batch</button>
+                    <button class="btn-rescan" onclick="resumeScanning()"><i class="fas fa-redo"></i> Scan Again</button>
                 </div>
             </div>
 
@@ -164,19 +168,19 @@
 
         <div class="app-bottom-dock">
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">🏠</div>
+                <div class="pill-overlay-badge"><i class="fas fa-home"></i></div>
                 <span>Home</span>
             </a>
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🕒</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-history"></i></span>
                 <span>History</span>
             </a>
             <a href="blockchain-records.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">⛓️</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-link"></i></span>
                 <span>Ledger</span>
             </a>
             <a href="search-traceability.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🔍</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-search"></i></span>
                 <span>Search</span>
             </a>
         </div>
@@ -199,7 +203,7 @@
         // ── Start camera ──────────────────────────────────────────────────────
         async function startCamera() {
             document.getElementById('permission-card').style.display = 'none';
-            statusBadge.textContent = '📷 STARTING CAMERA';
+            statusBadge.innerHTML = '<i class="fas fa-camera"></i> STARTING CAMERA';
             statusBadge.className = 'status-badge';
 
             try {
@@ -219,7 +223,7 @@
                 video.addEventListener('loadedmetadata', () => {
                     canvas.width  = video.videoWidth;
                     canvas.height = video.videoHeight;
-                    statusBadge.textContent = '🔍 SCANNING…';
+                    statusBadge.innerHTML = '<i class="fas fa-search"></i> SCANNING…';
                     statusBadge.className = 'status-badge scanning';
                     startScanLoop();
                 });
@@ -276,7 +280,7 @@
             // Show result overlay
             document.getElementById('result-text').textContent = `Batch ID: ${batchId}`;
             document.getElementById('scan-result-overlay').classList.add('visible');
-            statusBadge.textContent = '✅ QR CODE DETECTED';
+            statusBadge.innerHTML = '<i class="fas fa-check-circle"></i> QR CODE DETECTED';
             statusBadge.className = 'status-badge scanning';
 
             // Vibrate on mobile if supported
@@ -298,7 +302,7 @@
         function resumeScanning() {
             scannedValue = null;
             document.getElementById('scan-result-overlay').classList.remove('visible');
-            statusBadge.textContent = '🔍 SCANNING…';
+            statusBadge.innerHTML = '<i class="fas fa-search"></i> SCANNING…';
             statusBadge.className = 'status-badge scanning';
             startScanLoop();
         }
@@ -319,7 +323,7 @@
             try {
                 torchOn = !torchOn;
                 await torchTrack.applyConstraints({ advanced: [{ torch: torchOn }] });
-                document.getElementById('torch-btn').textContent = torchOn ? '💡' : '🔦';
+                document.getElementById('torch-btn').innerHTML = torchOn ? '<i class="fas fa-lightbulb"></i>' : '<i class="fas fa-flashlight"></i>';
             } catch {
                 Toast.info('Torch not supported on this device.');
             }
@@ -334,13 +338,13 @@
 
             if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
                 msg.textContent = 'Camera permission was denied. Please allow camera access in your browser settings, then tap "Allow Camera".';
-                statusBadge.textContent = '🚫 PERMISSION DENIED';
+                statusBadge.innerHTML = '<i class="fas fa-ban"></i> PERMISSION DENIED';
             } else if (err.name === 'NotFoundError') {
                 msg.textContent = 'No camera found on this device. Use the manual entry below to enter a Batch ID.';
-                statusBadge.textContent = '📵 NO CAMERA FOUND';
+                statusBadge.innerHTML = '<i class="fas fa-video-slash"></i> NO CAMERA FOUND';
             } else {
                 msg.textContent = `Camera error: ${err.message}. Try the manual entry below.`;
-                statusBadge.textContent = '⚠ CAMERA ERROR';
+                statusBadge.innerHTML = '<i class="fas fa-exclamation-triangle"></i> CAMERA ERROR';
             }
             statusBadge.className = 'status-badge error';
         }

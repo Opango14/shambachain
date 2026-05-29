@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Traceability Search Engine</title>
     <link rel="stylesheet" href="../styles/search-traceability.css?v=3">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>tailwind.config = { corePlugins: { preflight: false }, prefix: 'tw-' }</script>
     <link rel="stylesheet" href="../styles/theme.css">
@@ -14,16 +18,16 @@
     <div class="phone-container">
         
         <div class="top-app-bar">
-            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <button class="menu-icon" onclick="goBack()"><i class="fas fa-arrow-left"></i></button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"></button>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"><i class="fas fa-qrcode"></i></button>
         </div>
 
         <h2 class="help-main-headline" id="display-headline-txt"></h2>
 
         <!-- Search Bar -->
         <div class="search-box-wrapper">
-            <span class="search-icon-marker">🔍</span>
+            <span class="search-icon-marker"><i class="fas fa-search"></i></span>
             <input type="text" id="traceSearchInput" class="search-query-input"
                 placeholder="Enter batch ID to trace..."
                 onkeydown="if(event.key==='Enter') executeSearch()">
@@ -63,21 +67,21 @@
         </div>
 
         <div class="app-bottom-dock">
-            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge"></div>
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"><i class="fas fa-home"></i></span>
                 <span>Home</span>
             </a>
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing"><i class="fas fa-history"></i></span>
                 <span>History</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="Toast.info('Blockchain explorer coming soon!')">
-                <span class="unselected-icon-spacing"></span>
+                <span class="unselected-icon-spacing"><i class="fas fa-link"></i></span>
                 <span>Ledger</span>
             </a>
-            <a href="consumer_profile.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing"></span>
-                <span>Profile</span>
+            <a href="consumer_profile.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge"><i class="fas fa-search"></i></div>
+                <span>Search</span>
             </a>
         </div>
 
@@ -111,9 +115,9 @@
         }
 
         const recommendedFarmsPayload = [
-            { title: "Mutheka Co-operative", region: "📍 Nyeri, Central Kenya", badge: "✓ Certified", imgUrl: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=80&fit=crop" },
-            { title: "Green Valley Farm", region: "📍 Kisumu, Nyanza", badge: "✓ Organic", imgUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80&fit=crop" },
-            { title: "Kinangop Potato Coop", region: "📍 Nyandarua, Rift Valley", badge: "✓ FairTrade", imgUrl: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80&fit=crop" },
+            { title: "Mutheka Co-operative", region: "<i class='fas fa-map-marker-alt'></i> Nyeri, Central Kenya", badge: "<i class='fas fa-check'></i> Certified", imgUrl: "https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=400&q=80&fit=crop" },
+            { title: "Green Valley Farm", region: "<i class='fas fa-map-marker-alt'></i> Kisumu, Nyanza", badge: "<i class='fas fa-leaf'></i> Organic", imgUrl: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=400&q=80&fit=crop" },
+            { title: "Kinangop Potato Coop", region: "<i class='fas fa-map-marker-alt'></i> Nyandarua, Rift Valley", badge: "<i class='fas fa-handshake'></i> FairTrade", imgUrl: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?w=400&q=80&fit=crop" },
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -179,9 +183,9 @@
                 container.innerHTML += `
                     <div class="search-history-item" onclick="document.getElementById('traceSearchInput').value='${query}';executeSearch();" style="cursor:pointer;">
                         <div class="history-item-left">
-                            <span>🔍</span> <span>${query}</span>
+                            <span><i class="fas fa-search"></i></span> <span>${query}</span>
                         </div>
-                        <span class="history-item-chevron">&gt;</span>
+                        <span class="history-item-chevron"><i class="fas fa-chevron-right"></i></span>
                     </div>
                 `;
             });
@@ -212,7 +216,7 @@
             resultPanel.style.display = 'block';
             resultContent.innerHTML = `
                 <div style="padding:20px;text-align:center;color:#475569;font-size:14px;">
-                    🔍 Searching blockchain records for <strong>${query}</strong>...
+                    <i class="fas fa-search"></i> Searching blockchain records for <strong>${query}</strong>...
                 </div>`;
 
             try {
@@ -221,7 +225,7 @@
             } catch (err) {
                 resultContent.innerHTML = `
                     <div style="background:#fef2f2;border:1px solid #fecaca;border-radius:12px;padding:20px;text-align:center;">
-                        <div style="font-size:24px;margin-bottom:8px;">🔍</div>
+                        <div style="font-size:24px;margin-bottom:8px;"><i class="fas fa-search"></i></div>
                         <div style="font-weight:600;color:#991b1b;margin-bottom:4px;">Batch Not Found</div>
                         <div style="color:#b91c1c;font-size:13px;">${err.message || 'No records found for this batch ID.'}</div>
                     </div>`;
@@ -240,11 +244,11 @@
                 <div style="background:#f0fdf4;border:1px solid #86efac;border-radius:12px;padding:20px;margin-bottom:8px;">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
                         <div>
-                            <div style="font-size:11px;font-weight:700;color:#22c55e;letter-spacing:1px;margin-bottom:4px;">✓ VERIFIED ON-CHAIN</div>
+                            <div style="font-size:11px;font-weight:700;color:#22c55e;letter-spacing:1px;margin-bottom:4px;"><i class="fas fa-check"></i> VERIFIED ON-CHAIN</div>
                             <div style="font-size:18px;font-weight:800;color:#022c22;">${batch.produce_type || batch.ProduceType || query}</div>
                             <div style="font-size:13px;color:#475569;margin-top:2px;">
-                                📍 ${batch.location || batch.Location || '—'} &nbsp;·&nbsp;
-                                🌾 ${batch.farm_name || batch.FarmName || '—'}
+                                <i class="fas fa-map-marker-alt"></i> ${batch.location || batch.Location || '—'} &nbsp;·&nbsp;
+                                <i class="fas fa-seedling"></i> ${batch.farm_name || batch.FarmName || '—'}
                             </div>
                         </div>
                         <div style="text-align:right;">
@@ -253,8 +257,8 @@
                         </div>
                     </div>
                     <div style="display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;">
-                        <div style="font-size:12px;color:#475569;">⚖️ <strong>${batch.quantity || batch.Quantity || '—'} ${batch.unit || batch.Unit || 'kg'}</strong></div>
-                        <div style="font-size:12px;color:#475569;">📅 <strong>${batch.harvest_date ? new Date(batch.harvest_date).toLocaleDateString() : '—'}</strong></div>
+                        <div style="font-size:12px;color:#475569;"><i class="fas fa-weight-hanging"></i> <strong>${batch.quantity || batch.Quantity || '—'} ${batch.unit || batch.Unit || 'kg'}</strong></div>
+                        <div style="font-size:12px;color:#475569;"><i class="fas fa-calendar-alt"></i> <strong>${batch.harvest_date ? new Date(batch.harvest_date).toLocaleDateString() : '—'}</strong></div>
                     </div>
                     ${events.length > 0 ? `
                     <div style="margin-top:16px;border-top:1px solid #bbf7d0;padding-top:12px;">

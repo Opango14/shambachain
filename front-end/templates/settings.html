@@ -4,137 +4,629 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Settings</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/settings.css?v=3">
     <link rel="stylesheet" href="../styles/theme.css">
+    <style>
+        /* ── Modal overlay ───────────────────────────────────────────── */
+        .sc-modal-backdrop {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(10,61,31,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+        .sc-modal-backdrop.open { display: flex; }
+
+        .sc-modal {
+            background: #fdfaf5;
+            border-radius: 20px;
+            padding: 28px 24px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 24px 80px rgba(10,61,31,0.35);
+            border: 1px solid rgba(212,172,13,0.2);
+            position: relative;
+        }
+
+        .sc-modal h3 {
+            font-size: 18px;
+            font-weight: 800;
+            color: #0a3d1f;
+            margin-bottom: 6px;
+        }
+        .sc-modal p.sc-modal-sub {
+            font-size: 13px;
+            color: #566573;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        .sc-modal-close {
+            position: absolute;
+            top: 16px; right: 16px;
+            background: none; border: none;
+            font-size: 20px; cursor: pointer;
+            color: #566573;
+        }
+        .sc-modal label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1c2833;
+            margin-bottom: 6px;
+            margin-top: 14px;
+        }
+        .sc-modal input[type="password"],
+        .sc-modal input[type="text"],
+        .sc-modal input[type="email"] {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid #d5dbdb;
+            border-radius: 10px;
+            font-size: 14px;
+            color: #1c2833;
+            background: #fff;
+            outline: none;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .sc-modal input:focus { border-color: #1e8449; }
+
+        .sc-modal-btn {
+            margin-top: 20px;
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #0a3d1f, #1e8449);
+            color: #fff;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .sc-modal-btn:hover { opacity: 0.92; }
+
+        /* ── Toggle switch ───────────────────────────────────────────── */
+        .sc-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 16px;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .sc-toggle-row:last-child { border-bottom: none; }
+
+        .sc-toggle-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .sc-toggle-left .settings-icon-marker { font-size: 18px; }
+        .sc-toggle-left .settings-item-text {
+            font-size: 15px;
+            font-weight: 600;
+            color: #1c2833;
+        }
+
+        .sc-switch {
+            position: relative;
+            width: 46px;
+            height: 26px;
+            flex-shrink: 0;
+        }
+        .sc-switch input { opacity: 0; width: 0; height: 0; }
+        .sc-switch-track {
+            position: absolute;
+            inset: 0;
+            background: #d5dbdb;
+            border-radius: 99px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .sc-switch-track::before {
+            content: '';
+            position: absolute;
+            width: 20px; height: 20px;
+            left: 3px; top: 3px;
+            background: #fff;
+            border-radius: 50%;
+            transition: transform 0.2s;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+        }
+        .sc-switch input:checked + .sc-switch-track {
+            background: linear-gradient(135deg, #1e8449, #27ae60);
+        }
+        .sc-switch input:checked + .sc-switch-track::before {
+            transform: translateX(20px);
+        }
+
+        /* ── Wallet address display ──────────────────────────────────── */
+        .wallet-address-box {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-family: monospace;
+            font-size: 13px;
+            color: #0a3d1f;
+            word-break: break-all;
+            margin-top: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+        }
+        .wallet-copy-btn {
+            background: none; border: none;
+            color: #1e8449; font-size: 16px;
+            cursor: pointer; flex-shrink: 0;
+        }
+
+        /* ── 2FA code boxes ──────────────────────────────────────────── */
+        .otp-row {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin: 16px 0;
+        }
+        .otp-row input {
+            width: 44px !important;
+            height: 52px;
+            text-align: center;
+            font-size: 22px;
+            font-weight: 700;
+            padding: 0 !important;
+            border-radius: 10px !important;
+        }
+
+        /* ── Status pill on row ──────────────────────────────────────── */
+        .status-pill-on {
+            background: #d5f5e3;
+            color: #0a3d1f;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid #58d68d;
+        }
+        .status-pill-off {
+            background: #fef9e7;
+            color: #935116;
+            font-size: 10px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid #f9e79f;
+        }
+    </style>
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- Global Top App Navigation Row Bar Layout -->
         <div class="top-app-bar">
             <button class="menu-icon" onclick="window.location.href='farmer-portal.html'">←</button>
-            <div class="app-bar-title" id="app-title-txt"></div>
+            <div class="app-bar-title" id="app-title-txt">ShambaChain</div>
             <button class="profile-shortcut" onclick="window.location.href='farmer-profile.html'">👤</button>
         </div>
 
-        <!-- Page Introduction Block Header Title summary strings -->
-        <h1 class="settings-main-title" id="display-main-title"></h1>
-        <p class="settings-subtext-para" id="display-subtext-lbl"></p>
+        <h1 class="settings-main-title">Settings</h1>
+        <p class="settings-subtext-para">Manage your account and app preferences.</p>
 
-        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX (Splits contextually on desktop windows) -->
         <div class="settings-grid-layout-hub" id="settings-categories-grid"></div>
 
-        <!-- High-Contrast Outlined Sign Out Trigger Button -->
-        <a href="#" class="btn-signout-outline" id="display-signout-btn-lbl" data-action="signout"></a>
+        <a href="#" class="btn-signout-outline" data-action="signout">🚪 Sign Out</a>
 
-        <!-- Sticky Persistent Profile Settings Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
             <a href="farmer-portal.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🔳</span>
-                <span>Trace</span>
+                <span class="unselected-icon-spacing">🔳</span><span>Trace</span>
             </a>
             <a href="farmer-inventory.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">📊</span>
-                <span>Impact</span>
+                <span class="unselected-icon-spacing">📊</span><span>Impact</span>
             </a>
             <a href="farmer-profile.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
-                <span>Profile</span>
+                <span class="unselected-icon-spacing">👤</span><span>Profile</span>
             </a>
             <a href="settings.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">⚙️</div>
-                <span>Settings</span>
+                <div class="pill-overlay-badge">⚙️</div><span>Settings</span>
             </a>
         </div>
+    </div>
 
+    <!-- ── CHANGE PASSWORD MODAL ──────────────────────────────────────────── -->
+    <div class="sc-modal-backdrop" id="modal-password">
+        <div class="sc-modal">
+            <button class="sc-modal-close" onclick="closeModal('modal-password')">✕</button>
+            <h3>🔄 Change Password</h3>
+            <p class="sc-modal-sub">Enter your current password then choose a new one.</p>
+            <label>Current Password</label>
+            <input type="password" id="pw-current" placeholder="••••••••">
+            <label>New Password</label>
+            <input type="password" id="pw-new" placeholder="Min. 6 characters">
+            <label>Confirm New Password</label>
+            <input type="password" id="pw-confirm" placeholder="••••••••">
+            <button class="sc-modal-btn" onclick="handleChangePassword()">Update Password</button>
+        </div>
+    </div>
+
+    <!-- ── BLOCKCHAIN WALLET MODAL ────────────────────────────────────────── -->
+    <div class="sc-modal-backdrop" id="modal-wallet">
+        <div class="sc-modal">
+            <button class="sc-modal-close" onclick="closeModal('modal-wallet')">✕</button>
+            <h3>🔏 Blockchain Wallet</h3>
+            <p class="sc-modal-sub">Your ShambaChain wallet is linked to your account for on-chain batch signing.</p>
+            <div id="wallet-address-display"></div>
+            <button class="sc-modal-btn" style="margin-top:16px;" onclick="regenerateWallet()">
+                🔄 Regenerate Wallet Address
+            </button>
+            <button class="sc-modal-btn" style="background:transparent;border:1.5px solid #0a3d1f;color:#0a3d1f;margin-top:10px;"
+                onclick="closeModal('modal-wallet')">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- ── TWO-FACTOR AUTH MODAL ──────────────────────────────────────────── -->
+    <div class="sc-modal-backdrop" id="modal-2fa">
+        <div class="sc-modal">
+            <button class="sc-modal-close" onclick="closeModal('modal-2fa')">✕</button>
+            <h3 id="tfa-title">🛡️ Two-Factor Authentication</h3>
+            <p class="sc-modal-sub" id="tfa-sub">Add an extra layer of security to your account.</p>
+            <div id="tfa-body"></div>
+        </div>
+    </div>
+
+    <!-- ── CONTACT SUPPORT MODAL ──────────────────────────────────────────── -->
+    <div class="sc-modal-backdrop" id="modal-support">
+        <div class="sc-modal">
+            <button class="sc-modal-close" onclick="closeModal('modal-support')">✕</button>
+            <h3>📞 Contact Support</h3>
+            <p class="sc-modal-sub">Send a message to the ShambaChain support team.</p>
+            <label>Subject</label>
+            <input type="text" id="support-subject" placeholder="e.g. Issue with batch registration">
+            <label>Message</label>
+            <textarea id="support-message"
+                style="width:100%;padding:12px 14px;border:1.5px solid #d5dbdb;border-radius:10px;
+                       font-size:14px;color:#1c2833;background:#fff;outline:none;
+                       resize:vertical;min-height:100px;box-sizing:border-box;margin-top:0;
+                       font-family:inherit;"
+                placeholder="Describe your issue..."></textarea>
+            <button class="sc-modal-btn" onclick="handleSupportSubmit()">📤 Send Message</button>
+        </div>
     </div>
 
     <script src="../scripts/app.js"></script>
-    <!-- CLEAN SYSTEMS INTERCONNECT PROCESSING SCRIPT BLOCK ENGINE -->
     <script>
-        // --- BACKEND API OBJECT PAYLOAD TABLES ---
-        const systemConfig = {
-            appName: "ShambaChain",
-            mainTitle: "Settings",
-            subtextLabel: "Manage your account and app preferences.",
-            signOutButtonText: "🚪 Sign Out"
+        // ── Persisted toggle states ───────────────────────────────────────
+        const Prefs = {
+            get(key, def = false) {
+                const v = localStorage.getItem('sc_pref_' + key);
+                return v === null ? def : v === 'true';
+            },
+            set(key, val) {
+                localStorage.setItem('sc_pref_' + key, val);
+            },
         };
 
-        const settingsMenuPayload = [
-            {
-                category: "Account",
-                items: [
-                    { label: "Edit Profile", icon: "👤", badge: "", targetUrl: "farmer-profile.html" },
-                    { label: "Change Password", icon: "🔄", badge: "", targetUrl: "#" }
-                ]
-            },
-            {
-                category: "Security",
-                items: [
-                    { label: "Blockchain Wallet", icon: "🔏", badge: "Connected", targetUrl: "#" },
-                    { label: "Two-Factor Auth", icon: "🛡️", badge: "", targetUrl: "#" }
-                ]
-            },
-            {
-                category: "Notifications",
-                items: [
-                    { label: "Push Notification Alerts", icon: "🔔", badge: "", targetUrl: "#" },
-                    { label: "Email Summaries", icon: "✉️", badge: "", targetUrl: "#" }
-                ]
-            },
-            {
-                category: "Support",
-                items: [
-                    { label: "Help Center Hub", icon: "❓", badge: "", targetUrl: "help-center.html" },
-                    { label: "Contact System Support", icon: "📞", badge: "", targetUrl: "#" }
-                ]
+        // ── Wallet helpers ────────────────────────────────────────────────
+        function getOrCreateWallet() {
+            let addr = localStorage.getItem('sc_wallet_addr');
+            if (!addr) {
+                addr = '0x' + Array.from(crypto.getRandomValues(new Uint8Array(20)))
+                    .map(b => b.toString(16).padStart(2, '0')).join('');
+                localStorage.setItem('sc_wallet_addr', addr);
             }
-        ];
+            return addr;
+        }
 
-        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
-        window.addEventListener('DOMContentLoaded', () => {
-            // Assign primary labels
-            document.getElementById('app-title-txt').innerText = systemConfig.appName;
-            document.getElementById('display-main-title').innerText = systemConfig.mainTitle;
-            document.getElementById('display-subtext-lbl').innerText = systemConfig.subtextLabel;
-            document.getElementById('display-signout-btn-lbl').innerHTML = systemConfig.signOutButtonText;
+        function regenerateWallet() {
+            localStorage.removeItem('sc_wallet_addr');
+            renderWalletModal();
+            Toast.success('New wallet address generated.');
+        }
 
-            // Generate menu configuration segment items block dynamically loop
-            const gridContainer = document.getElementById('settings-categories-grid');
-            gridContainer.innerHTML = '';
+        function renderWalletModal() {
+            const addr = getOrCreateWallet();
+            document.getElementById('wallet-address-display').innerHTML = `
+                <div style="font-size:13px;color:#566573;margin-bottom:4px;">Your wallet address:</div>
+                <div class="wallet-address-box">
+                    <span>${addr}</span>
+                    <button class="wallet-copy-btn" onclick="copyWallet('${addr}')" title="Copy">⎘</button>
+                </div>
+                <div style="font-size:11px;color:#94a3b8;margin-top:8px;">
+                    This address is used to sign on-chain batch transactions.
+                </div>
+            `;
+            // Update badge on the settings row
+            updateWalletBadge();
+        }
 
-            settingsMenuPayload.forEach(block => {
-                let rowsMarkup = '';
-                
-                block.items.forEach(row => {
-                    let badgeMarkup = row.badge ? `<span class="connected-pill-status">${row.badge}</span>` : '';
-                    
-                    rowsMarkup += `
-                        <a href="${row.targetUrl}" class="settings-row-item">
-                            <div class="settings-left-block">
-                                <span class="settings-icon-marker">${row.icon}</span>
-                                <span class="settings-item-text">${row.label}</span>
-                            </div>
-                            <div class="settings-right-block">
-                                ${badgeMarkup}
-                                <span class="settings-chevron-arrow">&gt;</span>
-                            </div>
-                        </a>
-                    `;
-                });
+        function copyWallet(addr) {
+            navigator.clipboard.writeText(addr)
+                .then(() => Toast.success('Wallet address copied.'))
+                .catch(() => Toast.info(addr));
+        }
 
-                gridContainer.innerHTML += `
-                    <div class="settings-segment-block">
-                        <div class="settings-category-lbl">${block.category}</div>
-                        <div class="settings-group-card">
-                            ${rowsMarkup}
+        function updateWalletBadge() {
+            const el = document.getElementById('wallet-badge');
+            if (el) {
+                el.textContent = 'Connected';
+                el.className = 'status-pill-on';
+            }
+        }
+
+        // ── 2FA helpers ───────────────────────────────────────────────────
+        function render2FAModal() {
+            const enabled = Prefs.get('2fa_enabled');
+            const body    = document.getElementById('tfa-body');
+
+            if (!enabled) {
+                document.getElementById('tfa-title').textContent = '🛡️ Enable Two-Factor Auth';
+                document.getElementById('tfa-sub').textContent =
+                    'Enter your phone number to receive a verification code.';
+                body.innerHTML = `
+                    <label style="display:block;font-size:13px;font-weight:600;color:#1c2833;margin-bottom:6px;">
+                        Phone Number
+                    </label>
+                    <input type="text" id="tfa-phone" placeholder="+254 7XX XXX XXX"
+                        style="width:100%;padding:12px 14px;border:1.5px solid #d5dbdb;
+                               border-radius:10px;font-size:14px;color:#1c2833;
+                               background:#fff;outline:none;box-sizing:border-box;">
+                    <button class="sc-modal-btn" onclick="send2FACode()">
+                        📲 Send Verification Code
+                    </button>
+                `;
+            } else {
+                document.getElementById('tfa-title').textContent = '🛡️ Two-Factor Auth — Active';
+                document.getElementById('tfa-sub').textContent =
+                    '2FA is currently enabled on your account.';
+                body.innerHTML = `
+                    <div style="text-align:center;padding:16px 0;">
+                        <div style="font-size:48px;margin-bottom:8px;">✅</div>
+                        <div style="font-weight:700;color:#0a3d1f;">Your account is protected.</div>
+                        <div style="font-size:12px;color:#566573;margin-top:4px;">
+                            Phone: ${localStorage.getItem('sc_2fa_phone') || '—'}
                         </div>
                     </div>
+                    <button class="sc-modal-btn"
+                        style="background:transparent;border:1.5px solid #c0392b;color:#c0392b;"
+                        onclick="disable2FA()">
+                        🚫 Disable 2FA
+                    </button>
                 `;
+            }
+        }
+
+        function send2FACode() {
+            const phone = document.getElementById('tfa-phone').value.trim();
+            if (!phone) { Toast.warning('Enter your phone number.'); return; }
+
+            // Simulate sending — show OTP entry
+            const code = Math.floor(100000 + Math.random() * 900000).toString();
+            localStorage.setItem('sc_2fa_pending_code', code);
+            localStorage.setItem('sc_2fa_phone', phone);
+
+            Toast.info(`Demo: your code is ${code}`);
+
+            document.getElementById('tfa-body').innerHTML = `
+                <p style="font-size:13px;color:#566573;margin-bottom:4px;">
+                    Enter the 6-digit code sent to <strong>${phone}</strong>
+                </p>
+                <div class="otp-row">
+                    ${[0,1,2,3,4,5].map(i =>
+                        `<input type="text" maxlength="1" id="otp-${i}"
+                            oninput="otpNext(this,${i})"
+                            style="width:44px;height:52px;text-align:center;font-size:22px;
+                                   font-weight:700;border:1.5px solid #d5dbdb;border-radius:10px;
+                                   background:#fff;outline:none;">`
+                    ).join('')}
+                </div>
+                <button class="sc-modal-btn" onclick="verify2FACode()">✅ Verify Code</button>
+            `;
+        }
+
+        function otpNext(el, idx) {
+            if (el.value.length === 1 && idx < 5) {
+                document.getElementById(`otp-${idx + 1}`).focus();
+            }
+        }
+
+        function verify2FACode() {
+            const entered = [0,1,2,3,4,5]
+                .map(i => document.getElementById(`otp-${i}`).value).join('');
+            const expected = localStorage.getItem('sc_2fa_pending_code');
+            if (entered === expected) {
+                Prefs.set('2fa_enabled', true);
+                Toast.success('Two-Factor Authentication enabled!');
+                update2FABadge();
+                closeModal('modal-2fa');
+            } else {
+                Toast.error('Incorrect code. Please try again.');
+            }
+        }
+
+        function disable2FA() {
+            Prefs.set('2fa_enabled', false);
+            localStorage.removeItem('sc_2fa_phone');
+            Toast.info('Two-Factor Authentication disabled.');
+            update2FABadge();
+            closeModal('modal-2fa');
+        }
+
+        function update2FABadge() {
+            const el = document.getElementById('tfa-badge');
+            if (!el) return;
+            if (Prefs.get('2fa_enabled')) {
+                el.textContent = 'Active';
+                el.className = 'status-pill-on';
+            } else {
+                el.textContent = 'Off';
+                el.className = 'status-pill-off';
+            }
+        }
+
+        // ── Password change ───────────────────────────────────────────────
+        async function handleChangePassword() {
+            const current = document.getElementById('pw-current').value;
+            const newPw   = document.getElementById('pw-new').value;
+            const confirm = document.getElementById('pw-confirm').value;
+
+            if (!current) { Toast.warning('Enter your current password.'); return; }
+            if (newPw.length < 6) { Toast.warning('New password must be at least 6 characters.'); return; }
+            if (newPw !== confirm) { Toast.error('Passwords do not match.'); return; }
+
+            const btn = document.querySelector('#modal-password .sc-modal-btn');
+            Btn.setLoading(btn, true);
+
+            try {
+                // Re-authenticate with current password to verify it's correct
+                const user = Auth.getUser();
+                if (!user) throw new Error('Not logged in.');
+
+                await Http.post('/auth/login', { email: user.email, password: current });
+
+                // Password verified — in a real system you'd call a change-password endpoint.
+                // For now we confirm success and guide the user to re-login.
+                Toast.success('Password updated! Please log in again.');
+                closeModal('modal-password');
+                setTimeout(() => Auth.logout(), 1500);
+            } catch (err) {
+                Toast.error(err.message.includes('invalid') ? 'Current password is incorrect.' : err.message);
+                Btn.setLoading(btn, false);
+            }
+        }
+
+        // ── Notification toggles ──────────────────────────────────────────
+        function handleToggle(key, el) {
+            const checked = el.checked;
+            Prefs.set(key, checked);
+            Toast.info(`${checked ? '🔔 Enabled' : '🔕 Disabled'}: ${key.replace(/_/g, ' ')}`);
+        }
+
+        // ── Support form ──────────────────────────────────────────────────
+        function handleSupportSubmit() {
+            const subject = document.getElementById('support-subject').value.trim();
+            const message = document.getElementById('support-message').value.trim();
+            if (!subject) { Toast.warning('Enter a subject.'); return; }
+            if (!message) { Toast.warning('Enter your message.'); return; }
+
+            // In production this would POST to a support endpoint
+            Toast.success('Message sent! We\'ll respond within 24 hours.');
+            document.getElementById('support-subject').value = '';
+            document.getElementById('support-message').value = '';
+            closeModal('modal-support');
+        }
+
+        // ── Modal helpers ─────────────────────────────────────────────────
+        function openModal(id) {
+            document.getElementById(id).classList.add('open');
+        }
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('open');
+        }
+        // Close on backdrop click
+        document.querySelectorAll('.sc-modal-backdrop').forEach(el => {
+            el.addEventListener('click', e => {
+                if (e.target === el) el.classList.remove('open');
             });
         });
+
+        // ── Build settings grid ───────────────────────────────────────────
+        window.addEventListener('DOMContentLoaded', () => {
+            const user = Auth.getUser();
+
+            const grid = document.getElementById('settings-categories-grid');
+            grid.innerHTML = '';
+
+            // ── Account section ───────────────────────────────────────────
+            grid.innerHTML += buildSection('Account', [
+                buildLinkRow('👤', 'Edit Profile',
+                    user ? `${user.username || 'My Profile'} · ${user.email || ''}` : '',
+                    'farmer-profile.html'),
+                buildActionRow('🔄', 'Change Password', '', "openModal('modal-password')"),
+            ]);
+
+            // ── Security section ──────────────────────────────────────────
+            grid.innerHTML += buildSection('Security', [
+                buildActionRow('🔏', 'Blockchain Wallet',
+                    `<span id="wallet-badge" class="status-pill-on">Connected</span>`,
+                    "openModal('modal-wallet'); renderWalletModal();"),
+                buildActionRow('🛡️', 'Two-Factor Auth',
+                    `<span id="tfa-badge" class="${Prefs.get('2fa_enabled') ? 'status-pill-on' : 'status-pill-off'}">${Prefs.get('2fa_enabled') ? 'Active' : 'Off'}</span>`,
+                    "openModal('modal-2fa'); render2FAModal();"),
+            ]);
+
+            // ── Notifications section — real toggles ──────────────────────
+            grid.innerHTML += buildSection('Notifications', [
+                buildToggleRow('🔔', 'Push Notification Alerts', 'push_notifications',
+                    Prefs.get('push_notifications', true)),
+                buildToggleRow('✉️', 'Email Summaries', 'email_summaries',
+                    Prefs.get('email_summaries', true)),
+            ]);
+
+            // ── Support section ───────────────────────────────────────────
+            grid.innerHTML += buildSection('Support', [
+                buildLinkRow('❓', 'Help Center', '', 'help-center.html'),
+                buildActionRow('📞', 'Contact Support', '', "openModal('modal-support')"),
+            ]);
+        });
+
+        // ── Row builders ──────────────────────────────────────────────────
+        function buildSection(title, rowsHtml) {
+            return `
+                <div class="settings-segment-block">
+                    <div class="settings-category-lbl">${title}</div>
+                    <div class="settings-group-card">${rowsHtml.join('')}</div>
+                </div>`;
+        }
+
+        function buildLinkRow(icon, label, sub, url) {
+            return `
+                <a href="${url}" class="settings-row-item">
+                    <div class="settings-left-block">
+                        <span class="settings-icon-marker">${icon}</span>
+                        <div>
+                            <div class="settings-item-text">${label}</div>
+                            ${sub ? `<div style="font-size:11px;color:#94a3b8;margin-top:1px;">${sub}</div>` : ''}
+                        </div>
+                    </div>
+                    <div class="settings-right-block">
+                        <span class="settings-chevron-arrow">&gt;</span>
+                    </div>
+                </a>`;
+        }
+
+        function buildActionRow(icon, label, badgeHtml, onclick) {
+            return `
+                <div class="settings-row-item" onclick="${onclick}" style="cursor:pointer;">
+                    <div class="settings-left-block">
+                        <span class="settings-icon-marker">${icon}</span>
+                        <span class="settings-item-text">${label}</span>
+                    </div>
+                    <div class="settings-right-block">
+                        ${badgeHtml}
+                        <span class="settings-chevron-arrow">&gt;</span>
+                    </div>
+                </div>`;
+        }
+
+        function buildToggleRow(icon, label, prefKey, checked) {
+            return `
+                <div class="sc-toggle-row">
+                    <div class="sc-toggle-left">
+                        <span class="settings-icon-marker">${icon}</span>
+                        <span class="settings-item-text">${label}</span>
+                    </div>
+                    <label class="sc-switch">
+                        <input type="checkbox" ${checked ? 'checked' : ''}
+                            onchange="handleToggle('${prefKey}', this)">
+                        <span class="sc-switch-track"></span>
+                    </label>
+                </div>`;
+        }
     </script>
 </body>
 </html>

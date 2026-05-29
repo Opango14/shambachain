@@ -6,6 +6,10 @@
     <title>ShambaChain - Logistics Hub</title>
     <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/transporter-hub.css?v=3">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body>
@@ -15,7 +19,7 @@
         <!-- Top App Bar Navigation Row Layout -->
         <div class="top-app-bar">
             <!-- Simulated exit shortcut loop back to login gate context -->
-            <button class="menu-icon" onclick="window.location.href='login.html'">☰</button>
+            <button class="menu-icon" onclick="window.location.href='login.html'"><i class="fas fa-bars"></i></button>
             <div class="app-bar-title" id="app-title-txt"></div>
             <div style="width: 20px;"></div> <!-- Balance layout alignment spacings anchor -->
         </div>
@@ -26,7 +30,7 @@
         
         <div class="hub-meta-row">
             <div class="active-carrier-badge">
-                <span>🚚</span> <span id="display-badge-txt"></span>
+                <span><i class="fas fa-truck"></i></span> <span id="display-badge-txt"></span>
             </div>
         </div>
 
@@ -37,7 +41,7 @@
             <div>
                 <div class="telematics-summary-card">
                     <div class="telematics-top-strip">
-                        <span style="font-size: 18px;">❄️ Cold Chain Tracker</span>
+                        <span style="font-size: 18px;"><i class="fas fa-snowflake"></i> Cold Chain Tracker</span>
                         <span class="telematics-status-pill" id="display-status-pill-txt"></span>
                     </div>
                     
@@ -70,19 +74,19 @@
         <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
         <div class="app-bottom-dock">
             <a href="transporter-hub.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">🚚</div>
+                <div class="pill-overlay-badge"><i class="fas fa-truck"></i></div>
                 <span>Logistics</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="alert('Carrier milestone performance history logs coming soon!')">
-                <span class="unselected-icon-spacing">🕒</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-history"></i></span>
                 <span>History</span>
             </a>
             <a href="blockchain-records.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">📓</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-book"></i></span>
                 <span>Ledger</span>
             </a>
             <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🚪</span>
+                <span class="unselected-icon-spacing"><i class="fas fa-sign-out-alt"></i></span>
                 <span>Sign Out</span>
             </a>
         </div>

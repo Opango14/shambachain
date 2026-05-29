@@ -208,6 +208,110 @@ function requireAuth() {
   return true;
 }
 
+// BACK NAVIGATION
+// Smart back navigation that goes to previous page or fallback
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back();
+  } else {
+    // Fallback to dashboard based on user role
+    const role = localStorage.getItem('selectedRole') || 'consumer';
+    if (role === 'farmer') {
+      window.location.href = 'farmer-portal.html';
+    } else if (role === 'transporter') {
+      window.location.href = 'transporter-hub.html';
+    } else {
+      window.location.href = 'consumer-dashboard.html';
+    }
+  }
+}
+
+// LOCATION SERVICES
+const Location = {
+  // Get current position with promise-based API
+  async getCurrentPosition(options = {}) {
+    return new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error('Geolocation is not supported by this browser.'));
+        return;
+      }
+
+      const defaultOptions = {
+        enableHighAccuracy: true,
+        timeout: 10000,
+        maximumAge: 300000 // 5 minutes
+      };
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          resolve({
+            latitude: position.coords.latitude,
+            longitude: position.coords.longitude,
+            accuracy: position.coords.accuracy,
+            timestamp: position.timestamp
+          });
+        },
+        (error) => {
+          let message = 'Location access denied.';
+          switch(error.code) {
+            case error.PERMISSION_DENIED:
+              message = 'Location access denied by user.';
+              break;
+            case error.POSITION_UNAVAILABLE:
+              message = 'Location information unavailable.';
+              break;
+            case error.TIMEOUT:
+              message = 'Location request timed out.';
+              break;
+          }
+          reject(new Error(message));
+        },
+        { ...defaultOptions, ...options }
+      );
+    });
+  },
+
+  // Format coordinates for display
+  formatCoordinates(lat, lng, precision = 4) {
+    const latDir = lat >= 0 ? 'N' : 'S';
+    const lngDir = lng >= 0 ? 'E' : 'W';
+    return `${Math.abs(lat).toFixed(precision)}° ${latDir}, ${Math.abs(lng).toFixed(precision)}° ${lngDir}`;
+  },
+
+  // Get location and update UI element
+  async updateLocationDisplay(elementId, fallbackText = 'Location unavailable') {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+
+    try {
+      element.textContent = 'Detecting location...';
+      const position = await this.getCurrentPosition();
+      element.textContent = this.formatCoordinates(position.latitude, position.longitude);
+      return position;
+    } catch (error) {
+      element.textContent = fallbackText;
+      console.warn('Location error:', error.message);
+      return null;
+    }
+  },
+
+  // Store location data for batch registration
+  async getLocationForBatch() {
+    try {
+      const position = await this.getCurrentPosition();
+      return {
+        latitude: position.latitude,
+        longitude: position.longitude,
+        coordinates: this.formatCoordinates(position.latitude, position.longitude),
+        timestamp: new Date().toISOString()
+      };
+    } catch (error) {
+      Toast.warning('Could not get location: ' + error.message);
+      return null;
+    }
+  }
+};
+
 //  SIGN OUT WIRING 
 // Attach to any element with data-action="signout"
 document.addEventListener('DOMContentLoaded', () => {
