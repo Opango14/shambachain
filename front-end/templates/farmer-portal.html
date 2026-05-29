@@ -157,7 +157,7 @@
                 <div class="pill-overlay-badge"><i class="fas fa-map-marker-alt"></i></div>
                 <span>Trace</span>
             </a>
-            <a href="farmer-profile.html" class="dock-tab-link">
+            <a href="details.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing"><i class="fas fa-history"></i></span>
                 <span>History</span>
             </a>
@@ -211,6 +211,9 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication before loading page
+            if (!checkAuthAndRedirect()) return;
+            
             requireAuth();
 
             document.getElementById('app-title-txt').innerText = farmConfig.appName;

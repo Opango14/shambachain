@@ -79,7 +79,7 @@
                 <span class="unselected-icon-spacing"><i class="fas fa-link"></i></span>
                 <span>Ledger</span>
             </a>
-            <a href="consumer_profile.html" class="dock-tab-link active-pill-state">
+            <a href="search-traceability.html" class="dock-tab-link active-pill-state">
                 <div class="pill-overlay-badge"><i class="fas fa-search"></i></div>
                 <span>Search</span>
             </a>
@@ -121,6 +121,9 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication before loading page
+            if (!checkAuthAndRedirect()) return;
+            
             document.getElementById('app-title-txt').innerText = searchConfig.appName;
             document.getElementById('display-headline-txt').innerText = searchConfig.headline;
             document.getElementById('display-recent-lbl').innerText = searchConfig.recentLabel;

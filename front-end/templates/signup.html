@@ -100,13 +100,11 @@
             footerTargetUrl: "login.html"
         };
 
-        let activeWorkspaceRole = 'consumer';
+        let activeWorkspaceRole = 'consumer'; // Default to consumer
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (Auth.isLoggedIn()) {
-                window.location.href = 'consumer-dashboard.html';
-                return;
-            }
+            // Redirect if already logged in
+            if (!checkAuthAndRedirect()) return;
 
             document.getElementById('brand-emoji').innerHTML = pageSettings.logo;
             document.getElementById('brand-text').innerText = pageSettings.name;
@@ -153,6 +151,10 @@
             Form.clearAllErrors(form);
 
             let valid = true;
+            if (!activeWorkspaceRole) {
+                Toast.error('Please select a role (Consumer, Farmer, or Transporter).');
+                valid = false;
+            }
             if (!username.value.trim()) {
                 Form.setError(username, 'Username is required.');
                 valid = false;
@@ -173,12 +175,17 @@
 
             Btn.setLoading(btn, true);
 
+            // Debug: Log the data being sent
+            const registrationData = {
+                username: username.value.trim(),
+                email: email.value.trim(),
+                password: password.value,
+                role: activeWorkspaceRole,
+            };
+            console.log('Registration data:', registrationData);
+
             try {
-                await Http.post('/auth/register', {
-                    username: username.value.trim(),
-                    email: email.value.trim(),
-                    password: password.value,
-                });
+                await Http.post('/auth/register', registrationData);
 
                 Toast.success('Account created! Logging you in...');
 
@@ -203,6 +210,7 @@
                 }, 900);
 
             } catch (err) {
+                console.error('Registration error:', err);
                 Toast.error(err.message || 'Registration failed. Please try again.');
                 Btn.setLoading(btn, false);
             }

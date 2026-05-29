@@ -208,6 +208,54 @@ function requireAuth() {
   return true;
 }
 
+// AUTHENTICATION GUARD FOR PAGES
+// Automatically redirect unauthenticated users from protected pages
+function checkAuthAndRedirect() {
+  const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+  
+  // Pages that require authentication
+  const protectedPages = [
+    'consumer-dashboard.html',
+    'farmer-portal.html', 
+    'farmer-profile.html',
+    'farmer-inventory.html',
+    'transporter-hub.html',
+    'details.html',
+    'scanner.html',
+    'search-traceability.html',
+    'settings.html',
+    'blockchain-records.html'
+  ];
+
+  // Pages that should redirect logged-in users
+  const authPages = ['login.html', 'signup.html', 'index.html'];
+
+  if (protectedPages.includes(currentPage) && !Auth.isLoggedIn()) {
+    Toast.warning('Please log in to access this page.');
+    setTimeout(() => { window.location.href = 'login.html'; }, 800);
+    return false;
+  }
+
+  if (authPages.includes(currentPage) && Auth.isLoggedIn()) {
+    const role = localStorage.getItem('selectedRole') || 'consumer';
+    redirectByRole(role);
+    return false;
+  }
+
+  return true;
+}
+
+// ROLE-BASED REDIRECT
+function redirectByRole(role) {
+  if (role === 'farmer') {
+    window.location.href = 'farmer-portal.html';
+  } else if (role === 'transporter') {
+    window.location.href = 'transporter-hub.html';
+  } else {
+    window.location.href = 'consumer-dashboard.html';
+  }
+}
+
 // BACK NAVIGATION
 // Smart back navigation that goes to previous page or fallback
 function goBack() {

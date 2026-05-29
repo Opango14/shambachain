@@ -109,6 +109,9 @@
         ];
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication before loading page
+            if (!checkAuthAndRedirect()) return;
+            
             document.getElementById('app-title-txt').innerText = dashboardSettings.appName;
             document.getElementById('hero-headline').innerText = dashboardSettings.bannerTitle;
             document.getElementById('hero-tagline').innerText = dashboardSettings.bannerDesc;

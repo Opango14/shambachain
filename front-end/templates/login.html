@@ -101,12 +101,8 @@
 
         window.addEventListener('DOMContentLoaded', () => {
             // Redirect if already logged in
-            if (Auth.isLoggedIn()) {
-                const role = localStorage.getItem('selectedRole') || 'consumer';
-                redirectByRole(role);
-                return;
-            }
-
+            if (!checkAuthAndRedirect()) return;
+            
             document.getElementById('brand-emoji').innerHTML = pageSettings.logo;
             document.getElementById('brand-text').innerText = pageSettings.name;
             document.getElementById('nav-help-label').innerText = pageSettings.helpText;

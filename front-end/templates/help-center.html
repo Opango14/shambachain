@@ -6,6 +6,10 @@
     <title>ShambaChain - Help Center</title>
     <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/help-center.css?v=3">
+    <!-- FontAwesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- FontAwesome Custom Styles -->
+    <link rel="stylesheet" href="../styles/fontawesome-custom.css">
     <link rel="stylesheet" href="../styles/theme.css">
 </head>
 <body>
@@ -14,9 +18,9 @@
         
         <!-- Top App Bar Navigation Row Bar layout -->
         <div class="top-app-bar">
-            <button class="btn-back" onclick="window.location.href='settings.html'">←</button>
+            <button class="btn-back" onclick="goBackToAuth()"><i class="fas fa-arrow-left"></i></button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="btn-search-icon" onclick="document.getElementById('helpSearch').focus()">🔍</button>
+            <button class="btn-search-icon" onclick="document.getElementById('helpSearch').focus()"><i class="fas fa-search"></i></button>
         </div>
 
         <!-- Headline banner text query -->
@@ -24,7 +28,7 @@
 
         <!-- Rounded Prefixed Search Input Box -->
         <div class="search-wrapper-box">
-            <span class="search-decor-icon">🔍</span>
+            <span class="search-decor-icon"><i class="fas fa-search"></i></span>
             <input type="text" id="helpSearch" class="search-input-field" placeholder="Search for help articles...">
         </div>
 
@@ -35,11 +39,11 @@
             <div>
                 <div class="topics-grid-row">
                     <a href="#" class="topic-block-card topic-card-mint" onclick="alert('Opening Scanning Guideline Documentation Logs...')">
-                        <div class="topic-card-icon">🔳</div>
+                        <div class="topic-card-icon"><i class="fas fa-qrcode"></i></div>
                         <div class="topic-card-title">Scanning<br>Guides</div>
                     </a>
                     <a href="#" class="topic-block-card topic-card-grey" onclick="alert('Opening Ledger Cryptography & Security Dossiers...')">
-                        <div class="topic-card-icon">🛡️</div>
+                        <div class="topic-card-icon"><i class="fas fa-shield-alt"></i></div>
                         <div class="topic-card-title">Security &<br>Trust</div>
                     </a>
                 </div>
@@ -49,7 +53,7 @@
                     <h4 id="display-banner-title"></h4>
                     <p id="display-banner-desc"></p>
                     <a href="mailto:support@shambachain.com" class="btn-contact-support">
-                        <span>🎧</span> Contact Support
+                        <span><i class="fas fa-headset"></i></span> Contact Support
                     </a>
                 </div>
             </div>
@@ -64,21 +68,21 @@
 
         <!-- Sticky Persistent Profile Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
-            <a href="consumer-dashboard.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">📍</span>
-                <span>Trace</span>
+            <a href="index.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"><i class="fas fa-home"></i></span>
+                <span>Home</span>
             </a>
-            <a href="#" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🕒</span>
-                <span>History</span>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"><i class="fas fa-sign-in-alt"></i></span>
+                <span>Login</span>
             </a>
-            <a href="#" class="dock-tab-link">
-                <span class="unselected-icon-spacing">📓</span>
-                <span>Ledger</span>
+            <a href="signup.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"><i class="fas fa-user-plus"></i></span>
+                <span>Sign Up</span>
             </a>
-            <a href="settings.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">👤</div>
-                <span>Profile</span>
+            <a href="help-center.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge"><i class="fas fa-question-circle"></i></div>
+                <span>Help</span>
             </a>
         </div>
 
@@ -148,6 +152,32 @@
             // If the clicked element wasn't open, append the sliding selector class modifier text properties
             if (!isAlreadyExpanded) {
                 selectedRowElement.classList.add('drawer-open-state');
+            }
+        }
+
+        // Smart back navigation for help center
+        function goBackToAuth() {
+            // Check if user came from login/signup or is logged in
+            if (Auth.isLoggedIn()) {
+                // User is logged in, go to appropriate dashboard
+                const role = localStorage.getItem('selectedRole') || 'consumer';
+                if (role === 'farmer') {
+                    window.location.href = 'farmer-portal.html';
+                } else if (role === 'transporter') {
+                    window.location.href = 'transporter-hub.html';
+                } else {
+                    window.location.href = 'consumer-dashboard.html';
+                }
+            } else {
+                // User not logged in, check referrer or go to index
+                const referrer = document.referrer;
+                if (referrer.includes('login.html')) {
+                    window.location.href = 'login.html';
+                } else if (referrer.includes('signup.html')) {
+                    window.location.href = 'signup.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
             }
         }
     </script>

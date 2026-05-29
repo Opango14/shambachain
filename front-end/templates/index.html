@@ -99,6 +99,9 @@
 
         // --- RUNTIME RENDER CONTROLLER ENGINE ---
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication and redirect if needed
+            checkAuthAndRedirect();
+            
             // Mapping primary text properties onto layout selector headers
             document.getElementById('brand-emoji').innerHTML = appSettings.logo;
             document.getElementById('brand-text').innerText = appSettings.name;

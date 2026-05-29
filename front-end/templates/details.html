@@ -143,6 +143,9 @@
 
         // --- CORE APPLICATIONS RENDERING ENGINE CONTROLLER ---
         window.addEventListener('DOMContentLoaded', () => {
+            // Check authentication before loading page
+            if (!checkAuthAndRedirect()) return;
+            
             // Injects summary details headings variables properties
             document.getElementById('app-title-txt').innerText = pageSettings.appName;
             document.getElementById('crop-image-bg').style.backgroundImage = `url('${pageSettings.imageAssetUrl}')`;
