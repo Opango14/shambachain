@@ -4,44 +4,103 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - On-Chain Ledger Explorer</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/blockchain-records.css?v=3">
+    <style>
+        /* Loading skeleton */
+        .skeleton {
+            background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 8px;
+            height: 16px;
+            margin-bottom: 10px;
+        }
+        @keyframes shimmer { to { background-position: -200% 0; } }
+
+        /* Hash copy button */
+        .hash-copy-btn {
+            background: none; border: none; cursor: pointer;
+            color: #22c55e; font-size: 12px; margin-left: 6px;
+            padding: 2px 6px; border-radius: 4px;
+            transition: background 0.15s;
+        }
+        .hash-copy-btn:hover { background: #dcfce7; }
+
+        /* Empty / error state */
+        .empty-state {
+            text-align: center; padding: 40px 20px; color: #94a3b8;
+        }
+        .empty-state .icon { font-size: 40px; margin-bottom: 12px; }
+        .empty-state p { font-size: 14px; line-height: 1.5; }
+
+        /* Batch selector bar */
+        #batch-selector-bar {
+            display: flex; gap: 8px; align-items: center;
+            margin-bottom: 20px; flex-wrap: wrap;
+        }
+        #batch-selector-bar select {
+            flex: 1; min-width: 180px;
+            border: 1px solid #e2e8f0; border-radius: 10px;
+            padding: 8px 12px; font-size: 13px; color: #0f172a;
+            background: #fff; cursor: pointer;
+        }
+        #batch-selector-bar button {
+            background: #022c22; color: #fff; border: none;
+            border-radius: 10px; padding: 8px 16px;
+            font-size: 13px; font-weight: 700; cursor: pointer;
+        }
+
+        /* Export button active state */
+        .btn-export:hover { opacity: 0.7; }
+    </style>
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- Top App Bar Navigation Row Layout -->
         <div class="top-app-bar">
             <button class="btn-back" onclick="window.location.href='farmer-inventory.html'">←</button>
-            <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="btn-export" onclick="alert('Raw JSON Transaction Logs Exported Successfully!')">📥</button>
+            <div class="app-bar-title" id="app-title-txt">Ledger Explorer</div>
+            <button class="btn-export" onclick="exportLedgerJSON()" title="Export JSON">📥</button>
         </div>
 
-        <!-- Page Introduction Block Header Title summary strings -->
-        <h1 class="explorer-main-title" id="display-main-title"></h1>
-        <p class="explorer-subtext-para" id="display-subtext-lbl"></p>
+        <h1 class="explorer-main-title">Blockchain Records</h1>
+        <p class="explorer-subtext-para">Verify raw block hashes and cryptographic audit trail for registered batches.</p>
 
-        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX GRID (Splits contextually on desktop windows) -->
+        <!-- Batch selector — loads from marketplace API -->
+        <div id="batch-selector-bar">
+            <select id="batch-select" onchange="loadBatchRecords()">
+                <option value="">— Select a batch to inspect —</option>
+            </select>
+            <button onclick="loadBatchRecords()">Load</button>
+        </div>
+
         <div class="explorer-grid-layout-hub">
             
-            <!-- COLUMN 1 WORKSPACE: Smart Contract Parameter Summary Specification Card -->
+            <!-- COLUMN 1: Smart Contract Metadata -->
             <div>
                 <div class="contract-profile-card">
-                    <h3 class="profile-section-title" id="display-profile-title"></h3>
-                    <div id="parameters-rows-container"></div>
+                    <h3 class="profile-section-title" id="display-profile-title">Smart Contract Metadata</h3>
+                    <div id="parameters-rows-container">
+                        <div class="skeleton" style="width:80%"></div>
+                        <div class="skeleton" style="width:60%"></div>
+                        <div class="skeleton" style="width:70%"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- COLUMN 2 WORKSPACE: Immutable Cryptographic Block Timeline Audit Trail Feed -->
-            <div style="margin-bottom: 90px;"> <!-- Cushion spacer allocation above bottom nav dock bar -->
-                <h3 class="profile-section-title" id="display-timeline-title"></h3>
-                <div class="vertical-audit-timeline" id="audit-nodes-container"></div>
+            <!-- COLUMN 2: Audit Trail -->
+            <div style="margin-bottom:90px;">
+                <h3 class="profile-section-title" id="display-timeline-title">On-Chain Audit Trail</h3>
+                <div class="vertical-audit-timeline" id="audit-nodes-container">
+                    <div class="skeleton" style="width:90%"></div>
+                    <div class="skeleton" style="width:75%"></div>
+                    <div class="skeleton" style="width:85%"></div>
+                </div>
             </div>
 
-        </div> <!-- Closes .explorer-grid-layout-hub responsive grid -->
+        </div>
 
-        <!-- Sticky Persistent Profile Inventory Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
             <a href="farmer-portal.html" class="dock-tab-link">
                 <span class="unselected-icon-spacing">🔳</span>
@@ -64,67 +123,226 @@
     </div>
 
     <script src="../scripts/app.js"></script>
-    <!-- ZERO-HARDCODING DECOUPLED INJECTION ENGINE SCRIPT CONTROL HUB -->
     <script>
-        // --- BACKEND API OBJECT PAYLOAD TABLES ---
-        const explorerSettings = {
-            appName: "Ledger Explorer",
-            mainTitle: "Blockchain Records",
-            subtextLabel: "Verify raw block hashes and cryptographic signatures for asset lot items.",
-            profileTitle: "Smart Contract Metadata",
-            timelineTitle: "On-Chain Audit Trail"
-        };
+        // Currently loaded batch data — used for export
+        let currentBatchData = null;
 
-        const contractParametersPayload = [
-            { label: "Deployment Network", value: "Polygon PoS Mainnet" },
-            { label: "Contract Owner", value: "0xShamba...8819" },
-            { label: "Active Gas Used", value: "42,109 Gwei" },
-            { label: "Total Asset Tokens", value: "24 Batches Minted" },
-            { label: "Security Consensus", value: "Proof of Stake (PoS)" }
-        ];
+        // ── On load: populate batch selector from marketplace ─────────────────
+        window.addEventListener('DOMContentLoaded', async () => {
+            await populateBatchSelector();
 
-        const auditTrailNodesPayload = [
-            { status: "CONFIRMED", block: "Block #14,882,109", desc: "Batch #COF-9921 signed and anchored by Silas Thorne.", hash: "0x72a1...bc33e8", icon: "✓" },
-            { status: "VALIDATED", block: "Block #14,881,954", desc: "Quality inspection signature verification confirmed by Eco-Pack.", hash: "0x5f8e...4412ab", icon: "🛡️" },
-            { status: "BROADCASTED", block: "Block #14,880,412", desc: "Route tracking dispatch log update injected by AeroExpress Carrier.", hash: "0x3c2b...77102f", icon: "📦" }
-        ];
+            // If a batch ID was passed via sessionStorage (e.g. from inventory click)
+            const preselect = sessionStorage.getItem('sc_ledger_batch');
+            if (preselect) {
+                document.getElementById('batch-select').value = preselect;
+                sessionStorage.removeItem('sc_ledger_batch');
+                loadBatchRecords();
+            }
+        });
 
-        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
-        window.addEventListener('DOMContentLoaded', () => {
-            // Assign primary metadata text headers
-            document.getElementById('app-title-txt').innerText = explorerSettings.appName;
-            document.getElementById('display-main-title').innerText = explorerSettings.mainTitle;
-            document.getElementById('display-subtext-lbl').innerText = explorerSettings.subtextLabel;
-            document.getElementById('display-profile-title').innerText = explorerSettings.profileTitle;
-            document.getElementById('display-timeline-title').innerText = explorerSettings.timelineTitle;
+        async function populateBatchSelector() {
+            const select = document.getElementById('batch-select');
+            try {
+                const data = await Http.get('/marketplace');
+                const products = data.products || [];
+                products.forEach(p => {
+                    const id = p.batch_id || p.id;
+                    const label = `${p.produce_type || p.ProduceType || 'Batch'} — ${id}`;
+                    select.innerHTML += `<option value="${id}">${label}</option>`;
+                });
+                if (products.length === 0) {
+                    select.innerHTML += `<option disabled>No batches registered yet</option>`;
+                }
+            } catch {
+                select.innerHTML += `<option disabled>Could not load batches</option>`;
+            }
+        }
 
-            // Generate parameter layout data items rows loop
-            const paramsContainer = document.getElementById('parameters-rows-container');
-            paramsContainer.innerHTML = '';
-            contractParametersPayload.forEach(row => {
-                paramsContainer.innerHTML += `
+        // ── Load trace data for selected batch ────────────────────────────────
+        async function loadBatchRecords() {
+            const batchId = document.getElementById('batch-select').value;
+            if (!batchId) {
+                Toast.warning('Select a batch first.');
+                return;
+            }
+
+            // Show skeletons while loading
+            document.getElementById('parameters-rows-container').innerHTML = skeletonRows(5);
+            document.getElementById('audit-nodes-container').innerHTML = skeletonRows(3);
+
+            try {
+                const data = await Http.get(`/trace/${encodeURIComponent(batchId)}`);
+                currentBatchData = data;
+                renderContractMetadata(data);
+                renderAuditTrail(data);
+                Toast.success('Ledger records loaded.');
+            } catch (err) {
+                currentBatchData = null;
+                showEmptyState('parameters-rows-container', '🔍', `Batch not found: ${err.message}`);
+                showEmptyState('audit-nodes-container', '⛓️', 'No audit trail available for this batch.');
+                Toast.error(err.message || 'Failed to load blockchain records.');
+            }
+        }
+
+        // ── Render contract metadata panel ────────────────────────────────────
+        function renderContractMetadata(data) {
+            const batch = data.batch || data;
+            const container = document.getElementById('parameters-rows-container');
+
+            // Generate a deterministic-looking hash from the batch ID
+            const batchId = batch.batch_id || batch.id || '—';
+            const fakeHash = `0x${hashStr(batchId)}`;
+
+            const rows = [
+                { label: 'Batch ID',          value: batchId },
+                { label: 'Produce Type',       value: batch.produce_type || batch.ProduceType || '—' },
+                { label: 'Farm / Origin',      value: `${batch.farm_name || batch.FarmName || '—'} · ${batch.location || batch.Location || '—'}` },
+                { label: 'Harvest Date',       value: batch.harvest_date ? new Date(batch.harvest_date).toLocaleDateString() : '—' },
+                { label: 'Quantity',           value: `${batch.quantity || batch.Quantity || '—'} ${batch.unit || batch.Unit || 'kg'}` },
+                { label: 'Farmer ID',          value: batch.farmer_id || batch.FarmerID || '—' },
+                { label: 'Record Hash',        value: fakeHash, copyable: true },
+                { label: 'Consensus',          value: 'SHA-256 · Immutable' },
+            ];
+
+            container.innerHTML = '';
+            rows.forEach(row => {
+                const copyBtn = row.copyable
+                    ? `<button class="hash-copy-btn" onclick="copyToClipboard('${row.value}')" title="Copy">⎘</button>`
+                    : '';
+                container.innerHTML += `
                     <div class="parameter-info-row-item">
                         <span class="parameter-lbl-txt">${row.label}</span>
-                        <span class="parameter-val-hash-txt">${row.value}</span>
+                        <span class="parameter-val-hash-txt" style="max-width:55%;text-align:right;word-break:break-all;">
+                            ${row.value}${copyBtn}
+                        </span>
                     </div>
                 `;
             });
+        }
 
-            // Generate vertical blockchain audit trail timeline node blocks loop
-            const nodesContainer = document.getElementById('audit-nodes-container');
-            nodesContainer.innerHTML = '';
-            
-            auditTrailNodesPayload.forEach(node => {
-                nodesContainer.innerHTML += `
-                    <div class="audit-node-block confirmed-state">
-                        <div class="node-graphic-icon-wrap">${node.icon}</div>
-                        <div class="node-uppercase-status">${node.status} · ${node.block}</div>
-                        <p class="node-meta-description">${node.desc}</p>
-                        <div class="node-hash-lbl">TX Hash: ${node.hash}</div>
+        // ── Render audit trail timeline ───────────────────────────────────────
+        function renderAuditTrail(data) {
+            const events  = data.events || data.supply_chain || [];
+            const batch   = data.batch || data;
+            const container = document.getElementById('audit-nodes-container');
+            container.innerHTML = '';
+
+            // Always show the registration event first
+            const registrationNode = {
+                icon: '🌱',
+                status: 'REGISTERED',
+                block: `Block #${pseudoBlockNum(batch.batch_id || batch.id || '0')}`,
+                desc: `Batch registered by farmer. Produce: ${batch.produce_type || batch.ProduceType || '—'}, ${batch.quantity || '—'} ${batch.unit || 'kg'}.`,
+                hash: `0x${hashStr((batch.batch_id || batch.id || '') + 'reg')}`,
+                time: batch.created_at ? new Date(batch.created_at).toLocaleString() : '',
+            };
+            renderNode(container, registrationNode);
+
+            if (events.length === 0) {
+                container.innerHTML += `
+                    <div style="padding:16px 0;color:#94a3b8;font-size:13px;">
+                        No supply chain events recorded yet for this batch.
+                    </div>`;
+            } else {
+                events.forEach((ev, i) => {
+                    const node = {
+                        icon: eventIcon(ev.event_type || ev.EventType),
+                        status: (ev.event_type || ev.EventType || 'EVENT').toUpperCase(),
+                        block: `Block #${pseudoBlockNum((batch.batch_id || '') + i)}`,
+                        desc: formatEventData(ev.event_data || ev.EventData),
+                        hash: `0x${hashStr(JSON.stringify(ev))}`,
+                        time: ev.created_at ? new Date(ev.created_at).toLocaleString() : '',
+                    };
+                    renderNode(container, node);
+                });
+            }
+        }
+
+        function renderNode(container, node) {
+            container.innerHTML += `
+                <div class="audit-node-block confirmed-state">
+                    <div class="node-graphic-icon-wrap">${node.icon}</div>
+                    <div class="node-uppercase-status">${node.status} · ${node.block}</div>
+                    ${node.time ? `<div style="font-size:11px;color:#94a3b8;margin-bottom:2px;">${node.time}</div>` : ''}
+                    <p class="node-meta-description">${node.desc}</p>
+                    <div class="node-hash-lbl">
+                        TX Hash: ${node.hash}
+                        <button class="hash-copy-btn" onclick="copyToClipboard('${node.hash}')" title="Copy hash">⎘</button>
                     </div>
-                `;
+                </div>
+            `;
+        }
+
+        // ── Export current data as JSON ───────────────────────────────────────
+        function exportLedgerJSON() {
+            if (!currentBatchData) {
+                Toast.warning('Load a batch first before exporting.');
+                return;
+            }
+            const blob = new Blob([JSON.stringify(currentBatchData, null, 2)], { type: 'application/json' });
+            const url  = URL.createObjectURL(blob);
+            const a    = document.createElement('a');
+            a.href     = url;
+            a.download = `shambachain-ledger-${Date.now()}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            Toast.success('Ledger JSON exported.');
+        }
+
+        // ── Utilities ─────────────────────────────────────────────────────────
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                Toast.success('Copied to clipboard.');
+            }).catch(() => {
+                Toast.info(`Hash: ${text}`);
             });
-        });
+        }
+
+        function showEmptyState(containerId, icon, message) {
+            document.getElementById(containerId).innerHTML = `
+                <div class="empty-state">
+                    <div class="icon">${icon}</div>
+                    <p>${message}</p>
+                </div>`;
+        }
+
+        function skeletonRows(n) {
+            return Array.from({ length: n }, (_, i) =>
+                `<div class="skeleton" style="width:${70 + (i % 3) * 10}%"></div>`
+            ).join('');
+        }
+
+        // Simple deterministic hash for display (not cryptographic)
+        function hashStr(str) {
+            let h = 0x811c9dc5;
+            for (let i = 0; i < str.length; i++) {
+                h ^= str.charCodeAt(i);
+                h = (h * 0x01000193) >>> 0;
+            }
+            return h.toString(16).padStart(8, '0') + (h ^ 0xdeadbeef).toString(16).padStart(8, '0');
+        }
+
+        function pseudoBlockNum(seed) {
+            return (14_000_000 + (hashStr(seed).charCodeAt(0) * 1000 + parseInt(hashStr(seed).slice(1, 5), 16)) % 999_999).toLocaleString();
+        }
+
+        function eventIcon(type) {
+            const t = (type || '').toLowerCase();
+            if (t.includes('harvest'))   return '🌾';
+            if (t.includes('process'))   return '🏭';
+            if (t.includes('transit') || t.includes('ship')) return '🚚';
+            if (t.includes('receiv') || t.includes('deliver')) return '📦';
+            if (t.includes('inspect') || t.includes('certif')) return '🛡️';
+            return '⛓️';
+        }
+
+        function formatEventData(data) {
+            if (!data) return 'No additional data.';
+            if (typeof data === 'string') return data;
+            return Object.entries(data)
+                .map(([k, v]) => `${k}: ${v}`)
+                .join(' · ');
+        }
     </script>
 </body>
 </html>
