@@ -16,7 +16,7 @@
 }
 
 body {
-    background-color: #f1f5f9;
+    background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -77,8 +77,8 @@ body {
     position: relative;
     height: 280px;
     background-color: #e2e8f0;
-    /* Using an abstract architectural imagery pattern backdrop to mimic a routing map grid framework layout */
-    background-image: url('https://unsplash.com');
+    /* Kenyan highway / road map aerial view */
+    background-image: url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1200&q=80&fit=crop');
     background-size: cover;
     background-position: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.02);
@@ -147,8 +147,8 @@ body {
 }
 
 .sensor-metric-card-box {
-    background: #f8fafc;
-    border: 1px solid var(--border-color);
+    background: linear-gradient(135deg, #0a3d1f 0%, #145a32 100%);
+    border: 1px solid rgba(212, 172, 13, 0.25);
     border-radius: 16px;
     padding: 16px;
     text-align: left;
@@ -156,6 +156,7 @@ body {
     flex-direction: column;
     justify-content: space-between;
     min-height: 100px;
+    color: #ffffff;
 }
 
 .sensor-card-top-line {
@@ -189,7 +190,7 @@ body {
 .sensor-lbl-txt {
     font-size: 11px;
     font-weight: 700;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     letter-spacing: 0.5px;
     margin-bottom: 4px;
@@ -198,7 +199,7 @@ body {
 .sensor-val-num-display {
     font-size: 18px;
     font-weight: 800;
-    color: var(--text-dark);
+    color: #ffffff;
 }
 
 /* External ledger blockchain transactions documentation cards */
@@ -242,7 +243,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f1f5f9;
+    background: #0a3d1f;
     border-top: 1px solid var(--border-color);
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;

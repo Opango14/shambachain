@@ -17,7 +17,7 @@
 }
 
 body {
-    background-color: #f1f5f9;
+    background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -265,7 +265,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f1f5f9;
+    background: #0a3d1f;
     border-top: 1px solid var(--border-color);
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;

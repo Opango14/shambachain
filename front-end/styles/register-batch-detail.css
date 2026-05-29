@@ -16,7 +16,7 @@
 }
 
 body {
-    background-color: #f1f5f9;
+    background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -26,7 +26,7 @@ body {
 
 /* Universal Canvas Container Wrapper Frame */
 .phone-container {
-    background: #f8fafc;
+    background: #fdfaf5;
     width: 100%;
     max-width: var(--max-width-desktop);
     margin: 0 auto;
@@ -198,12 +198,18 @@ body {
 
 /* Immutable Verification Security Card */
 .immutable-integrity-card {
-    background-color: #022c22;
+    background:
+        linear-gradient(160deg, rgba(10,61,31,0.88) 0%, rgba(20,90,50,0.95) 100%),
+        url('https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&q=80&fit=crop');
+    background-size: cover;
+    background-position: center;
     color: #ffffff;
     border-radius: 20px;
     padding: 24px;
     text-align: left;
     margin-bottom: 24px;
+    border: 1px solid rgba(212, 172, 13, 0.3);
+    box-shadow: 0 8px 32px rgba(10, 61, 31, 0.25);
 }
 
 .integrity-header {
@@ -250,7 +256,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f1f5f9;
+    background: #0a3d1f;
     border-top: 1px solid #e2e8f0;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;

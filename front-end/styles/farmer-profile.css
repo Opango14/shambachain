@@ -17,7 +17,7 @@
 }
 
 body {
-    background-color: #f1f5f9;
+    background: linear-gradient(160deg, #0a3d1f 0%, #145a32 40%, #1e8449 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -27,7 +27,7 @@ body {
 
 /* Universal Workspace Responsive Canvas Container layout frame */
 .phone-container {
-    background: #f8fafc;
+    background: #fdfaf5;
     width: 100%;
     max-width: var(--max-width-desktop);
     margin: 0 auto;
@@ -77,6 +77,14 @@ body {
     align-items: center;
     text-align: center;
     margin-bottom: 24px;
+    background:
+        linear-gradient(160deg, rgba(10,61,31,0.75) 0%, rgba(20,90,50,0.85) 100%),
+        url('https://images.unsplash.com/photo-1464226184884-fa280b87c399?w=800&q=80&fit=crop');
+    background-size: cover;
+    background-position: center;
+    border-radius: 20px;
+    padding: 32px 24px;
+    border: 1px solid rgba(212, 172, 13, 0.3);
 }
 
 .avatar-badge-wrapper {
@@ -119,18 +127,18 @@ body {
 .producer-name-header {
     font-size: 22px;
     font-weight: 800;
-    color: var(--primary-dark);
+    color: #ffffff;
     margin-bottom: 4px;
 }
 
 .verified-capsule-tag {
-    background: #e6f4ea;
-    color: #115e59;
+    background: rgba(255,255,255,0.15);
+    color: #86efac;
     font-size: 11px;
     font-weight: 700;
     padding: 4px 12px;
     border-radius: 20px;
-    border: 1px solid #bbf7d0;
+    border: 1px solid rgba(134, 239, 172, 0.4);
     display: inline-flex;
     align-items: center;
     gap: 4px;
@@ -139,7 +147,7 @@ body {
 
 .location-pin-lbl {
     font-size: 13px;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.8);
     font-weight: 500;
     display: flex;
     align-items: center;
@@ -260,7 +268,7 @@ body {
     width: 36px;
     height: 36px;
     border-radius: 8px;
-    background: #f1f5f9;
+    background: #0a3d1f;
     color: var(--primary-dark);
     display: flex;
     justify-content: center;
@@ -310,7 +318,7 @@ body {
     bottom: 0;
     left: 0;
     right: 0;
-    background: #f1f5f9;
+    background: #0a3d1f;
     border-top: 1px solid #e2e8f0;
     border-bottom-left-radius: 24px;
     border-bottom-right-radius: 24px;
