@@ -4,14 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Register Account</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/signup.css?v=2">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { corePlugins: { preflight: false }, prefix: 'tw-' }</script>
 </head>
 <body>
 
     <div class="phone-container">
         
-        <!-- Top App Branding Bar Area -->
         <div class="nav-header">
             <div class="logo-block">
                 <span id="brand-emoji"></span> 
@@ -20,54 +20,50 @@
             <a href="help-center.html" class="help-link" id="nav-help-label"></a>
         </div>
 
-        <!-- Form Onboarding Subtitles Row Header Group Container -->
         <div class="intro-summary-block">
             <h1 class="main-title" id="display-title"></h1>
             <p class="main-subtitle" id="display-subtitle"></p>
         </div>
 
-        <!-- White Interactive Form Surface Panel Container -->
         <div class="registration-card">
             
-            <!-- Two-Step Progress Bar Indicator -->
             <div class="step-indicator">
                 <div class="indicator-bar active"></div>
                 <div class="indicator-bar active"></div>
             </div>
 
-            <!-- Role Tabs Toggle Selector Buttons Grid Row (UPDATED: Added Transporter Tab) -->
+            <!-- Role Tabs -->
             <div class="toggle-container">
                 <button type="button" class="toggle-tab" id="tab-consumer" onclick="toggleActiveRoleState('consumer')"></button>
                 <button type="button" class="toggle-tab" id="tab-farmer" onclick="toggleActiveRoleState('farmer')"></button>
                 <button type="button" class="toggle-tab" id="tab-transporter" onclick="toggleActiveRoleState('transporter')"></button>
             </div>
 
-            <!-- Entry Core Input Controls Form Element -->
-            <form id="signupForm" onsubmit="executeOnChainRegistration(event)">
+            <form id="signupForm" onsubmit="handleRegister(event)" novalidate>
                 
                 <div class="form-group">
                     <label for="reg-username" id="lbl-user"></label>
-                    <input type="text" id="reg-username" class="form-control" placeholder="e.g. jirani_farm" required>
+                    <input type="text" id="reg-username" class="form-control" placeholder="e.g. jirani_farm" required autocomplete="username">
                 </div>
 
                 <div class="form-group">
                     <label for="reg-email" id="lbl-email"></label>
-                    <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required>
+                    <input type="email" id="reg-email" class="form-control" placeholder="name@example.com" required autocomplete="email">
                 </div>
 
                 <div class="form-group">
                     <label for="reg-password" id="lbl-pass"></label>
                     <div class="password-wrapper">
-                        <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-password')">👁️</span>
+                        <input type="password" id="reg-password" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-password')" role="button" tabindex="0">👁️</span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="reg-confirm" id="lbl-confirm"></label>
                     <div class="password-wrapper">
-                        <input type="password" id="reg-confirm" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-confirm')">👁️</span>
+                        <input type="password" id="reg-confirm" class="form-control" placeholder="••••••••" required autocomplete="new-password">
+                        <span class="password-toggle" onclick="togglePasswordInputMask('reg-confirm')" role="button" tabindex="0">👁️</span>
                     </div>
                 </div>
 
@@ -76,16 +72,12 @@
 
         </div>
 
-        <!-- Baseline Redirection Footer Prompt -->
-        <p class="footer-prompt" id="display-footer-box">
-            <!-- Text layout elements generated cleanly by the runtime system script below -->
-        </p>
+        <p class="footer-prompt" id="display-footer-box"></p>
 
     </div>
 
-    <!-- DECOUPLED RUNTIME DATA HUB & VALIDATION ENGINE -->
+    <script src="../scripts/app.js"></script>
     <script>
-        // --- BACKEND API REPLICATED DATA DICTIONARIES ---
         const pageSettings = {
             name: "ShambaChain",
             logo: "🚜",
@@ -94,23 +86,23 @@
             tagline: "Join the global network of transparent food supply chains.",
             tabConsumerLabel: "Consumer Hub",
             tabFarmerLabel: "Producer Hub",
-            tabTransporterLabel: "Logistics Hub", // Added label string
+            tabTransporterLabel: "Logistics Hub",
             lblUsername: "Username",
             lblEmail: "Email Address",
             lblPassword: "Password",
             lblConfirmPassword: "Confirm Password",
             btnText: "Create Account",
-            footerPromptText: "Already have an account?",
-            footerLinkText: "Log In",
             footerTargetUrl: "login.html"
         };
 
-        // Keeps track of runtime state selection parameters
         let activeWorkspaceRole = 'consumer';
 
-        // --- CORE INTERFACE INJECTION ENGINE ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Mapping schema configurations across structural element targets
+            if (Auth.isLoggedIn()) {
+                window.location.href = 'consumer-dashboard.html';
+                return;
+            }
+
             document.getElementById('brand-emoji').innerText = pageSettings.logo;
             document.getElementById('brand-text').innerText = pageSettings.name;
             document.getElementById('nav-help-label').innerText = pageSettings.helpText;
@@ -124,64 +116,89 @@
             document.getElementById('lbl-pass').innerText = pageSettings.lblPassword;
             document.getElementById('lbl-confirm').innerText = pageSettings.lblConfirmPassword;
             document.getElementById('btn-submit-txt').innerText = pageSettings.btnText;
+            document.getElementById('display-footer-box').innerHTML =
+                `Already have an account? <a href="${pageSettings.footerTargetUrl}">Log In</a>`;
 
-            // Generate footer layout structure nodes
-            const footerContainer = document.getElementById('display-footer-box');
-            footerContainer.innerHTML = `${pageSettings.footerPromptText} <a href="${pageSettings.footerTargetUrl}">${pageSettings.footerLinkText}</a>`;
-
-            // READ INITIAL CHOICE: Read state variables from homepage localStorage session storage safely
             const cachedChoice = localStorage.getItem('selectedRole');
-            if (cachedChoice === 'farmer') {
-                toggleActiveRoleState('farmer');
-            } else if (cachedChoice === 'transporter') {
-                toggleActiveRoleState('transporter');
-            } else {
-                toggleActiveRoleState('consumer');
-            }
+            toggleActiveRoleState(cachedChoice || 'consumer');
         });
 
-        // --- VISUAL CONTROL STATE TOGGLERS ---
-        function toggleActiveRoleState(targetRoleModeId) {
-            activeWorkspaceRole = targetRoleModeId;
-            
-            // Sync current configuration status to session variables memory trace cache
-            localStorage.setItem('selectedRole', targetRoleModeId);
-
-            // Fetch and flush style assignments across toggle pills
-            document.getElementById('tab-consumer').classList.remove('active');
-            document.getElementById('tab-farmer').classList.remove('active');
-            document.getElementById('tab-transporter').classList.remove('active');
-
-            if (targetRoleModeId === 'consumer') {
-                document.getElementById('tab-consumer').classList.add('active');
-            } else if (targetRoleModeId === 'farmer') {
-                document.getElementById('tab-farmer').classList.add('active');
-            } else {
-                document.getElementById('tab-transporter').classList.add('active');
-            }
+        function toggleActiveRoleState(role) {
+            activeWorkspaceRole = role;
+            localStorage.setItem('selectedRole', role);
+            ['consumer', 'farmer', 'transporter'].forEach(r => {
+                document.getElementById(`tab-${r}`).classList.toggle('active', r === role);
+            });
         }
 
-        // Show/hide password input mask tool
-        function togglePasswordInputMask(inputElementFieldId) {
-            const targetField = document.getElementById(inputElementFieldId);
-            targetField.type = (targetField.type === "password") ? "text" : "password";
+        function togglePasswordInputMask(id) {
+            const f = document.getElementById(id);
+            f.type = f.type === 'password' ? 'text' : 'password';
         }
 
-        // --- BACKEND PIPELINE SIMULATION TRIGGER ---
-        function executeOnChainRegistration(e) {
+        async function handleRegister(e) {
             e.preventDefault();
-            
-            // Capture standard validation entries to memory spaces
-            const usernameInput = document.getElementById('reg-username').value;
-            localStorage.setItem('cachedUsername', usernameInput);
+            const form     = document.getElementById('signupForm');
+            const btn      = document.getElementById('btn-submit-txt');
+            const username = document.getElementById('reg-username');
+            const email    = document.getElementById('reg-email');
+            const password = document.getElementById('reg-password');
+            const confirm  = document.getElementById('reg-confirm');
 
-            // Contextual dynamic routing: forwards users based on their active workspace configuration pill
-            if (activeWorkspaceRole === 'farmer') {
-                window.location.href = 'farmer-portal.html';
-            } else if (activeWorkspaceRole === 'transporter') {
-                window.location.href = 'transporter-hub.html'; // Points to newly identified logistics dashboard file
-            } else {
-                window.location.href = 'consumer-dashboard.html';
+            Form.clearAllErrors(form);
+
+            let valid = true;
+            if (!username.value.trim()) {
+                Form.setError(username, 'Username is required.');
+                valid = false;
+            }
+            if (!email.value.trim()) {
+                Form.setError(email, 'Email is required.');
+                valid = false;
+            }
+            if (password.value.length < 6) {
+                Form.setError(password, 'Password must be at least 6 characters.');
+                valid = false;
+            }
+            if (password.value !== confirm.value) {
+                Form.setError(confirm, 'Passwords do not match.');
+                valid = false;
+            }
+            if (!valid) return;
+
+            Btn.setLoading(btn, true);
+
+            try {
+                await Http.post('/auth/register', {
+                    username: username.value.trim(),
+                    email: email.value.trim(),
+                    password: password.value,
+                });
+
+                Toast.success('Account created! Logging you in...');
+
+                // Auto-login after registration
+                const loginData = await Http.post('/auth/login', {
+                    email: email.value.trim(),
+                    password: password.value,
+                });
+
+                Auth.setToken(loginData.token);
+                localStorage.setItem('cachedUsername', username.value.trim());
+
+                setTimeout(() => {
+                    if (activeWorkspaceRole === 'farmer') {
+                        window.location.href = 'farmer-portal.html';
+                    } else if (activeWorkspaceRole === 'transporter') {
+                        window.location.href = 'transporter-hub.html';
+                    } else {
+                        window.location.href = 'consumer-dashboard.html';
+                    }
+                }, 900);
+
+            } catch (err) {
+                Toast.error(err.message || 'Registration failed. Please try again.');
+                Btn.setLoading(btn, false);
             }
         }
     </script>

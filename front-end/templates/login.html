@@ -4,8 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShambaChain - Log In</title>
-    <!-- Relative path back out to the parent styles sub-directory directory -->
     <link rel="stylesheet" href="../styles/login.css?v=2">
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            corePlugins: { preflight: false }, // Don't override existing CSS resets
+            prefix: 'tw-',
+        }
+    </script>
 </head>
 <body>
 
@@ -15,7 +22,7 @@
         <div class="nav-header">
             <div class="logo-block">
                 <span id="brand-emoji"></span> 
-                <span id="brand-text" onclick="window.location.href='index.html'"></span>
+                <span id="brand-text" onclick="window.location.href='index.html'" style="cursor:pointer;"></span>
             </div>
             <a href="help-center.html" class="help-link" id="nav-help-label"></a>
         </div>
@@ -29,18 +36,18 @@
         <!-- White Interactive Form Container Card -->
         <div class="registration-card">
             
-            <form onsubmit="executeSmartAuthRouting(event)">
+            <form id="loginForm" onsubmit="handleLogin(event)" novalidate>
                 
                 <div class="form-group">
                     <label for="login-email" id="lbl-email"></label>
-                    <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required>
+                    <input type="email" id="login-email" class="form-control" placeholder="name@example.com" required autocomplete="email">
                 </div>
 
                 <div class="form-group">
                     <label for="login-password" id="lbl-pass"></label>
                     <div class="password-wrapper">
-                        <input type="password" id="login-password" class="form-control" placeholder="••••••••" required>
-                        <span class="password-toggle" onclick="togglePasswordInputMask()">👁️</span>
+                        <input type="password" id="login-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+                        <span class="password-toggle" onclick="togglePasswordInputMask()" title="Show/hide password" role="button" tabindex="0">👁️</span>
                     </div>
                 </div>
 
@@ -55,16 +62,13 @@
 
         </div>
 
-        <!-- Baseline Redirection Footer Prompt (UPDATED: Pointing back to signup.html) -->
-        <p class="footer-prompt" id="display-footer-box">
-            <!-- Content layout elements generated cleanly by the runtime script engine below -->
-        </p>
+        <!-- Baseline Redirection Footer Prompt -->
+        <p class="footer-prompt" id="display-footer-box"></p>
 
     </div>
 
-    <!-- DECOUPLED AUTHENTICATION MANAGEMENT ROUTING ENGINE -->
+    <script src="../scripts/app.js"></script>
     <script>
-        // --- BACKEND API REPLICATED DATA DICTIONARIES ---
         const pageSettings = {
             name: "ShambaChain",
             logo: "🚜",
@@ -76,14 +80,17 @@
             btnText: "Sign In →",
             dividerText: "Don't have an account?",
             btnGoogleText: "Sign Up",
-            footerPromptText: "",
-            footerLinkText: "",
-            footerTargetUrl: "signup.html" // Matches your local signup file configuration precisely
+            footerTargetUrl: "signup.html"
         };
 
-        // --- CORE INTERFACE INJECTION ENGINE ---
         window.addEventListener('DOMContentLoaded', () => {
-            // Assigning data variables parameters over to layout view anchors
+            // Redirect if already logged in
+            if (Auth.isLoggedIn()) {
+                const role = localStorage.getItem('selectedRole') || 'consumer';
+                redirectByRole(role);
+                return;
+            }
+
             document.getElementById('brand-emoji').innerText = pageSettings.logo;
             document.getElementById('brand-text').innerText = pageSettings.name;
             document.getElementById('nav-help-label').innerText = pageSettings.helpText;
@@ -94,36 +101,69 @@
             document.getElementById('btn-submit-txt').innerText = pageSettings.btnText;
             document.getElementById('display-divider').innerText = pageSettings.dividerText;
             document.getElementById('google-btn-txt').innerText = pageSettings.btnGoogleText;
-
-            // Generate footer link elements markup node structure
-            const footerContainer = document.getElementById('display-footer-box');
-            footerContainer.innerHTML = `${pageSettings.footerPromptText} <a href="${pageSettings.footerTargetUrl}">${pageSettings.footerLinkText}</a>`;
+            document.getElementById('display-footer-box').innerHTML =
+                `Don't have an account? <a href="${pageSettings.footerTargetUrl}">Sign Up</a>`;
         });
 
-        // Show/hide password input mask utility tool
         function togglePasswordInputMask() {
-            const targetField = document.getElementById('login-password');
-            targetField.type = (targetField.type === "password") ? "text" : "password";
+            const f = document.getElementById('login-password');
+            f.type = f.type === 'password' ? 'text' : 'password';
         }
 
-        // --- CORE CONTEXTUAL WORKFLOW REDIRECTION CONTROLLER ---
-        function executeSmartAuthRouting(e) {
-            e.preventDefault();
-            const emailInputLower = document.getElementById('login-email').value.toLowerCase();
-
-            // SMART DEMO ROUTING MAP RULES:
-            if (emailInputLower.includes('farmer')) {
-                // If user types any email with "farmer" (e.g., Silas_farmer@valley.com)
-                localStorage.setItem('selectedRole', 'farmer');
+        function redirectByRole(role) {
+            if (role === 'farmer') {
                 window.location.href = 'farmer-portal.html';
-            } else if (emailInputLower.includes('transporter')) {
-                // If user types any email with "transporter" (e.g., transit_transporter@plus.com)
-                localStorage.setItem('selectedRole', 'transporter');
+            } else if (role === 'transporter') {
                 window.location.href = 'transporter-hub.html';
             } else {
-                // Defaults safely to standard consumer tracking dashboard layout view 
-                localStorage.setItem('selectedRole', 'consumer');
                 window.location.href = 'consumer-dashboard.html';
+            }
+        }
+
+        async function handleLogin(e) {
+            e.preventDefault();
+            const form = document.getElementById('loginForm');
+            const btn  = document.getElementById('btn-submit-txt');
+            const email    = document.getElementById('login-email');
+            const password = document.getElementById('login-password');
+
+            Form.clearAllErrors(form);
+
+            // Basic client-side validation
+            let valid = true;
+            if (!email.value.trim()) {
+                Form.setError(email, 'Email is required.');
+                valid = false;
+            }
+            if (!password.value) {
+                Form.setError(password, 'Password is required.');
+                valid = false;
+            }
+            if (!valid) return;
+
+            Btn.setLoading(btn, true);
+
+            try {
+                const data = await Http.post('/auth/login', {
+                    email: email.value.trim(),
+                    password: password.value,
+                });
+
+                Auth.setToken(data.token);
+
+                // Determine role from email for routing (can be improved with a role field from API)
+                const emailLower = email.value.toLowerCase();
+                let role = 'consumer';
+                if (emailLower.includes('farmer')) role = 'farmer';
+                else if (emailLower.includes('transporter')) role = 'transporter';
+                localStorage.setItem('selectedRole', role);
+
+                Toast.success('Login successful! Redirecting...');
+                setTimeout(() => redirectByRole(role), 900);
+
+            } catch (err) {
+                Toast.error(err.message || 'Login failed. Please check your credentials.');
+                Btn.setLoading(btn, false);
             }
         }
     </script>
