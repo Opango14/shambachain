@@ -16,7 +16,7 @@
             <!-- Calls the sliding menu drawer function inside this dashboard scope -->
             <button class="menu-icon" onclick="toggleDashboardNavigationDrawer(true)">☰</button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"></button>
         </div>
 
         <!-- SLIDE-OUT LEFT SIDEBAR NAVIGATION MENU OVERLAY COMPONENT -->
@@ -31,19 +31,19 @@
             <!-- Dynamic menu link listings mapped to your local template paths -->
             <div class="drawer-links-stack">
                 <a href="consumer-dashboard.html" class="drawer-link-item">
-                    <span>🔍</span> Trace Produce
+                    <span></span> Trace Produce
                 </a>
                 <a href="search-traceability.html" class="drawer-link-item">
-                    <span>🌾</span> Search Engine
+                    <span></span> Search Engine
                 </a>
                 <a href="marketplace.html" class="drawer-link-item">
-                    <span>🛒</span> Marketplace Hub
+                    <span></span> Marketplace Hub
                 </a>
                 <a href="help-center.html" class="drawer-link-item">
-                    <span>❓</span> Help Center
+                    <span></span> Help Center
                 </a>
                 <a href="login.html" class="drawer-link-item" style="color: #b91c1c; margin-top: 40px; border-top: 1px dashed #e2e8f0; padding-top: 16px;">
-                    <span>🚪</span> Sign Out
+                    <span></span> Sign Out
                 </a>
             </div>
         </div>
@@ -82,19 +82,19 @@
         <!-- Sticky Persistent Tray Bottom Menu Bar Dock Layout -->
         <div class="app-bottom-dock">
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">📍</div>
+                <div class="pill-overlay-badge"></div>
                 <span>Trace</span>
             </a>
             <a href="details.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">🕒</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>History</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
-                <span class="unselected-icon-spacing">📓</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Ledger</span>
             </a>
-            <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
+            <a href="consumer_profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing"></span>
                 <span>Profile</span>
             </a>
         </div>
@@ -108,7 +108,7 @@
             appName: "ShambaChain",
             bannerTitle: "Trace Your Food",
             bannerDesc: "Verify the origin and journey of your produce directly on-chain.",
-            scanBtnText: "🔳 Scan Product QR",
+            scanBtnText: "Scan Product QR",
             lblFeatured: "Featured Local",
             linkFeaturedText: "View All Marketplace →",
             lblHistory: "Recent Scans"
@@ -126,8 +126,8 @@
         ];
 
         const recentScansFeed = [
-            { name: "Organic Kale", time: "Verified 2 hours ago", assetId: "88219", icon: "🌿", styleClass: "bg-mint-leaf", targetUrl: "details.html" },
-            { name: "Sourdough Loaf", time: "Verified Oct 24", assetId: "77102", icon: "🍞", styleClass: "bg-bread-box", targetUrl: "#" }
+            { name: "Organic Kale", time: "Verified 2 hours ago", assetId: "88219", icon: "", targetUrl: "details.html" },
+            { name: "Sourdough Loaf", time: "Verified Oct 24", assetId: "77102", icon: "", targetUrl: "details.html" }
         ];
 
         // --- RUNTIME RENDER CONTROLLER ENGINE ---

@@ -15,7 +15,7 @@
         <div class="top-app-bar">
             <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
             <div class="app-bar-title" id="app-title-txt"></div>
-            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'"></button>
         </div>
 
         <!-- RESPONSIVE LAYOUT MATRIX WRAPPER GRID (Splits on large screen viewports) -->
@@ -66,7 +66,7 @@
                 <!-- Security Immutable Status Banner Block Card -->
                 <div class="security-banner-card">
                     <div class="security-top-header-line">
-                        <span class="shield-graphic">🛡️</span>
+                        <span class="shield-graphic"></span>
                         <span class="tech-tag-badge" id="display-tech-badge"></span>
                     </div>
                     <h4 class="security-main-headline" id="display-security-title"></h4>
@@ -83,19 +83,19 @@
         <!-- Sticky Persistent Tray Navigation Bar Dock Layout -->
         <div class="app-bottom-dock">
             <a href="consumer-dashboard.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">📍</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Trace</span>
             </a>
             <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
-                <div class="pill-overlay-badge">🕒</div>
+                <div class="pill-overlay-badge"></div>
                 <span>History</span>
             </a>
             <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
-                <span class="unselected-icon-spacing">📓</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Ledger</span>
             </a>
             <a href="login.html" class="dock-tab-link">
-                <span class="unselected-icon-spacing">👤</span>
+                <span class="unselected-icon-spacing"></span>
                 <span>Profile</span>
             </a>
         </div>
@@ -114,23 +114,19 @@
             blockchainTxHash: "0x72a1...4f92bc33e8",
             imageAssetUrl: "https://unsplash.com",
             lblJourney: "Product Journey",
-            lblEco: "Sustainability Metrics",
+            lblEco: "",
             securityTechTag: "ENCRYPTEM",
             securityTitle: "Immutable Record",
             securityDesc: "This product's data is secured on the cryptographic ledger and cannot be altered or falsified."
         };
 
         const timelineNodesPayload = [
-            { status: "Received", place: "Whole Foods Market", meta: "Arrived May 24, 2026 · 08:45 AM", icon: "🏪", isActive: true, hasNestedCard: false },
-            { status: "In Transit", place: "Logistics Plus", meta: "Cold-chain logistics maintained at 4°C. Departed May 22, 2026.", icon: "🚚", isActive: false, hasNestedCard: false },
-            { status: "Processed", place: "Eco-Pack Facility", meta: "Eco-friendly packaging applied. Certified Carbon Neutral facility.", icon: "🗄️", isActive: false, hasNestedCard: false },
-            { status: "Harvested", place: "Green Valley Farm", meta: "Harvested May 19, 2026. Block B-12. Soil health score: 98/100.", icon: "🚜", isActive: false, hasNestedCard: true, farmerName: "Silas Thorne", farmerRole: "Verified Producer", avatarUrl: "https://unsplash.com" }
+            { status: "Received", place: "Whole Foods Market", meta: "Arrived May 24, 2026 · 08:45 AM", icon: "", isActive: true, hasNestedCard: false },
+            { status: "In Transit", place: "Logistics Plus", meta: "Cold-chain logistics maintained at 4°C. Departed May 22, 2026.", icon: "", isActive: false, hasNestedCard: false },
+            { status: "Processed", place: "Eco-Pack Facility", meta: "Eco-friendly packaging applied. Certified Carbon Neutral facility.", icon: "", isActive: false, hasNestedCard: false },
+            { status: "Harvested", place: "Green Valley Farm", meta: "Harvested May 19, 2026. Block B-12. Soil health score: 98/100.", icon: "", isActive: false, hasNestedCard: true, farmerName: "Silas Thorne", farmerRole: "Verified Producer", avatarUrl: "https://unsplash.com" }
         ];
 
-        const ecoMetricsPayload = [
-            { label: "Carbon Footprint", value: "0.42 kg", symbol: "🍃", tintColor: "#16a34a" },
-            { label: "Water Used", value: "70 L", symbol: "💧", tintColor: "#2563eb" }
-        ];
 
         // --- CORE APPLICATIONS RENDERING ENGINE CONTROLLER ---
         window.addEventListener('DOMContentLoaded', () => {
@@ -159,10 +155,9 @@
                     nestedCardStructure = `
                         <div class="farmer-nested-profile-card" onclick="window.location.href='farmer-profile.html'">
                             <div class="farmer-left-profile">
-                                <img class="farmer-avatar-img" src="${node.avatarUrl}" alt="${node.farmerName}">
                                 <div>
                                     <div class="profile-action-lbl">View Farmer Profile</div>
-                                    <div class="profile-meta-lbl">${node.farmerName} · ${node.farmerRole}</div>
+                                    <div class="profile-meta-lbl">${node.farmerRole}</div>
                                 </div>
                             </div>
                             <div class="profile-chevron-arrow">&gt;</div>
