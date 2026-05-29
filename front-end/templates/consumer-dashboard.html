@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Trace Hub</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/consumer-dashboard.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <!-- Calls the sliding menu drawer function inside this dashboard scope -->
+            <button class="menu-icon" onclick="toggleDashboardNavigationDrawer(true)">☰</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+        </div>
+
+        <!-- SLIDE-OUT LEFT SIDEBAR NAVIGATION MENU OVERLAY COMPONENT -->
+        <div class="drawer-overlay-tint" id="dashboardOverlay" onclick="toggleDashboardNavigationDrawer(false)"></div>
+        
+        <div class="navigation-drawer-pane" id="dashboardNavDrawer">
+            <div class="drawer-header">
+                <h4 id="menu-drawer-title">🚜 ShambaMenu</h4>
+                <button class="btn-close-drawer" onclick="toggleDashboardNavigationDrawer(false)">✕</button>
+            </div>
+            
+            <!-- Dynamic menu link listings mapped to your local template paths -->
+            <div class="drawer-links-stack">
+                <a href="consumer-dashboard.html" class="drawer-link-item">
+                    <span>🔍</span> Trace Produce
+                </a>
+                <a href="search-traceability.html" class="drawer-link-item">
+                    <span>🌾</span> Search Engine
+                </a>
+                <a href="marketplace.html" class="drawer-link-item">
+                    <span>🛒</span> Marketplace Hub
+                </a>
+                <a href="help-center.html" class="drawer-link-item">
+                    <span>❓</span> Help Center
+                </a>
+                <a href="login.html" class="drawer-link-item" style="color: #b91c1c; margin-top: 40px; border-top: 1px dashed #e2e8f0; padding-top: 16px;">
+                    <span>🚪</span> Sign Out
+                </a>
+            </div>
+        </div>
+
+        <!-- Upper Row Combined Block Panel (Responsive flex columns) -->
+        <div class="dashboard-top-flex-panel">
+            
+            <!-- Hero Premium Image Feature Block Card -->
+            <div class="hero-image-card">
+                <h2 id="hero-headline"></h2>
+                <p id="hero-tagline"></p>
+                <a href="scanner.html" class="btn-scan-bar" id="btn-scan-lbl"></a>
+            </div>
+
+            <!-- Analytics Statistics Dual Grid System -->
+            <div class="metrics-row" id="metrics-cards-grid"></div>
+
+        </div>
+
+        <!-- Section 1: Featured Local Produce Carousel Layout -->
+        <div class="section-headline-bar">
+            <h3 id="sec-featured-lbl"></h3>
+            <a href="marketplace.html" class="view-all" id="sec-featured-link"></a>
+        </div>
+        <div class="carousel-viewport" id="featured-produce-carousel"></div>
+
+        <!-- Section 2: Recent Scanning History Audit Feed Log -->
+        <div class="scans-section-container">
+            <div class="section-headline-bar">
+                <h3 id="sec-history-lbl"></h3>
+                <a href="#" class="view-all" onclick="clearLocalHistoryLogs(event)" style="color: #b91c1c;">Clear</a>
+            </div>
+            <div id="recent-scans-list-feed"></div>
+        </div>
+
+        <!-- Sticky Persistent Tray Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+            <a href="details.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- REPLICATED SYSTEM DATA FETCH MANAGEMENT LAYER -->
+    <script>
+        // --- BACKEND OBJECT PAYLOAD TABLES (Zero hardcoding architecture) ---
+        const dashboardSettings = {
+            appName: "ShambaChain",
+            bannerTitle: "Trace Your Food",
+            bannerDesc: "Verify the origin and journey of your produce directly on-chain.",
+            scanBtnText: "🔳 Scan Product QR",
+            lblFeatured: "Featured Local",
+            linkFeaturedText: "View All Marketplace →",
+            lblHistory: "Recent Scans"
+        };
+
+        const networkMetrics = [
+            { id: "score", title: "Trust Score", value: "Verified", marker: "🛡️", badge: "100%" },
+            { id: "nodes", title: "Nodes Connected", value: "1,204", marker: "☊", badge: "Active" }
+        ];
+
+        const featuredProduceData = [
+            { name: "Honeycrisp Apples", id: "4412", imgUrl: "https://unsplash.com" },
+            { name: "Virgin Olive Oil", id: "2201", imgUrl: "https://unsplash.com" },
+            { name: "Kinangop Potatoes", id: "9081", imgUrl: "https://unsplash.com" }
+        ];
+
+        const recentScansFeed = [
+            { name: "Organic Kale", time: "Verified 2 hours ago", assetId: "88219", icon: "🌿", styleClass: "bg-mint-leaf", targetUrl: "details.html" },
+            { name: "Sourdough Loaf", time: "Verified Oct 24", assetId: "77102", icon: "🍞", styleClass: "bg-bread-box", targetUrl: "#" }
+        ];
+
+        // --- RUNTIME RENDER CONTROLLER ENGINE ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Map text labels
+            document.getElementById('app-title-txt').innerText = dashboardSettings.appName;
+            document.getElementById('hero-headline').innerText = dashboardSettings.bannerTitle;
+            document.getElementById('hero-tagline').innerText = dashboardSettings.bannerDesc;
+            document.getElementById('btn-scan-lbl').innerText = dashboardSettings.scanBtnText;
+            document.getElementById('sec-featured-lbl').innerText = dashboardSettings.lblFeatured;
+            document.getElementById('sec-featured-link').innerText = dashboardSettings.linkFeaturedText;
+            document.getElementById('sec-history-lbl').innerText = dashboardSettings.lblHistory;
+
+            // Generate Network metrics layout boxes
+            const metricsGrid = document.getElementById('metrics-cards-grid');
+            metricsGrid.innerHTML = '';
+            networkMetrics.forEach(box => {
+                metricsGrid.innerHTML += `
+                    <div class="metric-box">
+                        <div class="metric-top-line">
+                            <span style="color: #115e59; font-size: 16px;">${box.marker}</span>
+                            <span class="metric-badge-label">${box.badge}</span>
+                        </div>
+                        <div>
+                            <div class="metric-sub-label">${box.title}</div>
+                            <div class="metric-main-value">${box.value}</div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            // Generate Featured Produce items matrix rows
+            const carousel = document.getElementById('featured-produce-carousel');
+            carousel.innerHTML = '';
+            featuredProduceData.forEach(item => {
+                carousel.innerHTML += `
+                    <a href="details.html" class="carousel-crop-card">
+                        <div class="crop-image-frame" style="background-image: url('${item.imgUrl}');">
+                            <div class="authentic-overlay-badge">✓ AUTHENTIC</div>
+                        </div>
+                        <div class="crop-footer-details">
+                            <div class="crop-name-label">${item.name}</div>
+                        </div>
+                    </a>
+                `;
+            });
+
+            // Generate Scanned History items stream list layout
+            renderScanHistoryListLog();
+        });
+
+        function renderScanHistoryListLog() {
+            const feedContainer = document.getElementById('recent-scans-list-feed');
+            feedContainer.innerHTML = '';
+            recentScansFeed.forEach(row => {
+                feedContainer.innerHTML += `
+                    <a href="${row.targetUrl}" class="scan-history-row">
+                        <div class="scan-item-profile">
+                            <div class="scan-icon-wrapper ${row.styleClass}">${row.icon}</div>
+                            <div>
+                                <div class="scan-headline-text">${row.name}</div>
+                                <div class="scan-sub-meta">${row.time} • ID: ${row.assetId}</div>
+                            </div>
+                        </div>
+                        <div class="chevron-arrow">&gt;</div>
+                    </a>
+                `;
+            });
+        }
+
+        function clearLocalHistoryLogs(e) {
+            e.preventDefault();
+            recentScansFeed.length = 0; // Empty configuration tracking pointer
+            renderScanHistoryListLog();  // Redraw layout immediately
+            alert('Recent Local Tracking Cache History Logs Cleared.');
+            }
+
+        // --- SLIDE-OUT PANEL INTERACTION STATE CONTROLLER ---
+        function toggleDashboardNavigationDrawer(shouldOpenDrawer) {
+            const backgroundOverlay = document.getElementById('dashboardOverlay');
+            const movingDrawerPane = document.getElementById('dashboardNavDrawer');
+            
+            if (shouldOpenDrawer) {
+                backgroundOverlay.classList.add('panel-active-state');
+                movingDrawerPane.classList.add('panel-active-state');
+            } else {
+                backgroundOverlay.classList.remove('panel-active-state');
+                movingDrawerPane.classList.remove('panel-active-state');
+            }
+        }
+    </script>
+</body>
+</html>

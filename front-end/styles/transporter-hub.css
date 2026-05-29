@@ -1,0 +1,323 @@
+/* --- TRANSPORTER DASHBOARD DESKTOP RESPONSIVE DESIGN --- */
+:root {
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-amber: #d97706;     /* Warm Logistics Amber */
+    --accent-mint: #22c55e;      /* Mint Tracking Highlight */
+    --text-dark: #0f172a;        /* Charcoal text */
+    --text-muted: #475569;       /* Slate subtext */
+    --border-color: #e2e8f0;
+    --max-width-desktop: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px;
+}
+
+/* Universal Canvas Width Wrapper Shell */
+.phone-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    min-height: calc(100vh - 48px);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+    overflow: hidden;
+}
+
+/* Top Navigation App Bar Row */
+.top-app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-icon, .qr-shortcut {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+}
+
+.app-bar-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* RESPONSIVE LAYOUT DESKTOP CORE GRID PANEL SPLIT WRAPPER */
+.transporter-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* Heading Typography metadata info tags */
+.hub-tag-lbl {
+    font-size: 11px;
+    font-weight: 800;
+    color: var(--accent-amber);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.hub-main-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 12px;
+    text-align: left;
+}
+
+.hub-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.active-carrier-badge {
+    background: #fef3c7;
+    color: #b45309;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 4px 12px;
+    border-radius: 20px;
+    border: 1px solid #f59e0b;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* Telematics metrics block banner */
+.telematics-summary-card {
+    background-color: var(--primary-dark);
+    color: #ffffff;
+    border-radius: 20px;
+    padding: 20px;
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+.telematics-top-strip {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+
+.telematics-status-pill {
+    background-color: #15803d;
+    font-size: 10px;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 6px;
+    letter-spacing: 0.5px;
+}
+
+.telematics-grid-cells {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.cell-sub-lbl {
+    font-size: 11px;
+    opacity: 0.75;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.cell-main-val {
+    font-size: 18px;
+    font-weight: 700;
+    margin-top: 2px;
+}
+
+/* Shared Marketplace Shipments Table List Cards */
+.shipments-table-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 20px 16px;
+    margin-bottom: 80px; /* Pillow safety gap clearance layout room above bottom tray bar dock */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+.table-headline-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.table-title-lbl {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    text-align: left;
+}
+
+.table-action-link-btn {
+    font-size: 13px;
+    color: var(--accent-amber);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+/* Flexible Table Data Layout rows rules columns maps */
+.table-labels-strip {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1.3fr;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+
+.col-txt-lbl {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.shipment-log-row {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr 1.3fr;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f5f9;
+    text-decoration: none;
+}
+
+.shipment-log-row:last-child {
+    border-bottom: none;
+}
+
+.id-bold-cell {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+.cargo-details-cell {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.cargo-main-name {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.cargo-sub-origin {
+    font-size: 10px;
+    color: var(--text-muted);
+}
+
+.route-checkpoint-cell {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-dark);
+    text-align: left;
+}
+
+.pulse-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: var(--accent-amber);
+}
+
+.pulse-dot.stable { background-color: var(--accent-mint); }
+
+/* Sticky Persistent Application Base Dock Tab bar menu */
+.app-bottom-dock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f5f9;
+    border-top: 1px solid var(--border-color);
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 8px;
+    height: 70px;
+    z-index: 10;
+}
+
+.dock-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    flex: 1;
+}
+
+.dock-tab-link.active-pill-state {
+    color: var(--primary-dark) !important;
+}
+
+.dock-tab-link.active-pill-state .pill-overlay-badge {
+    background-color: #bbf7d0 !important;
+    padding: 6px 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.unselected-icon-spacing {
+    padding: 6px 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* --- THE DESKTOP MULTI-COLUMN RESPONSIVE LAYOUT CHANGE --- */
+@media (min-width: 850px) {
+    .transporter-grid-layout {
+        grid-template-columns: 1fr 1.3fr; /* Splits live maps metrics (left) from shipments data table checklists (right) side-by-side */
+        align-items: start;
+        gap: 24px;
+    }
+    
+    .telematics-summary-card {
+        margin-bottom: 0px;
+    }
+}

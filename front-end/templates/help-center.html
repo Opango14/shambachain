@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Help Center</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/help-center.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Bar layout -->
+        <div class="top-app-bar">
+            <button class="btn-back" onclick="window.location.href='settings.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="btn-search-icon" onclick="document.getElementById('helpSearch').focus()">🔍</button>
+        </div>
+
+        <!-- Headline banner text query -->
+        <h2 class="help-main-headline" id="display-headline"></h2>
+
+        <!-- Rounded Prefixed Search Input Box -->
+        <div class="search-wrapper-box">
+            <span class="search-decor-icon">🔍</span>
+            <input type="text" id="helpSearch" class="search-input-field" placeholder="Search for help articles...">
+        </div>
+
+        <!-- RESPONSIVE LAYOUT ENGINE CORE WRAPPER (Splits on large screen viewports side-by-side) -->
+        <div class="help-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Quick Topic Cards & Support Contact Widget -->
+            <div>
+                <div class="topics-grid-row">
+                    <a href="#" class="topic-block-card topic-card-mint" onclick="alert('Opening Scanning Guideline Documentation Logs...')">
+                        <div class="topic-card-icon">🔳</div>
+                        <div class="topic-card-title">Scanning<br>Guides</div>
+                    </a>
+                    <a href="#" class="topic-block-card topic-card-grey" onclick="alert('Opening Ledger Cryptography & Security Dossiers...')">
+                        <div class="topic-card-icon">🛡️</div>
+                        <div class="topic-card-title">Security &<br>Trust</div>
+                    </a>
+                </div>
+
+                <!-- Premium Gradient Support Banner Card Component -->
+                <div class="support-banner-card">
+                    <h4 id="display-banner-title"></h4>
+                    <p id="display-banner-desc"></p>
+                    <a href="mailto:support@shambachain.com" class="btn-contact-support">
+                        <span>🎧</span> Contact Support
+                    </a>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Comprehensive FAQ Accordion List Component -->
+            <div>
+                <h3 class="faq-section-title" id="display-faq-lbl"></h3>
+                <div class="faq-accordion-stack" id="faq-rows-container"></div>
+            </div>
+
+        </div> <!-- Closes .help-grid-layout-hub responsive grid -->
+
+        <!-- Sticky Persistent Profile Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📍</span>
+                <span>Trace</span>
+            </a>
+            <a href="#" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="settings.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">👤</div>
+                <span>Profile</span>
+            </a>
+        </div>
+
+    </div>
+
+        <!-- UTILITY SYSTEM CONFIG INJECTION LOGIC SCRIPT ENGINE -->
+    <script>
+        // --- BACKEND REPLICATED PAYLOAD TABLES ---
+        const helpSettings = {
+            appName: "Help Center",
+            headlineText: "How can we help?",
+            bannerTitle: "Still have questions?",
+            bannerDesc: "Our support team is available 24/7 to assist with your supply chain queries.",
+            faqTitle: "Frequently Asked Questions"
+        };
+
+        const faqAccordionPayload = [
+            { question: "How does ShambaChain verification work?", answer: "ShambaChain cross-verifies QR hash tracking across independent cryptographic storage validator nodes." },
+            { question: "How do I scan a product?", answer: "Click the central Scan tab button on your home dashboard to launch your device viewfinder camera." },
+            { question: "What is a Trust Score?", answer: "A trust rating scored automatically relative to on-chain compliance history and certification checks." },
+            { question: "How to record a new batch?", answer: "Log in to your Farmer Profile workspace portal and utilize the Record New Batch entry submission card layout." }
+        ];
+
+        // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign primary labels configurations
+            document.getElementById('app-title-txt').innerText = helpSettings.appName;
+            document.getElementById('display-headline').innerText = helpSettings.headlineText;
+            document.getElementById('display-banner-title').innerText = helpSettings.bannerTitle;
+            document.getElementById('display-banner-desc').innerText = helpSettings.bannerDesc;
+            document.getElementById('display-faq-lbl').innerText = helpSettings.faqTitle;
+
+            // Generate FAQ expandable accordion loops container row items dynamically
+            const faqContainer = document.getElementById('faq-rows-container');
+            faqContainer.innerHTML = '';
+            
+            faqAccordionPayload.forEach((item, index) => {
+                faqContainer.innerHTML += `
+                    <div class="faq-row-item" id="faq-item-${index}">
+                        <!-- Top header triggers the toggle class directly inside this row's scope -->
+                        <div class="faq-question-trigger-bar" onclick="toggleAccordionDrawer(${index})">
+                            <span class="faq-question-txt">${item.question}</span>
+                            <span class="faq-dropdown-chevron" id="faq-chevron-${index}">∨</span>
+                        </div>
+                        <!-- Hidden text tray container drawer -->
+                        <div class="faq-answer-drawer">
+                            ${item.answer}
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        // --- ACCORDION CORE STATE ACCELERATION ENGINE ---
+        function toggleAccordionDrawer(targetItemIndexId) {
+            const selectedRowElement = document.getElementById(`faq-item-${targetItemIndexId}`);
+            
+            // Checks if item is currently expanded
+            const isAlreadyExpanded = selectedRowElement.classList.contains('drawer-open-state');
+
+            // OPTIONAL STEP: Automatically collapses any other open faq item rows to keep screen uncluttered
+            document.querySelectorAll('.faq-row-item').forEach(row => {
+                row.classList.remove('drawer-open-state');
+            });
+
+            // If the clicked element wasn't open, append the sliding selector class modifier text properties
+            if (!isAlreadyExpanded) {
+                selectedRowElement.classList.add('drawer-open-state');
+            }
+        }
+    </script>
+</body>
+</html>

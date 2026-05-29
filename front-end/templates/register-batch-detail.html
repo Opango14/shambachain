@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Advanced Crop Registry</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/register-batch-detail.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <button class="menu-icon" onclick="window.location.href='farmer-portal.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <div style="width: 20px;"></div> <!-- Balance layout alignment spacing anchor -->
+        </div>
+
+        <!-- RESPONSIVE LAYOUT ENGINE CORE WRAPPER MATRIX (Splits side-by-side on desktops) -->
+        <form class="batch-detail-grid-layout" onsubmit="executeOnChainBroadcastLog(event)">
+            
+            <!-- COLUMN 1 WORKSPACE: Sectioned Advanced Crop Configuration Data Entry Blocks -->
+            <div>
+                <!-- Block Section 1: Basic Production Metrics -->
+                <div class="batch-section-card">
+                    <h3 class="batch-section-title" id="sec-title-basic"></h3>
+                    
+                    <div class="form-group">
+                        <label for="batch-weight" id="lbl-weight"></label>
+                        <div class="input-icon-wrapper">
+                            <span class="input-decor-icon">⚖️</span>
+                            <input type="text" id="batch-weight" class="batch-form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="batch-sku" id="lbl-sku"></label>
+                        <div class="input-icon-wrapper">
+                            <span class="input-decor-icon">🏷️</span>
+                            <input type="text" id="batch-sku" class="batch-form-input" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Block Section 2: Sustainable Certifications Checklists -->
+                <div class="batch-section-card">
+                    <h3 class="batch-section-title" id="sec-title-cert"></h3>
+                    <div id="certification-toggles-box"></div>
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Immutable Cryptographic Integrity Broadcaster Widget -->
+            <div>
+                <div class="immutable-integrity-card">
+                    <div class="integrity-header">
+                        <span>🛡️</span> <span id="display-integrity-title"></span>
+                    </div>
+                    <p class="integrity-body-para" id="display-integrity-desc"></p>
+                    
+                    <!-- Execution broadcast commit switch trigger button -->
+                    <button type="submit" class="btn-commit-ledger">
+                        <span>⛓️</span> <span id="btn-broadcast-txt"></span>
+                    </button>
+                </div>
+            </div>
+
+        </form> <!-- Closes advanced form layout container wrapper grid -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="farmer-portal.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+            <a href="farmer-profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+            <a href="farmer-inventory.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="settings.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">⚙️</span>
+                <span>Settings</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- ZERO-HARDCODING ENGINE CONTROL DATA SCRIPT HUB -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD PAYLOAD TABLES ---
+        const registryConfig = {
+            appName: "Register Batch Details",
+            titleBasic: "Basic Information",
+            titleCert: "Certifications & Sustainability",
+            labelWeight: "Total Harvest Weight Volume (kg)",
+            labelSku: "Internal System SKU / Stock Lot",
+            defaultWeightValue: "4,500 kg",
+            defaultSkuValue: "SKU-HAS-2026-B12",
+            integrityTitle: "Blockchain Node Validation",
+            integrityDesc: "Broadcasting this crop lot anchors immutable parameters globally. The generated transaction hash links directly into smart contract traceability logs.",
+            btnBroadcastText: "Sign & Broadcast to Ledger"
+        };
+
+        const certificationTogglesPayload = [
+            { id: "cert-organic", title: "Organic Certified", desc: "100% synthetic chemical and pesticide free verified.", isChecked: true },
+            { id: "cert-fairtrade", title: "Fair Trade Certified", desc: "Ethical minimum wage allocations and smallholder equality.", isChecked: true },
+            { id: "cert-carbon", title: "Low Carbon Logistics", desc: "Anchors data packet to eco impact scoring analytics tracking.", isChecked: false }
+        ];
+
+        // --- CORE APPLICATION INJECTION CONTROL HUB ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mapping texts variables over to element targets
+            document.getElementById('app-title-txt').innerText = registryConfig.appName;
+            document.getElementById('sec-title-basic').innerText = registryConfig.titleBasic;
+            document.getElementById('sec-title-cert').innerText = registryConfig.titleCert;
+            document.getElementById('lbl-weight').innerText = registryConfig.labelWeight;
+            document.getElementById('lbl-sku').innerText = registryConfig.labelSku;
+            document.getElementById('batch-weight').value = registryConfig.defaultWeightValue;
+            document.getElementById('batch-sku').value = registryConfig.defaultSkuValue;
+            document.getElementById('display-integrity-title').innerText = registryConfig.integrityTitle;
+            document.getElementById('display-integrity-desc').innerText = registryConfig.integrityDesc;
+            document.getElementById('btn-broadcast-txt').innerText = registryConfig.btnBroadcastText;
+
+            // Generate certification dynamic switch check items loop rows template nodes
+            const togglesBox = document.getElementById('certification-toggles-box');
+            togglesBox.innerHTML = '';
+            
+            certificationTogglesPayload.forEach(item => {
+                let stateCheckedAttribute = item.isChecked ? "checked" : "";
+                togglesBox.innerHTML += `
+                    <div class="certification-toggle-row">
+                        <div class="toggle-details-block">
+                            <div class="toggle-main-title">${item.title}</div>
+                            <div class="toggle-sub-desc">${item.desc}</div>
+                        </div>
+                        <input type="checkbox" id="${item.id}" class="switch-input-element" ${stateCheckedAttribute}>
+                    </div>
+                `;
+            });
+        });
+
+        // --- PIPELINE ON-CHAIN BROADCAST SUBMISSION MOCK REDIRECTION ---
+        function executeOnChainBroadcastLog(e) {
+            e.preventDefault();
+            alert('Smart Contract Broadcast Confirmed!\nCryptographic lock hashes dispatched across ShambaChain supply validator blocks successfully.');
+            window.location.href = 'farmer-portal.html'; // Returns back safely to portal cockpit dashboard matrix
+        }
+    </script>
+</body>
+</html>

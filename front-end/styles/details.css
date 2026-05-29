@@ -1,0 +1,452 @@
+/* --- PRODUCT DETAILS DESKTOP RESPONSIVE DESIGN SYSTEM --- */
+:root {
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-mint: #22c55e;      /* Mint Green Accent */
+    --bg-light: #f8fafc;         /* Background light tone */
+    --text-dark: #0f172a;        /* Dark Slate */
+    --text-muted: #475569;       /* Muted Charcoal Text */
+    --border-color: #e2e8f0;
+    --max-width-desktop: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px;
+}
+
+/* Universal Workspace Canvas Frame Container */
+.phone-container {
+    background: #f8fafc;        
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 48px);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+}
+
+/* App Header Row Bar layout */
+.top-app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.menu-icon, .qr-shortcut {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+}
+
+.app-bar-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* RESPONSIVE LAYOUT DESKTOP CORE GRID PANEL SPLIT WRAPPER */
+.details-grid-layout-hub {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* Main Premium Structured Product Summary Card Container */
+.product-showcase-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+.crop-image-container {
+    height: 180px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    background-color: #e2e8f0;
+}
+
+.verified-pill-badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #bbf7d0;       
+    color: #14532d;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 14px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid #86efac;
+}
+
+.card-content-body {
+    padding: 20px;
+}
+
+.title-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.product-main-headline {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    line-height: 1.2;
+}
+
+.batch-pill-box {
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.batch-title-lbl {
+    font-size: 10px;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.batch-numeric-id {
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+.product-description-para {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    margin-bottom: 16px;
+}
+
+/* Cryptographic Blockchain Address Link Bar Ribbon */
+.chain-link-ribbon {
+    background: #f0f6f4;        
+    border: 1px solid #e2ece9;
+    border-radius: 12px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chain-icon-block {
+    font-size: 16px;
+    color: var(--text-dark);
+}
+
+.chain-text-labels {
+    display: flex;
+    flex-direction: column;
+}
+
+.chain-txt-lbl {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.chain-hash-string {
+    font-family: monospace;
+    font-size: 12px;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+/* Section Journey Headers */
+.section-header-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 16px;
+    margin-top: 12px;
+}
+
+/* Premium Vertical Tracking Logistics Line Timeline Layout */
+.vertical-journey-timeline {
+    position: relative;
+    padding-left: 52px;
+}
+
+.vertical-journey-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background-color: #cbd5e1;
+}
+
+.journey-node-block {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.node-graphic-icon-wrap {
+    position: absolute;
+    left: -52px;
+    top: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    z-index: 5;
+}
+
+.journey-node-block.completed-state .node-graphic-icon-wrap {
+    border-color: #bbf7d0;
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.node-uppercase-status {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+}
+
+.journey-node-block.completed-state .node-uppercase-status {
+    color: #166534;
+}
+
+.node-main-location-header {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.node-meta-description {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* Farmer Profile Callout nested Card */
+.farmer-nested-profile-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 12px;
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.farmer-left-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.farmer-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border-color);
+}
+
+.profile-action-lbl {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+}
+
+.profile-meta-lbl {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.profile-chevron-arrow {
+    color: #0f172a;
+    font-weight: 800;
+    font-size: 13px;
+}
+
+/* Deep Forest Green Security Banner Block */
+.security-banner-card {
+    background-color: #022c22;
+    color: #ffffff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-top: 12px;
+    margin-bottom: 16px;
+}
+
+.security-top-header-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.shield-graphic { font-size: 16px; }
+
+.tech-tag-badge {
+    background: rgba(255, 255, 255, 0.12);
+    font-size: 9px;
+    font-weight: 800;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.security-main-headline {
+    font-size: 15px;
+    font-weight: 800;
+    margin-bottom: 4px;
+    text-align: left;
+}
+
+.security-subtext-para {
+    font-size: 12px;
+    opacity: 0.8;
+    line-height: 1.4;
+    text-align: left;
+}
+
+/* Grid Layout for Eco Metrics Cards */
+.eco-metrics-split-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 80px; /* Cushion room layout clearance space above dock tray */
+}
+
+.eco-metric-split-box {
+    background: #eef2f6; 
+    border-radius: 14px;
+    padding: 14px;
+    text-align: center;
+}
+
+.eco-icon-marker {
+    font-size: 16px;
+    margin-bottom: 4px;
+    display: inline-block;
+}
+
+.eco-metric-txt-lbl {
+    font-size: 10px;
+    font-weight: 800;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.eco-metric-val-num {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+}
+
+/* Global Sticky App Bottom Navigation Menu Tab bar layout */
+.app-bottom-dock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 8px;
+    height: 70px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.dock-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    flex: 1;
+}
+
+.dock-tab-link.active-pill-state {
+    color: #022c22 !important;
+}
+
+.dock-tab-link.active-pill-state .pill-overlay-badge {
+    background-color: #bbf7d0 !important;
+    padding: 6px 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.unselected-icon-spacing {
+    padding: 6px 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* --- THE DESKTOP MULTI-COLUMN VIEWPORT MEDIATION HUB --- */
+@media (min-width: 850px) {
+    .details-grid-layout-hub {
+        grid-template-columns: 1fr 1.2fr; /* Splits static left showcase card from active timelines grid panel box side-by-side */
+        align-items: start;
+    }
+    
+    .eco-metrics-split-row {
+        margin-bottom: 20px; /* Normalizes padding depths once structure expands outwards */
+    }
+}

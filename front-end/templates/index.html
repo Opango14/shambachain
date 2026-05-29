@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Entry Portal</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/index.css?v=2">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Branding Bar Area -->
+        <div class="nav-header">
+            <div class="logo-block">
+                <!-- Values loaded dynamically below from the payload object -->
+                <span id="brand-emoji"></span> 
+                <span id="brand-text"></span>
+            </div>
+            <!-- Explicit public direct link out to your local help center template file -->
+            <a href="help-center.html" class="help-link" id="nav-help-label"></a>
+        </div>
+
+        <!-- Onboarding Summary Text Blocks Group Container -->
+        <div class="intro-summary-block">
+            <h1 class="main-title" id="display-title"></h1>
+            <p class="main-subtitle" id="display-subtitle"></p>
+        </div>
+
+        <!-- White Interactive Card Panel Container -->
+        <div class="registration-card">
+            
+            <!-- Two-Step Progress Bar Indicator Progress Track -->
+            <div class="step-indicator">
+                <div class="indicator-bar active"></div>
+                <div class="indicator-bar"></div>
+            </div>
+
+            <!-- Contextual Headline Question Prompt -->
+            <h2 class="prompt-text" id="display-prompt"></h2>
+
+            <!-- Target element wrapper for generating the grid role alternative buttons -->
+            <div id="dynamic-roles-box"></div>
+
+        </div>
+
+        <!-- Sticky Bottom Global Anchor Redirect Link -->
+        <p class="footer-prompt" id="display-footer-box">
+            <!-- Structural markup content generated cleanly by the runtime script engine -->
+        </p>
+
+    </div>
+
+    <!-- UTILITY APPLICATION RENDERING ENGINE SCRIPT -->
+    <script>
+        // --- DATA VARIABLES OBJECTS (Mocks your Backend database API structures) ---
+        const appSettings = {
+            name: "ShambaChain",
+            logo: "🚜",
+            helpText: "Help",
+            headline: "Create your account",
+            tagline: "Join the global network of transparent food supply chains.",
+            question: "How will you use ShambaChain?",
+            footerPromptText: "Already have an account?",
+            footerLinkText: "Log In",
+            footerTargetUrl: "login.html"
+        };
+
+        // --- UPDATED ROLE PAYLOAD REGISTER: Now includes the Transporter configuration block ---
+        const rolesPayload = [
+            {
+                id: "consumer",
+                title: "Consumer",
+                desc: "I want to trace food origins and verify sustainability.",
+                avatarIcon: "👤",
+                customStyleClass: "icon-consumer"
+            },
+            {
+                id: "transporter",
+                title: "Transporter/Logistics",
+                desc: "I want to update route coordinates and sign transit handovers.",
+                avatarIcon: "🚚",
+                customStyleClass: "icon-transporter"
+            },
+            {
+                id: "farmer",
+                title: "Farmer/Producer",
+                desc: "I want to record batches and certify my production.",
+                avatarIcon: "🚜",
+                customStyleClass: "icon-farmer"
+            }
+        ];
+
+        // --- RUNTIME RENDER CONTROLLER ENGINE ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Mapping primary text properties onto layout selector headers
+            document.getElementById('brand-emoji').innerText = appSettings.logo;
+            document.getElementById('brand-text').innerText = appSettings.name;
+            document.getElementById('nav-help-label').innerText = appSettings.helpText;
+            document.getElementById('display-title').innerText = appSettings.headline;
+            document.getElementById('display-subtitle').innerText = appSettings.tagline;
+            document.getElementById('display-prompt').innerText = appSettings.question;
+
+            // Compute and assign baseline link elements
+            const footerContainer = document.getElementById('display-footer-box');
+            footerContainer.innerHTML = `${appSettings.footerPromptText} <a href="${appSettings.footerTargetUrl}">${appSettings.footerLinkText}</a>`;
+
+            // Flush temporary structural text nodes out of container element
+            const rolesBox = document.getElementById('dynamic-roles-box');
+            rolesBox.innerHTML = '';
+
+            // Map variables cleanly into markup template node cards loop
+            rolesPayload.forEach(role => {
+                const dynamicCardNode = `
+                    <div onclick="executeRoleRouting('${role.id}')" class="role-btn">
+                        <div class="icon-circle ${role.customStyleClass}">
+                            ${role.avatarIcon}
+                        </div>
+                        <div class="role-body">
+                            <div class="role-title">${role.title}</div>
+                            <div class="role-description">${role.desc}</div>
+                        </div>
+                        <div class="role-arrow">&gt;</div>
+                    </div>
+                `;
+                rolesBox.innerHTML += dynamicCardNode;
+            });
+        });
+
+        // --- CORE APPLICATION ROUTER STATE CONTROLLER ---
+        function executeRoleRouting(selectedRoleId) {
+            // Commit user's chosen workspace variant parameter path natively to temporary storage
+            localStorage.setItem('selectedRole', selectedRoleId);
+            
+            // Forward runtime navigation directly onto your secondary form step template file
+            window.location.href = 'signup.html';
+        }
+    </script>
+</body>
+</html>

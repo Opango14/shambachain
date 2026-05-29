@@ -1,0 +1,286 @@
+/* --- BLOCKCHAIN EXPLORER DESKTOP RESPONSIVE SYSTEM --- */
+:root {
+    --primary-dark: #022c22;     /* Deep Forest Green */
+    --accent-mint: #22c55e;      /* Mint Green Accent */
+    --bg-light: #f8fafc;         /* Background light tone */
+    --text-dark: #0f172a;        /* Dark Slate */
+    --text-muted: #475569;       /* Muted Charcoal Text */
+    --border-color: #e2e8f0;
+    --max-width-desktop: 1200px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: #f1f5f9;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 24px 16px;
+}
+
+/* Universal Workspace Canvas Frame Container */
+.phone-container {
+    background: #f8fafc;        
+    width: 100%;
+    max-width: var(--max-width-desktop);
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 48px);
+    border-radius: 24px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.02);
+    overflow: hidden;
+}
+
+/* App Header Row Bar layout */
+.top-app-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.btn-back, .btn-export {
+    font-size: 20px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    background: none;
+    border: none;
+    text-decoration: none;
+}
+
+.app-bar-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--primary-dark);
+}
+
+/* Page Summary Headers */
+.explorer-main-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 6px;
+    text-align: left;
+}
+
+.explorer-subtext-para {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 24px;
+    text-align: left;
+}
+
+/* RESPONSIVE LAYOUT DESKTOP CORE GRID PANEL SPLIT WRAPPER */
+.explorer-grid-layout-hub {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 24px;
+}
+
+/* Contract Profile Parameters Block Container Card */
+.contract-profile-card {
+    background: #ffffff;
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.01);
+}
+
+.profile-section-title {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    margin-bottom: 18px;
+    border-left: 4px solid var(--accent-mint);
+    padding-left: 10px;
+    text-align: left;
+}
+
+.parameter-info-row-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.parameter-info-row-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.parameter-lbl-txt {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-align: left;
+}
+
+.parameter-val-hash-txt {
+    font-family: monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-dark);
+    text-align: right;
+}
+
+/* Premium Vertical Audit Trail Log Timeline Layout */
+.vertical-audit-timeline {
+    position: relative;
+    padding-left: 52px;
+}
+
+.vertical-audit-timeline::before {
+    content: '';
+    position: absolute;
+    left: 20px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background-color: #cbd5e1;
+}
+
+.audit-node-block {
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.audit-node-block:last-child {
+    margin-bottom: 0;
+}
+
+.node-graphic-icon-wrap {
+    position: absolute;
+    left: -52px;
+    top: 0;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 2px solid #cbd5e1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    z-index: 5;
+}
+
+.audit-node-block.confirmed-state .node-graphic-icon-wrap {
+    border-color: #bbf7d0;
+    background: #dcfce7;
+    color: #14532d;
+}
+
+.node-uppercase-status {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-muted);
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.audit-node-block.confirmed-state .node-uppercase-status {
+    color: #166534;
+}
+
+.node-main-location-header {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+    text-align: left;
+}
+
+.node-meta-description {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.4;
+    text-align: left;
+}
+
+.node-hash-lbl {
+    font-family: monospace;
+    font-size: 11px;
+    color: #115e59;
+    font-weight: 600;
+    margin-top: 4px;
+    text-align: left;
+}
+
+/* Global Sticky App Bottom Navigation Menu Tab bar layout */
+.app-bottom-dock {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #f1f5f9;
+    border-top: 1px solid #e2e8f0;
+    border-bottom-left-radius: 24px;
+    border-bottom-right-radius: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px 8px;
+    height: 70px;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+.dock-tab-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 700;
+    gap: 4px;
+    flex: 1;
+}
+
+.dock-tab-link.active-pill-state {
+    color: #022c22 !important;
+}
+
+.dock-tab-link.active-pill-state .pill-overlay-badge {
+    background-color: #bbf7d0 !important;
+    padding: 6px 20px;
+    border-radius: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2px;
+}
+
+.unselected-icon-spacing {
+    padding: 6px 0;
+    font-size: 16px;
+    display: inline-block;
+}
+
+/* --- THE DESKTOP MULTI-COLUMN RESPONSIVE LAYOUT CHANGE --- */
+@media (min-width: 850px) {
+    .explorer-grid-layout-hub {
+        grid-template-columns: 1fr 1.3fr; /* Splits static parameter parameters (left) from active audit logs stream box side-by-side */
+        align-items: start;
+        gap: 24px;
+    }
+    
+    .contract-profile-card {
+        margin-bottom: 0px;
+    }
+}

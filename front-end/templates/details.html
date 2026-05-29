@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Trace Details</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/details.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Top App Bar Navigation Row Layout -->
+        <div class="top-app-bar">
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='scanner.html'">🔲</button>
+        </div>
+
+        <!-- RESPONSIVE LAYOUT MATRIX WRAPPER GRID (Splits on large screen viewports) -->
+        <div class="details-grid-layout-hub">
+            
+            <!-- COLUMN 1 WORKSPACE: Product Core Summary Showcase Box Card -->
+            <div>
+                <div class="product-showcase-card">
+                    
+                    <!-- Graphic Image Header Area -->
+                    <div class="crop-image-container" id="crop-image-bg">
+                        <div class="verified-pill-badge" id="display-badge-lbl"></div>
+                    </div>
+
+                    <!-- Informational Typography details body box -->
+                    <div class="card-content-body">
+                        <div class="title-header-row">
+                            <h1 class="product-main-headline" id="display-crop-name"></h1>
+                            
+                            <div class="batch-pill-box">
+                                <div class="batch-title-lbl">Batch</div>
+                                <div class="batch-numeric-id" id="display-batch-id"></div>
+                            </div>
+                        </div>
+
+                        <p class="product-description-para" id="display-crop-desc"></p>
+
+                        <!-- Cryptographic Blockchain Fingerprint Link Block Ribbon -->
+                        <div class="chain-link-ribbon">
+                            <div class="chain-icon-block">🔗</div>
+                            <div class="chain-text-labels">
+                                <span class="chain-txt-lbl">Chain TXID</span>
+                                <span class="chain-hash-string" id="display-blockchain-hash"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- COLUMN 2 WORKSPACE: Supply Chain Vertical Tracker Timeline & Eco Cards Box -->
+            <div>
+                <h2 class="section-header-title" id="sec-journey-lbl"></h2>
+
+                <!-- Vertical Production Logistics Steps Stream Matrix -->
+                <div class="vertical-journey-timeline" id="journey-nodes-container"></div>
+
+                <!-- Security Immutable Status Banner Block Card -->
+                <div class="security-banner-card">
+                    <div class="security-top-header-line">
+                        <span class="shield-graphic">🛡️</span>
+                        <span class="tech-tag-badge" id="display-tech-badge"></span>
+                    </div>
+                    <h4 class="security-main-headline" id="display-security-title"></h4>
+                    <p class="security-subtext-para" id="display-security-desc"></p>
+                </div>
+
+                <!-- Sustainability Footprints Twin Split Cells Rows -->
+                <h2 class="section-header-title" id="sec-eco-lbl"></h2>
+                <div class="eco-metrics-split-row" id="eco-cards-container"></div>
+            </div>
+
+        </div> <!-- Closes .details-grid-layout-hub wrapper grid context -->
+
+        <!-- Sticky Persistent Tray Navigation Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📍</span>
+                <span>Trace</span>
+            </a>
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">🕒</div>
+                <span>History</span>
+            </a>
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- UTILITY ZERO-HARDCODING PROCESSING SCHEMAS LOGIC ENGINE -->
+    <script>
+        // --- BACKEND OBJECT REPLICATED TABLES PAYLOAD ---
+        const pageSettings = {
+            appName: "ShambaChain",
+            verifiedText: "✓ VERIFIED AUTHENTIC",
+            cropName: "Organic<br>Avocado",
+            batchNumber: "#88219",
+            cropDesc: "Premium Hass variety, sustainably grown with zero synthetic pesticides. Verified provenance.",
+            blockchainTxHash: "0x72a1...4f92bc33e8",
+            imageAssetUrl: "https://unsplash.com",
+            lblJourney: "Product Journey",
+            lblEco: "Sustainability Metrics",
+            securityTechTag: "ENCRYPTEM",
+            securityTitle: "Immutable Record",
+            securityDesc: "This product's data is secured on the cryptographic ledger and cannot be altered or falsified."
+        };
+
+        const timelineNodesPayload = [
+            { status: "Received", place: "Whole Foods Market", meta: "Arrived May 24, 2026 · 08:45 AM", icon: "🏪", isActive: true, hasNestedCard: false },
+            { status: "In Transit", place: "Logistics Plus", meta: "Cold-chain logistics maintained at 4°C. Departed May 22, 2026.", icon: "🚚", isActive: false, hasNestedCard: false },
+            { status: "Processed", place: "Eco-Pack Facility", meta: "Eco-friendly packaging applied. Certified Carbon Neutral facility.", icon: "🗄️", isActive: false, hasNestedCard: false },
+            { status: "Harvested", place: "Green Valley Farm", meta: "Harvested May 19, 2026. Block B-12. Soil health score: 98/100.", icon: "🚜", isActive: false, hasNestedCard: true, farmerName: "Silas Thorne", farmerRole: "Verified Producer", avatarUrl: "https://unsplash.com" }
+        ];
+
+        const ecoMetricsPayload = [
+            { label: "Carbon Footprint", value: "0.42 kg", symbol: "🍃", tintColor: "#16a34a" },
+            { label: "Water Used", value: "70 L", symbol: "💧", tintColor: "#2563eb" }
+        ];
+
+        // --- CORE APPLICATIONS RENDERING ENGINE CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Injects summary details headings variables properties
+            document.getElementById('app-title-txt').innerText = pageSettings.appName;
+            document.getElementById('crop-image-bg').style.backgroundImage = `url('${pageSettings.imageAssetUrl}')`;
+            document.getElementById('display-badge-lbl').innerText = pageSettings.verifiedText;
+            document.getElementById('display-crop-name').innerHTML = pageSettings.cropName;
+            document.getElementById('display-batch-id').innerText = pageSettings.batchNumber;
+            document.getElementById('display-crop-desc').innerText = pageSettings.cropDesc;
+            document.getElementById('display-blockchain-hash').innerText = pageSettings.blockchainTxHash;
+            document.getElementById('sec-journey-lbl').innerText = pageSettings.lblJourney;
+            document.getElementById('sec-eco-lbl').innerText = pageSettings.lblEco;
+            document.getElementById('display-tech-badge').innerText = pageSettings.securityTechTag;
+            document.getElementById('display-security-title').innerText = pageSettings.securityTitle;
+            document.getElementById('display-security-desc').innerText = pageSettings.securityDesc;
+
+            // Generate Timeline nodes loop layout structure maps
+            const nodesContainer = document.getElementById('journey-nodes-container');
+            nodesContainer.innerHTML = '';
+            timelineNodesPayload.forEach(node => {
+                let statusClassMarker = node.isActive ? "completed-state" : "";
+                let nestedCardStructure = "";
+
+                if (node.hasNestedCard) {
+                    nestedCardStructure = `
+                        <div class="farmer-nested-profile-card" onclick="window.location.href='farmer-profile.html'">
+                            <div class="farmer-left-profile">
+                                <img class="farmer-avatar-img" src="${node.avatarUrl}" alt="${node.farmerName}">
+                                <div>
+                                    <div class="profile-action-lbl">View Farmer Profile</div>
+                                    <div class="profile-meta-lbl">${node.farmerName} · ${node.farmerRole}</div>
+                                </div>
+                            </div>
+                            <div class="profile-chevron-arrow">&gt;</div>
+                        </div>
+                    `;
+                }
+
+                nodesContainer.innerHTML += `
+                    <div class="journey-node-block completed-state">
+                        <div class="node-graphic-icon-wrap">${node.icon}</div>
+                        <div class="node-uppercase-status">${node.status}</div>
+                        <div class="node-main-location-header">${node.place}</div>
+                        <div class="node-meta-description">${node.meta}</div>
+                        ${nestedCardStructure}
+                    </div>
+                `;
+            });
+            // Generate Eco Metrics cards grids splitter
+            const ecoContainer = document.getElementById('eco-cards-container');
+            ecoContainer.innerHTML = '';
+            ecoMetricsPayload.forEach(card => {
+                ecoContainer.innerHTML += `
+                    <div class="eco-metric-split-box">
+                        <span class="eco-icon-marker" style="color: ${card.tintColor};">${card.symbol}</span>
+                        <div class="eco-metric-txt-lbl">${card.label}</div>
+                        <div class="eco-metric-val-num">${card.value}</div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>

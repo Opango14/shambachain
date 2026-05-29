@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Scanner Viewfinder</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/scanner.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- White Top Navigation App Bar Row -->
+        <div class="top-app-bar">
+            <!-- Returns back to main consumer hub screen workspace -->
+            <button class="menu-icon" onclick="window.location.href='consumer-dashboard.html'">☰</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="qr-shortcut" onclick="window.location.href='consumer-dashboard.html'">🔳</button>
+        </div>
+
+        <!-- Main Viewfinder Tracking Camera Space Content Area -->
+        <div class="scanner-body-area">
+            
+            <!-- Top Align Warning Pill Badge overlay -->
+            <div class="align-badge">
+                <span id="badge-icon-field"></span> <span id="badge-text-field"></span>
+            </div>
+
+            <!-- Target brackets camera simulation mask box -->
+            <!-- Clicking inside the brackets acts as a mockup scan trigger link pointing to details.html -->
+            <div class="viewfinder-box" onclick="window.location.href='details.html'">
+                <div class="corner-target top-left"></div>
+                <div class="corner-target top-right"></div>
+                <div class="corner-target bot-left"></div>
+                <div class="corner-target bot-right"></div>
+            </div>
+
+            <!-- Descriptive Instructions Headings -->
+            <h2 class="verification-header" id="display-headline"></h2>
+            <p class="instruction-text" id="display-instruction"></p>
+
+            <!-- Bottom utility belt button layout tools -->
+            <div class="control-belt">
+                <!-- Flashlight flash tool mock layout button -->
+                <button type="button" class="circle-btn" onclick="alert('Device Flashlight Triggered Successfully!')">🔦</button>
+                
+                <!-- Main central action redirection path back into dashboard history log anchor -->
+                <a href="consumer-dashboard.html" class="btn-scan-history" id="btn-history-lbl"></a>
+                
+                <!-- Gallery photo file selector mock layout button -->
+                <button type="button" class="circle-btn" onclick="alert('Opening Native Device Image Gallery Selection...')">🖼️</button>
+            </div>
+
+        </div>
+
+        <!-- Sticky Persistent Tray Navigation Bar Bottom Dock Layout -->
+        <div class="app-bottom-dock">
+            
+            <a href="consumer-dashboard.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">📍</div>
+                <span>Trace</span>
+            </a>
+
+            <a href="consumer-dashboard.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🕒</span>
+                <span>History</span>
+            </a>
+
+            <a href="#" class="dock-tab-link" onclick="alert('Global blockchain block explorer ledger module coming soon!')">
+                <span class="unselected-icon-spacing">📓</span>
+                <span>Ledger</span>
+            </a>
+
+            <a href="login.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ZERO HARDCODING ARCHITECTURE RENDERING LOGIC SCRIPT -->
+    <script>
+        // --- DATA OBJECT MAPPERS (Simulates standard API data models) ---
+        const scannerConfig = {
+            appName: "ShambaChain",
+            warningIcon: "⚙",
+            warningBadgeText: "ALIGN QR CODE",
+            headlineText: "Verification",
+            instructionText: "Scan the batch label to trace origin",
+            historyButtonText: "⏳ Scan History"
+        };
+
+        // --- CORE APPLICATION INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('app-title-txt').innerText = scannerConfig.appName;
+            document.getElementById('badge-icon-field').innerText = scannerConfig.warningIcon;
+            document.getElementById('badge-text-field').innerText = scannerConfig.warningBadgeText;
+            document.getElementById('display-headline').innerText = scannerConfig.headlineText;
+            document.getElementById('display-instruction').innerText = scannerConfig.instructionText;
+            document.getElementById('btn-history-lbl').innerHTML = scannerConfig.historyButtonText;
+        });
+    </script>
+</body>
+</html>

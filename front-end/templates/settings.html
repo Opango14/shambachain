@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShambaChain - Settings</title>
+    <!-- Relative path back out to the parent styles sub-directory directory -->
+    <link rel="stylesheet" href="../styles/settings.css?v=3">
+</head>
+<body>
+
+    <div class="phone-container">
+        
+        <!-- Global Top App Navigation Row Bar Layout -->
+        <div class="top-app-bar">
+            <button class="menu-icon" onclick="window.location.href='farmer-portal.html'">←</button>
+            <div class="app-bar-title" id="app-title-txt"></div>
+            <button class="profile-shortcut" onclick="window.location.href='farmer-profile.html'">👤</button>
+        </div>
+
+        <!-- Page Introduction Block Header Title summary strings -->
+        <h1 class="settings-main-title" id="display-main-title"></h1>
+        <p class="settings-subtext-para" id="display-subtext-lbl"></p>
+
+        <!-- RESPONSIVE LAYOUT ENGINE WRAPPER MATRIX (Splits contextually on desktop windows) -->
+        <div class="settings-grid-layout-hub" id="settings-categories-grid"></div>
+
+        <!-- High-Contrast Outlined Sign Out Trigger Button -->
+        <a href="login.html" class="btn-signout-outline" id="display-signout-btn-lbl"></a>
+
+        <!-- Sticky Persistent Profile Settings Bottom Menu Bar Dock Layout -->
+        <div class="app-bottom-dock">
+            <a href="farmer-portal.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">🔳</span>
+                <span>Trace</span>
+            </a>
+            <a href="farmer-inventory.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">📊</span>
+                <span>Impact</span>
+            </a>
+            <a href="farmer-profile.html" class="dock-tab-link">
+                <span class="unselected-icon-spacing">👤</span>
+                <span>Profile</span>
+            </a>
+            <a href="settings.html" class="dock-tab-link active-pill-state">
+                <div class="pill-overlay-badge">⚙️</div>
+                <span>Settings</span>
+            </a>
+        </div>
+
+    </div>
+
+    <!-- CLEAN SYSTEMS INTERCONNECT PROCESSING SCRIPT BLOCK ENGINE -->
+    <script>
+        // --- BACKEND API OBJECT PAYLOAD TABLES ---
+        const systemConfig = {
+            appName: "ShambaChain",
+            mainTitle: "Settings",
+            subtextLabel: "Manage your account and app preferences.",
+            signOutButtonText: "🚪 Sign Out"
+        };
+
+        const settingsMenuPayload = [
+            {
+                category: "Account",
+                items: [
+                    { label: "Edit Profile", icon: "👤", badge: "", targetUrl: "farmer-profile.html" },
+                    { label: "Change Password", icon: "🔄", badge: "", targetUrl: "#" }
+                ]
+            },
+            {
+                category: "Security",
+                items: [
+                    { label: "Blockchain Wallet", icon: "🔏", badge: "Connected", targetUrl: "#" },
+                    { label: "Two-Factor Auth", icon: "🛡️", badge: "", targetUrl: "#" }
+                ]
+            },
+            {
+                category: "Notifications",
+                items: [
+                    { label: "Push Notification Alerts", icon: "🔔", badge: "", targetUrl: "#" },
+                    { label: "Email Summaries", icon: "✉️", badge: "", targetUrl: "#" }
+                ]
+            },
+            {
+                category: "Support",
+                items: [
+                    { label: "Help Center Hub", icon: "❓", badge: "", targetUrl: "help-center.html" },
+                    { label: "Contact System Support", icon: "📞", badge: "", targetUrl: "#" }
+                ]
+            }
+        ];
+
+        // --- CORE CHASSIS INJECTION RENDERING CONTROLLER ---
+        window.addEventListener('DOMContentLoaded', () => {
+            // Assign primary labels
+            document.getElementById('app-title-txt').innerText = systemConfig.appName;
+            document.getElementById('display-main-title').innerText = systemConfig.mainTitle;
+            document.getElementById('display-subtext-lbl').innerText = systemConfig.subtextLabel;
+            document.getElementById('display-signout-btn-lbl').innerHTML = systemConfig.signOutButtonText;
+
+            // Generate menu configuration segment items block dynamically loop
+            const gridContainer = document.getElementById('settings-categories-grid');
+            gridContainer.innerHTML = '';
+
+            settingsMenuPayload.forEach(block => {
+                let rowsMarkup = '';
+                
+                block.items.forEach(row => {
+                    let badgeMarkup = row.badge ? `<span class="connected-pill-status">${row.badge}</span>` : '';
+                    
+                    rowsMarkup += `
+                        <a href="${row.targetUrl}" class="settings-row-item">
+                            <div class="settings-left-block">
+                                <span class="settings-icon-marker">${row.icon}</span>
+                                <span class="settings-item-text">${row.label}</span>
+                            </div>
+                            <div class="settings-right-block">
+                                ${badgeMarkup}
+                                <span class="settings-chevron-arrow">&gt;</span>
+                            </div>
+                        </a>
+                    `;
+                });
+
+                gridContainer.innerHTML += `
+                    <div class="settings-segment-block">
+                        <div class="settings-category-lbl">${block.category}</div>
+                        <div class="settings-group-card">
+                            ${rowsMarkup}
+                        </div>
+                    </div>
+                `;
+            });
+        });
+    </script>
+</body>
+</html>
