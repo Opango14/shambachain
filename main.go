@@ -29,6 +29,11 @@ func main() {
 	router.GET("/", func(c *gin.Context) {
 		c.HTML(200, "index.html", nil)
 	})
+	// Serve all HTML pages
+	router.GET("/:page", func(c *gin.Context) {
+		page := c.Param("page")
+		c.HTML(200, page, nil)
+	})
 
 	// Setup API routes
 	routes.SetupRoutes(router)
