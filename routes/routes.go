@@ -24,6 +24,7 @@ func SetupRoutes(router *gin.Engine) {
 		{
 			// User profile
 			protected.GET("/user/profile", handlers.GetProfileHandler)
+			protected.PUT("/user/profile", handlers.UpdateProfileHandler)
 
 			// Batch registration
 			protected.POST("/batches", handlers.RegisterBatchHandler)

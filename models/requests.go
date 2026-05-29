@@ -31,3 +31,12 @@ type LoginUserRequest struct {
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
 }
+
+// UpdateProfileRequest represents the request body for updating user profile
+type UpdateProfileRequest struct {
+	FullName    string `json:"full_name"`
+	PhoneNumber string `json:"phone_number"`
+	Address     string `json:"address"`
+	FarmName    string `json:"farm_name"`
+	Company     string `json:"company"`
+}
